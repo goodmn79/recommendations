@@ -13,8 +13,8 @@ public class ProductMapper implements RowMapper<Product> {
     @Override
     public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Product()
-                .setId(rs.getObject("ID", UUID.class))
-                .setName(rs.getString("NAME"))
-                .setType(rs.getString("TYPE"));
+                .setId(rs.getObject("p.ID", UUID.class))
+                .setName(rs.getString("p.NAME"))
+                .setType(rs.getString("p.TYPE"));
     }
 }

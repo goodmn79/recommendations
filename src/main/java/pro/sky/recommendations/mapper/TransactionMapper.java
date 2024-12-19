@@ -14,21 +14,21 @@ public class TransactionMapper implements RowMapper <Transaction> {
     @Override
     public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User()
-                .setId(rs.getObject("ID", UUID.class))
-                .setUserName(rs.getString("USERNAME"))
-                .setFirstName(rs.getString("FIRST_NAME"))
-                .setLastName(rs.getString("LAST_NAME"));
+                .setId(rs.getObject("u.ID", UUID.class))
+                .setUserName(rs.getString("u.USERNAME"))
+                .setFirstName(rs.getString("u.FIRST_NAME"))
+                .setLastName(rs.getString("u.LAST_NAME"));
 
         Product product = new Product()
-                .setId(rs.getObject("ID", UUID.class))
-                .setName(rs.getString("NAME"))
-                .setType(rs.getString("TYPE"));
+                .setId(rs.getObject("p.ID", UUID.class))
+                .setName(rs.getString("p.NAME"))
+                .setType(rs.getString("p.TYPE"));
 
         return new Transaction()
-                .setId(rs.getObject("ID", UUID.class))
+                .setId(rs.getObject("t.ID", UUID.class))
                 .setProduct(product)
                 .setUser(user)
-                .setType(rs.getString("TYPE"))
-                .setAmount(rs.getObject("AMOUNT", Integer.class));
+                .setType(rs.getString("t.TYPE"))
+                .setAmount(rs.getObject("t.AMOUNT", Integer.class));
     }
 }
