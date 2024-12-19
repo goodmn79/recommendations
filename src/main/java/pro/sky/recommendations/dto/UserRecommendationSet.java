@@ -21,5 +21,7 @@ public class UserRecommendationSet {
 
     public void addRecommendation(Recommendation recommendation) {
         this.recommendations.add(recommendation);
+
+
     }
 }

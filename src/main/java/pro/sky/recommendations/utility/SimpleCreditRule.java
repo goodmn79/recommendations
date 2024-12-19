@@ -1,23 +1,28 @@
-package pro.sky.recommendations.serviceRecommendation;
+package pro.sky.recommendations.utility;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.model.Transaction;
-import pro.sky.recommendations.modelRecommendation.SimpleCredit;
+import pro.sky.recommendations.model.SimpleCredit;
 import pro.sky.recommendations.repository.RecommendationRepository;
+import pro.sky.recommendations.repository.TransactionRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class SimpleCreditRule implements RecommendationRuleSet {
     private final SimpleCredit credit;
     private final RecommendationRepository recommendationRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
-    public Optional <Optional<Recommendation>> validateRecommendationRule(List<Transaction> transactions) {
+    public Optional <Optional<Recommendation>> validateRecommendationRule(UUID userId) {
+        List<Transaction> transactions = transactionRepository.findAllTransactionByUserId(userId);
+
         // Проверка 1. Пользователь не использует продукты с типом CREDIT.
         boolean checkRule1 = !credit.hasProduct(transactions);
 

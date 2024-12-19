@@ -1,6 +1,4 @@
-package pro.sky.recommendations.modelRecommendation;
-
-import pro.sky.recommendations.model.Transaction;
+package pro.sky.recommendations.model;
 
 import java.util.List;
 

@@ -1,23 +1,28 @@
-package pro.sky.recommendations.serviceRecommendation;
+package pro.sky.recommendations.utility;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.model.Transaction;
-import pro.sky.recommendations.modelRecommendation.Invest;
+import pro.sky.recommendations.model.Invest;
 import pro.sky.recommendations.repository.RecommendationRepository;
+import pro.sky.recommendations.repository.TransactionRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class InvestRule implements RecommendationRuleSet {
     private final Invest invest;
     private final RecommendationRepository recommendationRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
-    public Optional <Optional<Recommendation>> validateRecommendationRule(List<Transaction> transactions) {
+    public Optional<Optional<Recommendation>> validateRecommendationRule(UUID userId) {
+        List<Transaction> transactions = transactionRepository.findAllTransactionByUserId(userId);
+
         // Проверка 1: Пользователь использует как минимум один продукт с типом DEBIT
         boolean checkRule1 = invest.hasProduct(transactions);
 
