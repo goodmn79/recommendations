@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.recommendations.dto.UserRecommendationSet;
 import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.repository.UserRepository;
-import pro.sky.recommendations.utility.Invest500RuleSet;
 import pro.sky.recommendations.utility.RecommendationRuleSet;
-import pro.sky.recommendations.utility.SimpleCreditRuleSet;
-import pro.sky.recommendations.utility.TopSavingRuleSet;
 
 import java.util.UUID;
 
@@ -24,9 +21,9 @@ public class RecommendationService {
     private final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
 
     public RecommendationService(UserRepository userRepository,
-                                 @Qualifier("invest500") Invest500RuleSet invest500,
-                                 @Qualifier("simpleCredit") SimpleCreditRuleSet simpleCredit,
-                                 @Qualifier("topSaving") TopSavingRuleSet topSaving) {
+                                 @Qualifier("invest500") RecommendationRuleSet invest500,
+                                 @Qualifier("simpleCredit") RecommendationRuleSet simpleCredit,
+                                 @Qualifier("topSaving") RecommendationRuleSet topSaving) {
         this.userRepository = userRepository;
         this.invest500 = invest500;
         this.simpleCredit = simpleCredit;
