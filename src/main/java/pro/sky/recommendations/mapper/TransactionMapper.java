@@ -14,21 +14,21 @@ public class TransactionMapper implements RowMapper <Transaction> {
     @Override
     public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User()
-                .setId(rs.getObject("u.ID", UUID.class))
-                .setUserName(rs.getString("u.USERNAME"))
-                .setFirstName(rs.getString("u.FIRST_NAME"))
-                .setLastName(rs.getString("u.LAST_NAME"));
+                .setId(rs.getObject("user_id", UUID.class))
+                .setUserName(rs.getString("user_username"))
+                .setFirstName(rs.getString("user_first_name"))
+                .setLastName(rs.getString("user_last_name"));
 
         Product product = new Product()
-                .setId(rs.getObject("p.ID", UUID.class))
-                .setName(rs.getString("p.NAME"))
-                .setType(rs.getString("p.TYPE"));
+                .setId(rs.getObject("product_id", UUID.class))
+                .setName(rs.getString("product_name"))
+                .setType(rs.getString("product_type"));
 
         return new Transaction()
-                .setId(rs.getObject("t.ID", UUID.class))
+                .setId(rs.getObject("transaction_id", UUID.class))
                 .setProduct(product)
                 .setUser(user)
-                .setType(rs.getString("t.TYPE"))
-                .setAmount(rs.getObject("t.AMOUNT", Integer.class));
+                .setType(rs.getString("transaction_type"))
+                .setAmount(rs.getObject("transaction_amount", Integer.class));
     }
 }
