@@ -8,6 +8,7 @@ import pro.sky.recommendations.dto.UserRecommendationSet;
 import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.repository.UserRepository;
 import pro.sky.recommendations.utility.Invest500RuleSet;
+import pro.sky.recommendations.utility.RecommendationRuleSet;
 import pro.sky.recommendations.utility.SimpleCreditRuleSet;
 import pro.sky.recommendations.utility.TopSavingRuleSet;
 
@@ -16,9 +17,9 @@ import java.util.UUID;
 @Service
 public class RecommendationService {
     private final UserRepository userRepository;
-    private final Invest500RuleSet invest500;
-    private final SimpleCreditRuleSet simpleCredit;
-    private final TopSavingRuleSet topSaving;
+    private final RecommendationRuleSet invest500;
+    private final RecommendationRuleSet simpleCredit;
+    private final RecommendationRuleSet topSaving;
 
     private final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
 
