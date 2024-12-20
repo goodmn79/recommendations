@@ -1,11 +1,13 @@
 package pro.sky.recommendations.utility;
 
+import lombok.RequiredArgsConstructor;
 import pro.sky.recommendations.model.Transaction;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 public class TransactionListDataUtility {
+
     public static boolean productUsage(List<Transaction> transactions, String productType) {
         return transactions.stream()
                 .anyMatch(transaction -> transaction.getProduct().getType().equals(productType));

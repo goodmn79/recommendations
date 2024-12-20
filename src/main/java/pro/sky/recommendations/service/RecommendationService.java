@@ -1,5 +1,7 @@
 package pro.sky.recommendations.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.dto.UserRecommendationSet;
@@ -18,25 +20,37 @@ public class RecommendationService {
     private final SimpleCreditRuleSet simpleCredit;
     private final TopSavingRuleSet topSaving;
 
+    private final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
+
     public RecommendationService(UserRepository userRepository,
-                                 @Qualifier ("invest500") Invest500RuleSet invest500,
-                                 @Qualifier ("simpleCredit")SimpleCreditRuleSet simpleCredit,
-                                 @Qualifier ("topSaving")TopSavingRuleSet topSaving) {
+                                 @Qualifier("invest500") Invest500RuleSet invest500,
+                                 @Qualifier("simpleCredit") SimpleCreditRuleSet simpleCredit,
+                                 @Qualifier("topSaving") TopSavingRuleSet topSaving) {
         this.userRepository = userRepository;
         this.invest500 = invest500;
         this.simpleCredit = simpleCredit;
         this.topSaving = topSaving;
     }
 
-    // Проверяем подходят ли продукты (invest 500, простой кредит или Top Saving) для рекомендаций пользователю
     public UserRecommendationSet checkRecommendation(UUID userId) {
+        logger.info("Invoke method checkRecommendation");
         validateUserId(userId);
         UserRecommendationSet userRecommendationSet = new UserRecommendationSet(userId);
-        invest500.validateRecommendationRule(userId).ifPresent(userRecommendationSet::addRecommendation);
-        simpleCredit.validateRecommendationRule(userId).ifPresent(userRecommendationSet::addRecommendation);
-        topSaving.validateRecommendationRule(userId).ifPresent(userRecommendationSet::addRecommendation);
+        invest500.validateRecommendationRule(userId).ifPresent(recommendation -> {
+            logger.debug("Invest500 recommendation: {}", recommendation);
+            userRecommendationSet.addRecommendation(recommendation);
+        });
+        simpleCredit.validateRecommendationRule(userId).ifPresent(recommendation -> {
+            logger.debug("SimpleCredit recommendation: {}", recommendation);
+            userRecommendationSet.addRecommendation(recommendation);
+        });
+        topSaving.validateRecommendationRule(userId).ifPresent(recommendation -> {
+            logger.debug("TopSaving recommendation: {}", recommendation);
+            userRecommendationSet.addRecommendation(recommendation);
+        });
         return userRecommendationSet;
     }
+
     private void validateUserId(UUID userId) {
         userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
