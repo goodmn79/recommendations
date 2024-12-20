@@ -5,7 +5,7 @@ import pro.sky.recommendations.model.Transaction;
 import java.util.List;
 
 
-public abstract class TransactionListDataUtility {
+public class TransactionListDataUtility {
     public static boolean productUsage(List<Transaction> transactions, String productType) {
         return transactions.stream()
                 .anyMatch(transaction -> transaction.getProduct().getType().equals(productType));
@@ -26,5 +26,4 @@ public abstract class TransactionListDataUtility {
                 .mapToInt(Transaction::getAmount)
                 .sum();
     }
-
 }
