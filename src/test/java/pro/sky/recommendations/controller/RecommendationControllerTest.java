@@ -16,7 +16,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RecommendationControllerTest {
     @LocalServerPort
@@ -31,7 +30,7 @@ class RecommendationControllerTest {
     private RecommendationService recommendationService;
 
     @Test
-    void testGetRecommendation(){
+    void testGetRecommendation() {
         UUID userId = UUID.fromString("d4a4d619-9a0c-4fc5-b0cb-76c49409546b");
 
         ResponseEntity<UserRecommendationSet> userRecommendationSet =
