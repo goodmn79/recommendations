@@ -10,22 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourceConfiguration {
-    @Bean(name = "transactionDataSource")
-    public DataSource transactionDataSource(
-            @Value("${application.transaction-db.url}") String transactionUrl) {
-        var dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(transactionUrl);
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setReadOnly(true);
-        return dataSource;
-    }
-
-    @Bean(name = "transactionJdbcTemplate")
-    public JdbcTemplate transactionJdbcTemplate(@Qualifier("transactionDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-
+public class Recommendation_dbDataSourceConfiguration {
     @Bean(name = "recommendationDataSource")
     public DataSource recommendationDataSource(
             @Value("${application.recommendation-db.url}") String recommendationUrl) {
