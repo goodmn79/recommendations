@@ -11,12 +11,16 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class UserRecommendationSet {
-    private final UUID userId;
+    private UUID userId;
     private Set<Recommendation> recommendations;
 
     public UserRecommendationSet(UUID userId) {
         this.userId = userId;
         this.recommendations = new HashSet<>();
+    }
+
+    public UserRecommendationSet() {
+
     }
 
     public void addRecommendation(Recommendation recommendation) {
