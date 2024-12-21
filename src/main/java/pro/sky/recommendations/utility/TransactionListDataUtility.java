@@ -1,19 +1,21 @@
 package pro.sky.recommendations.utility;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pro.sky.recommendations.model.Transaction;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class TransactionListDataUtility {
 
-    public static boolean productUsage(List<Transaction> transactions, String productType) {
+    public boolean productUsage(List<Transaction> transactions, String productType) {
         return transactions.stream()
                 .anyMatch(transaction -> transaction.getProduct().getType().equals(productType));
     }
 
-    public static int totalDeposit(List<Transaction> transactions, String productType) {
+    public int totalDeposit(List<Transaction> transactions, String productType) {
         return transactions.stream()
                 .filter(transaction -> transaction.getProduct().getType().equals(productType))
                 .filter(transaction -> transaction.getType().equals("DEPOSIT"))
@@ -21,7 +23,7 @@ public class TransactionListDataUtility {
                 .sum();
     }
 
-    public static int totalWithdraw(List<Transaction> transactions, String productType) {
+    public int totalWithdraw(List<Transaction> transactions, String productType) {
         return transactions.stream()
                 .filter(transaction -> transaction.getProduct().getType().equals(productType))
                 .filter(transaction -> transaction.getType().equals("WITHDRAW"))

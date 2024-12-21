@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static pro.sky.recommendations.utility.TransactionListDataUtility.*;
 import static pro.sky.recommendations.utility.constant.ProductType.DEBIT;
 import static pro.sky.recommendations.utility.constant.ProductType.SAVING;
 
@@ -24,6 +23,7 @@ import static pro.sky.recommendations.utility.constant.ProductType.SAVING;
 public class TopSavingRuleSet implements RecommendationRuleSet {
     private final RecommendationRepository recommendationRepository;
     private final TransactionRepository transactionRepository;
+    private final TransactionListDataUtility utility;
 
     Logger logger = LoggerFactory.getLogger(TopSavingRuleSet.class);
 
@@ -33,15 +33,15 @@ public class TopSavingRuleSet implements RecommendationRuleSet {
         List<Transaction> transactions = transactionRepository.findAllTransactionByUserId(userId);
 
         // Проверка 1: Пользователь использует как минимум один продукт с типом DEBIT
-        boolean checkRule1 = productUsage(transactions, DEBIT);
+        boolean checkRule1 = utility.productUsage(transactions, DEBIT);
         logger.debug("Check rule 1: {}", checkRule1);
 
         // Проверка 2: Сумма пополнений по всем продуктам типа DEBIT больше или равна 50 000 ₽ ИЛИ Сумма пополнений по всем продуктам типа SAVING больше или равна 50 000 ₽.
-        boolean checkRule2 = totalDeposit(transactions, DEBIT) >= 50_000 || totalDeposit(transactions, SAVING) >= 50_000;
+        boolean checkRule2 = utility.totalDeposit(transactions, DEBIT) >= 50_000 || utility.totalDeposit(transactions, SAVING) >= 50_000;
         logger.debug("Check rule 2: {}", checkRule2);
 
         // Проверка 3. Сумма пополнений по всем продуктам типа DEBIT больше, чем сумма трат по всем продуктам типа DEBIT.
-        boolean checkRule3 = totalDeposit(transactions, DEBIT) > totalWithdraw(transactions, DEBIT);
+        boolean checkRule3 = utility.totalDeposit(transactions, DEBIT) > utility.totalWithdraw(transactions, DEBIT);
         logger.debug("Check rule 3: {}", checkRule3);
 
         if (checkRule1 && checkRule2 && checkRule3) {
