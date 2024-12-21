@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.recommendations.dto.UserRecommendationSet;
 import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.repository.UserRepository;
-import pro.sky.recommendations.utility.RecommendationRuleSet;
+import pro.sky.recommendations.service.utility.RecommendationRuleSet;
 
 import java.util.UUID;
 
