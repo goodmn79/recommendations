@@ -19,6 +19,7 @@ public class QueryMapper {
             @Override
             protected void configure() {
                 skip(destination.getId());
+                map(source.getId(), destination.getId());
             }
         });
     }
