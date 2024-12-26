@@ -18,8 +18,8 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pro.sky.recommendations.service.utility.constant.ProductType.DEBIT;
-import static pro.sky.recommendations.service.utility.constant.ProductType.SAVING;
+import static pro.sky.recommendations.constant.ProductType.DEBIT;
+import static pro.sky.recommendations.constant.ProductType.SAVING;
 
 @ExtendWith(MockitoExtension.class)
 class TopSavingRuleSetTest {

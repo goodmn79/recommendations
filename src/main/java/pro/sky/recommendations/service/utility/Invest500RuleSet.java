@@ -9,7 +9,7 @@ import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.model.Transaction;
 import pro.sky.recommendations.repository.RecommendationRepository;
 import pro.sky.recommendations.repository.TransactionRepository;
-import pro.sky.recommendations.service.utility.constant.ProductType;
+import pro.sky.recommendations.constant.ProductType;
 
 import java.util.List;
 import java.util.Optional;
