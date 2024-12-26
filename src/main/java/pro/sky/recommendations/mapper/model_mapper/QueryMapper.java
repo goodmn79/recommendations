@@ -1,4 +1,4 @@
-package pro.sky.recommendations.mapper;
+package pro.sky.recommendations.mapper.model_mapper;
 
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -13,7 +13,7 @@ import pro.sky.recommendations.exception.InvalidQueryDataException;
 import pro.sky.recommendations.model.Query;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import static pro.sky.recommendations.constant.QueryType.*;
@@ -37,11 +37,11 @@ public class QueryMapper {
                 .setId(UUID.randomUUID());
     }
 
-    public Collection<Query> mapFromDTO(Collection<QueryDTO> queryDTOS) {
+    public List<Query> mapFromDTO(List<QueryDTO> queryDTOS) {
         queryDTOS.forEach(this::validateQuery);
-        Type collectionType = new TypeToken<Collection<Query>>() {
+        Type listType = new TypeToken<List<Query>>() {
         }.getType();
-        Collection<Query> queries = mapper.map(queryDTOS, collectionType);
+        List<Query> queries = mapper.map(queryDTOS, listType);
         queries.forEach(query -> query.setId(UUID.randomUUID()));
         return queries;
     }
@@ -50,10 +50,10 @@ public class QueryMapper {
         return mapper.map(query, QueryDTO.class);
     }
 
-    public Collection<QueryDTO> mapToDTO(Collection<Query> queries) {
-        Type collectionType = new TypeToken<Collection<QueryDTO>>() {
+    public List<QueryDTO> mapToDTO(List<Query> queries) {
+        Type listType = new TypeToken<List<QueryDTO>>() {
         }.getType();
-        return mapper.map(queries, collectionType);
+        return mapper.map(queries, listType);
     }
 
     private void validateQuery(QueryDTO queryDTO) {
