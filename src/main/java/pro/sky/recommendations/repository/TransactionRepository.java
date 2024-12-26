@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static pro.sky.recommendations.repository.constant.SQLQuery.FIND_ALL_TRANSACTION_BY_USER_ID;
+import static pro.sky.recommendations.constant.SQLQuery.FIND_ALL_TRANSACTION_BY_USER_ID;
 
 @Repository
 public class TransactionRepository {

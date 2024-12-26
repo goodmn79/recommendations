@@ -9,7 +9,7 @@ import pro.sky.recommendations.model.Recommendation;
 
 import java.util.Optional;
 
-import static pro.sky.recommendations.repository.constant.SQLQuery.FIND_RECOMMENDATION_BY_NAME;
+import static pro.sky.recommendations.constant.SQLQuery.FIND_RECOMMENDATION_BY_NAME;
 
 @Repository
 public class RecommendationRepository {

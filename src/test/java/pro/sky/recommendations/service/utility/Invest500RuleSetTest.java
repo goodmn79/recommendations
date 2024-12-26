@@ -18,7 +18,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pro.sky.recommendations.service.utility.constant.ProductType.*;
+import static pro.sky.recommendations.constant.ProductType.*;
 
 @ExtendWith(MockitoExtension.class)
 class Invest500RuleSetTest {

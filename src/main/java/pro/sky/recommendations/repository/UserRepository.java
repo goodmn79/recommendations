@@ -12,7 +12,7 @@ import pro.sky.recommendations.model.User;
 import java.util.Optional;
 import java.util.UUID;
 
-import static pro.sky.recommendations.repository.constant.SQLQuery.FIND_USER_BY_ID;
+import static pro.sky.recommendations.constant.SQLQuery.FIND_USER_BY_ID;
 
 @Repository
 public class UserRepository {
