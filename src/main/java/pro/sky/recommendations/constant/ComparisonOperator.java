@@ -10,9 +10,9 @@ public class ComparisonOperator {
     public static final String LT = "<";
     public static final String LE = "<=";
 
-    public static final Set<String> COMPARISON_OPERATOR;
+    public static final Set<String> COMPARISON_OPERATORS;
 
     static {
-        COMPARISON_OPERATOR = Set.of(EQ, GT, GE, LT, LE);
+        COMPARISON_OPERATORS = Set.of(EQ, GT, GE, LT, LE);
     }
 }
