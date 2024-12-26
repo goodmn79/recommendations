@@ -1,4 +1,4 @@
-package pro.sky.recommendations.service.utility.constant;
+package pro.sky.recommendations.constant;
 
 public final class ProductType {
     public static final String DEBIT = "DEBIT";
