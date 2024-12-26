@@ -74,6 +74,8 @@ public class QueryMapper {
                     && TransactionType.TRANSACTION_TYPES.contains(args[1])
                     && ComparisonOperator.COMPARISON_OPERATORS.contains(args[2])
                     && StringUtils.isNumeric(args[3]);
+            case (TRANSACTION_SUM_COMPARE) -> args.length == 2 && ProductType.PRODUCT_TYPES.contains(args[0])
+                    && ComparisonOperator.COMPARISON_OPERATORS.contains(args[1]);
             default -> false;
         };
     }
