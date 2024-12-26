@@ -11,5 +11,5 @@ public class Query {
     private UUID id;
     private String query;
     private String[] args;
-    private boolean negate;
+    private Boolean negate;
 }
