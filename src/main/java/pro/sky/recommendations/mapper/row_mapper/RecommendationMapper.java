@@ -1,4 +1,4 @@
-package pro.sky.recommendations.mapper;
+package pro.sky.recommendations.mapper.row_mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;

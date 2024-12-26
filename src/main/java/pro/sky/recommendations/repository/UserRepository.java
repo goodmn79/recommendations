@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.mapper.UserMapper;
+import pro.sky.recommendations.mapper.row_mapper.UserMapper;
 import pro.sky.recommendations.model.User;
 
 import java.util.Optional;
