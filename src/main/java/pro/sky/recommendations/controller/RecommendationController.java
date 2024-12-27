@@ -11,7 +11,6 @@ import pro.sky.recommendations.service.RecommendationService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("recommendation")
 @RequiredArgsConstructor
 public class RecommendationController {
     private final RecommendationService recommendationService;

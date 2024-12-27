@@ -9,7 +9,8 @@ import java.util.UUID;
 @Accessors(chain = true)
 public class QueryDTO {
     private UUID id;
+    private UUID dynamicRuleId;
     private String query;
-    private String[] args;
+    private String[] arguments;
     private Boolean negate;
 }
