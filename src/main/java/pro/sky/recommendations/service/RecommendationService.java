@@ -9,6 +9,7 @@ import pro.sky.recommendations.dto.DynamicRecommendationRule;
 import pro.sky.recommendations.dto.QueryData;
 import pro.sky.recommendations.exception.DynamicRuleNotFoundException;
 import pro.sky.recommendations.exception.RecommendationNotFoundException;
+import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
 import pro.sky.recommendations.model.Product;
 import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
@@ -27,38 +28,50 @@ public class RecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
-    public Recommendation createRecommendation(DynamicRecommendationRule drr) {
+    public DynamicRecommendationRule createRecommendation(DynamicRecommendationRule drr) {
         log.info("Invoke method 'RecommendationService: createRecommendation'");
 
-        drr.getRule().forEach(QueryData::validate);
+        List<QueryData> queryData = drr.getRule();
+        queryData.forEach(QueryData::validate);
 
         Product product = productService.findById(drr.getProductId());
 
-        Recommendation recommendation = recommendationRepository.save(new Recommendation()
+        Recommendation savedRecommendation = recommendationRepository.save(new Recommendation()
                 .setProduct(product)
                 .setProductText(drr.getProductText()));
 
+        List<Query> savedRule = queryService.createRule(queryData, savedRecommendation);
 
-        List<Query> rule = queryService.createRule(drr, recommendation);
 
-        return recommendation.setRule(rule);
+        return new DynamicRecommendationRule()
+                .setId(savedRecommendation.getId())
+                .setProductName(product.getName())
+                .setProductId(product.getId())
+                .setProductText(savedRecommendation.getProductText())
+                .setRule(QueryMapper.toQueryData(savedRule));
     }
 
-    public Recommendation findById(UUID recommendationId) {
+    public DynamicRecommendationRule findById(UUID recommendationId) {
         log.info("Invoke method 'RecommendationService: findById'");
 
-        return recommendationRepository.findById(recommendationId)
+        Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(DynamicRuleNotFoundException::new);
+
+        return dynamicRecommendationRuleBuilder(recommendation);
     }
 
-    public List<Recommendation> findAll() {
+    public List<DynamicRecommendationRule> findAll() {
         log.info("Invoke method 'RecommendationService: findAll'");
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
             throw new RecommendationNotFoundException();
         }
-        return recommendations;
+
+        return recommendations
+                .stream()
+                .map(this::dynamicRecommendationRuleBuilder)
+                .toList();
     }
 
     @Transactional
@@ -68,5 +81,16 @@ public class RecommendationService {
         queryService.deleteBYRecommendationId(recommendationId);
 
         recommendationRepository.deleteById(recommendationId);
+    }
+
+    private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
+        log.info("Invoke method 'DynamicRecommendationRule.dynamicRecommendationRuleBuilder'");
+
+        return new DynamicRecommendationRule()
+                .setId(recommendation.getId())
+                .setProductName(recommendation.getProduct().getName())
+                .setProductId(recommendation.getProduct().getId())
+                .setProductText(recommendation.getProductText())
+                .setRule(QueryMapper.toQueryData(recommendation.getRule()));
     }
 }

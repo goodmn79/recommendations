@@ -21,10 +21,8 @@ public class QueryService {
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
-    public List<Query> createRule(DynamicRecommendationRule drr, Recommendation recommendation) {
+    public List<Query> createRule(List<QueryData> queryData, Recommendation recommendation) {
         log.info("Invoke method 'QueryService: createRule'");
-
-        List<QueryData> queryData = drr.getRule();
 
         List<Query> savedQuery = QueryMapper.toQuery(queryData, recommendation);
 
