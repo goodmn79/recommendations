@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.model.Recommendation;
+import pro.sky.recommendations.model.Recommend;
 import pro.sky.recommendations.model.Transaction;
 import pro.sky.recommendations.repository.RecommendationRepository;
 import pro.sky.recommendations.repository.TransactionRepository;
@@ -28,7 +28,7 @@ public class SimpleCreditRuleSet implements RecommendationRuleSet {
     Logger logger = LoggerFactory.getLogger(SimpleCreditRuleSet.class);
 
     @Override
-    public Optional<Recommendation> validateRecommendationRule(UUID userId) {
+    public Optional<Recommend> validateRecommendationRule(UUID userId) {
         logger.info("Invoke method validateRecommendationRule for 'Simple credit' recommendation");
         List<Transaction> transactions = transactionRepository.findAllTransactionByUserId(userId);
 
@@ -44,9 +44,9 @@ public class SimpleCreditRuleSet implements RecommendationRuleSet {
         boolean checkRule3 = utility.totalWithdraw(transactions, DEBIT) > 100_000;
         logger.debug("Check rule 3: {}", checkRule3);
 
-        if (checkRule1 && checkRule2 && checkRule3) {
-            return recommendationRepository.findByName("Простой кредит");
-        }
+//        if (checkRule1 && checkRule2 && checkRule3) {
+//            return recommendationRepository.findByName("Простой кредит");
+//        }
         return Optional.empty();
     }
 }

@@ -12,9 +12,11 @@ import java.util.UUID;
 public class QueryRowMapper implements RowMapper<Query> {
     @Override
     public Query mapRow(ResultSet rs, int rowNum) throws SQLException {
+
         return new Query()
                 .setId(rs.getObject("ID", UUID.class))
                 .setQuery(rs.getString("QUERY"))
+                .stringToArgs(rs.getString("ARGUMENTS"))
                 .setNegate(rs.getBoolean("NEGATE"));
     }
 }
