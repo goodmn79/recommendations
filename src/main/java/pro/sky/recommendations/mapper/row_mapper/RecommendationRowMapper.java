@@ -1,31 +1,39 @@
 package pro.sky.recommendations.mapper.row_mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import pro.sky.recommendations.model.Product;
+import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.service.ProductService;
+import pro.sky.recommendations.service.QueryService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class RecommendationRowMapper implements RowMapper<Recommendation> {
     private final ProductService productService;
-
-    public RecommendationRowMapper(ProductService productService) {
-        this.productService = productService;
-    }
+    private final QueryService queryService;
 
     @Override
     public Recommendation mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         Product product = productService.findById(rs.getObject("PRODUCT_ID", UUID.class));
 
+        UUID id = rs.getObject("ID", UUID.class);
+
+        List<Query> rule = queryService.findAllByRecommendationId(id);
+
         return new Recommendation()
-                .setId(rs.getObject("ID", UUID.class))
+                .setId(id)
                 .setProduct(product)
-                .setProductText(rs.getString("PRODUCT_TEXT"));
+                .setProductText(rs.getString("PRODUCT_TEXT"))
+                .setRule(rule);
+
     }
 }
