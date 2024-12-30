@@ -40,11 +40,11 @@ public class RecommendationRepository {
         try {
             jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, id, recommendation.getProduct().getId(), recommendation.getProductText());
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new DataRetentionException();
         }
-        return recommendation
-                .setId(id);
+
+        return findById(id).orElse(null);
     }
 
     public Optional<Recommendation> findById(UUID id) {
@@ -53,7 +53,7 @@ public class RecommendationRepository {
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(FIND_RECOMMENDATION_BY_ID_SQL, mapper, id));
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             return Optional.empty();
         }
     }
@@ -65,7 +65,7 @@ public class RecommendationRepository {
             return jdbcTemplate.queryForStream(FIND_ALL_RECOMMENDATION_SQL, mapper)
                     .toList();
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -76,7 +76,7 @@ public class RecommendationRepository {
         try {
             jdbcTemplate.update(DELETE_RECOMMENDATION_BY_ID_SQL, id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 }
