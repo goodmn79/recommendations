@@ -1,56 +1,72 @@
 package pro.sky.recommendations.service;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.dto.UserRecommendationSet;
-import pro.sky.recommendations.exception.UserNotFoundException;
-import pro.sky.recommendations.repository.UserRepository;
-import pro.sky.recommendations.service.utility.RecommendationRuleSet;
+import org.springframework.transaction.annotation.Transactional;
+import pro.sky.recommendations.dto.DynamicRecommendationRule;
+import pro.sky.recommendations.dto.QueryData;
+import pro.sky.recommendations.exception.DynamicRuleNotFoundException;
+import pro.sky.recommendations.exception.RecommendationNotFoundException;
+import pro.sky.recommendations.model.Product;
+import pro.sky.recommendations.model.Query;
+import pro.sky.recommendations.model.Recommendation;
+import pro.sky.recommendations.repository.RecommendationRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class RecommendationService {
-    private final UserRepository userRepository;
-    private final RecommendationRuleSet invest500;
-    private final RecommendationRuleSet simpleCredit;
-    private final RecommendationRuleSet topSaving;
+    private final RecommendationRepository recommendationRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
+    private final ProductService productService;
+    private final QueryService queryService;
 
-    public RecommendationService(UserRepository userRepository,
-                                 @Qualifier("invest500") RecommendationRuleSet invest500,
-                                 @Qualifier("simpleCredit") RecommendationRuleSet simpleCredit,
-                                 @Qualifier("topSaving") RecommendationRuleSet topSaving) {
-        this.userRepository = userRepository;
-        this.invest500 = invest500;
-        this.simpleCredit = simpleCredit;
-        this.topSaving = topSaving;
+    private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
+
+    public Recommendation createRecommendation(DynamicRecommendationRule drr) {
+        log.info("Invoke method 'RecommendationService: createRecommendation'");
+
+        drr.getRule().forEach(QueryData::validate);
+
+        Product product = productService.findById(drr.getProductId());
+
+        Recommendation recommendation = recommendationRepository.save(new Recommendation()
+                .setProduct(product)
+                .setProductText(drr.getProductText()));
+
+
+        List<Query> rule = queryService.createRule(drr, recommendation);
+
+        return recommendation.setRule(rule);
     }
 
-    public UserRecommendationSet checkRecommendation(UUID userId) {
-        logger.info("Invoke method checkRecommendation");
-        validateUserId(userId);
-        UserRecommendationSet userRecommendationSet = new UserRecommendationSet(userId);
-        invest500.validateRecommendationRule(userId).ifPresent(recommendation -> {
-            logger.debug("Invest500 recommendation: {}", recommendation);
-            userRecommendationSet.addRecommendation(recommendation);
-        });
-        simpleCredit.validateRecommendationRule(userId).ifPresent(recommendation -> {
-            logger.debug("SimpleCredit recommendation: {}", recommendation);
-            userRecommendationSet.addRecommendation(recommendation);
-        });
-        topSaving.validateRecommendationRule(userId).ifPresent(recommendation -> {
-            logger.debug("TopSaving recommendation: {}", recommendation);
-            userRecommendationSet.addRecommendation(recommendation);
-        });
-        return userRecommendationSet;
+    public Recommendation findById(UUID recommendationId) {
+        log.info("Invoke method 'RecommendationService: findById'");
+
+        return recommendationRepository.findById(recommendationId)
+                .orElseThrow(DynamicRuleNotFoundException::new);
     }
 
-    private void validateUserId(UUID userId) {
-        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    public List<Recommendation> findAll() {
+        log.info("Invoke method 'RecommendationService: findAll'");
+
+        List<Recommendation> recommendations = recommendationRepository.findAll();
+        if (recommendations.isEmpty()) {
+            throw new RecommendationNotFoundException();
+        }
+        return recommendations;
+    }
+
+    @Transactional
+    public void deleteById(UUID recommendationId) {
+        log.info("Invoke method 'RecommendationService: deleteById'");
+
+        queryService.deleteBYRecommendationId(recommendationId);
+
+        recommendationRepository.deleteById(recommendationId);
     }
 }
-

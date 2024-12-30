@@ -1,11 +1,17 @@
 package pro.sky.recommendations.dto;
 
 import lombok.Data;
-import pro.sky.recommendations.model.Query;
-import pro.sky.recommendations.model.Recommendation;
+import lombok.experimental.Accessors;
+
+import java.util.List;
+import java.util.UUID;
 
 @Data
+@Accessors(chain = true)
 public class DynamicRecommendationRule {
-    private Recommendation recommendation;
-    private Query[] queries;
+    private UUID id;
+    private String productName;
+    private UUID productId;
+    private String productText;
+    private List<QueryData> rule;
 }
