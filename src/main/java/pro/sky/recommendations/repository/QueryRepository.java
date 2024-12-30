@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.exception.DataRetentionException;
 import pro.sky.recommendations.mapper.row_mapper.QueryRowMapper;
 import pro.sky.recommendations.model.Query;
 
@@ -35,21 +34,14 @@ public class QueryRepository {
         this.mapper = mapper;
     }
 
-    public Query save(Query query) {
-        log.info("Invoke method 'QueryRepository: save");
-
-        UUID recommendationId = query.getRecommendation().getId();
-
-        try {
-            jdbcTemplate.update(SAVE_QUERY_SQL, UUID.randomUUID(), recommendationId, query.getQuery(), query.argsToString(), query.getNegate());
-        } catch (Exception e) {
-            throw new DataRetentionException();
-        }
-        return query;
-    }
-
     public List<Query> saveAll(List<Query> queries) {
         log.info("Invoke method 'QueryRepository: saveAll");
+
+        UUID recommendationId = queries
+                .stream()
+                .map(query -> query.getRecommendation().getId())
+                .findAny()
+                .orElse(null);
 
         try {
             jdbcTemplate.batchUpdate(SAVE_QUERY_SQL, new BatchPreparedStatementSetter() {
@@ -58,7 +50,7 @@ public class QueryRepository {
                     Query query = queries.get(i);
 
                     ps.setObject(1, UUID.randomUUID());
-                    ps.setObject(2, query.getRecommendation().getId());
+                    ps.setObject(2, recommendationId);
                     ps.setString(3, query.getQuery());
                     ps.setString(4, query.argsToString());
                     ps.setBoolean(5, query.getNegate());
@@ -69,9 +61,10 @@ public class QueryRepository {
                     return queries.size();
                 }
             });
-            return queries;
+
+            return findAllByRecommendationId(recommendationId);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -83,7 +76,7 @@ public class QueryRepository {
             return Boolean.TRUE.equals(jdbcTemplate
                     .queryForObject(EXIST_QUERIES_BY_RECOMMENDATION_ID_SQL, Boolean.class, recommendationId));
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
         return Boolean.FALSE;
     }
@@ -95,7 +88,7 @@ public class QueryRepository {
             return jdbcTemplate
                     .query(FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL, mapper, recommendationId);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -106,7 +99,7 @@ public class QueryRepository {
         try {
             jdbcTemplate.update(DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL, recommendationId);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 }
