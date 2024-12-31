@@ -11,8 +11,7 @@ import pro.sky.recommendations.service.QueryService;
 import java.util.List;
 
 public final class QueryMapper {
-
-    private static final Logger log = LoggerFactory.getLogger(QueryService.class);
+    private static final Logger log = LoggerFactory.getLogger(QueryMapper.class);
 
     public static List<Query> toQuery(List<QueryData> queryData, Recommendation recommendation) throws InvalidQueryDataException {
         log.info("Invoke method QueryMapper.toQuery");
