@@ -20,7 +20,9 @@ public class ProductService {
     public Product findById(UUID id) {
         log.info("Invoke method ProductRepository: 'findById");
 
-        return productRepository.findById(id)
-                .orElseThrow(ProductNotFoundException::new);
+        return productRepository.findById(id).orElseThrow(()->{
+            log.info("Invoke method ProductRepository: 'findById'");
+            return new ProductNotFoundException();
+        });
     }
 }

@@ -15,18 +15,22 @@ import static pro.sky.recommendations.constant.SQLQuery.FIND_ALL_TRANSACTION_BY_
 
 @Repository
 public class TransactionRepository {
-    private final JdbcTemplate transactionDataSource;
+    private final JdbcTemplate jdbcTemplate;
     private final TransactionRowMapper mapper;
 
-    public TransactionRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionDataSource,
+    public TransactionRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate,
                                  TransactionRowMapper mapper) {
-        this.transactionDataSource = transactionDataSource;
+        this.jdbcTemplate = jdbcTemplate;
         this.mapper = mapper;
+    }
+
+    public boolean isCompliance(String query, UUID userId) {
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
     }
 
     public List<Transaction> findAllTransactionByUserId(UUID id) {
         try {
-            return transactionDataSource.queryForStream(FIND_ALL_TRANSACTION_BY_USER_ID, mapper, id)
+            return jdbcTemplate.queryForStream(FIND_ALL_TRANSACTION_BY_USER_ID, mapper, id)
                     .toList();
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList();
