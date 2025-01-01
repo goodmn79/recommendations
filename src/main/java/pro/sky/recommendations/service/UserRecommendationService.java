@@ -56,7 +56,7 @@ public class UserRecommendationService {
         boolean isCompliance = transactionService.isCompliance(querySQL, userId);
         log.info("Result of query '{}' - '{}'", querySQL, isCompliance);
 
-        return revers(isCompliance, query.getNegate());
+        return checkNegate(isCompliance, query.getNegate());
     }
 
     private String queryGenerator(Query query) {
@@ -71,7 +71,7 @@ public class UserRecommendationService {
         return queryPattern;
     }
 
-    private boolean revers(boolean isCompliance, boolean negate) {
+    private boolean checkNegate(boolean isCompliance, boolean negate) {
         if (isCompliance && negate) return false;
         if (!isCompliance && negate) return true;
         return isCompliance;
