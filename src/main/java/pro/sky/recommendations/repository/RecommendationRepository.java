@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.exception.DataRetentionException;
 import pro.sky.recommendations.mapper.row_mapper.RecommendationRowMapper;
 import pro.sky.recommendations.model.Recommendation;
 
@@ -41,7 +40,6 @@ public class RecommendationRepository {
             jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, id, recommendation.getProduct().getId(), recommendation.getProductText());
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new DataRetentionException();
         }
 
         return findById(id).orElse(null);
