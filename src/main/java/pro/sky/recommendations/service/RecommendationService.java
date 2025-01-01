@@ -1,4 +1,7 @@
-
+/*
+Файл сервиса для создания, сохранения, получения и удаления рекомендации банковских продуктов
+Powered by ©AYE.team
+ */
 
 package pro.sky.recommendations.service;
 
@@ -30,6 +33,7 @@ public class RecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
+    // Создание рекомендации банковского продукта
     public DynamicRecommendationRule createRecommendation(DynamicRecommendationRule drr) {
         log.info("Invoke method 'RecommendationService: createRecommendation'");
 
@@ -53,6 +57,7 @@ public class RecommendationService {
                 .setRule(QueryMapper.toQueryData(savedRule));
     }
 
+    // Получение рекомендации банковского продукта по её идентификатору
     public DynamicRecommendationRule findById(UUID recommendationId) {
         log.info("Invoke method 'RecommendationService: findById'");
 
@@ -65,6 +70,7 @@ public class RecommendationService {
         return dynamicRecommendationRuleBuilder(recommendation);
     }
 
+    // Получение всех рекомендаций банковских продуктов
     public List<DynamicRecommendationRule> findAll() {
         log.info("Invoke method 'RecommendationService: findAll'");
 
@@ -80,6 +86,7 @@ public class RecommendationService {
                 .toList();
     }
 
+    // Удаление рекомендации банковского продукта по её идентификатору
     @Transactional
     public void deleteById(UUID recommendationId) {
         log.info("Invoke method 'RecommendationService: deleteById'");
@@ -89,6 +96,7 @@ public class RecommendationService {
         recommendationRepository.deleteById(recommendationId);
     }
 
+    // Создание динамического правила рекомендации банковского продукта
     private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
         log.info("Invoke method 'DynamicRecommendationRule.dynamicRecommendationRuleBuilder'");
 

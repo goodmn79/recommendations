@@ -1,3 +1,8 @@
+/*
+Файл сервиса для получения рекомендаций банковских продуктов доступных пользователю
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +31,7 @@ public class UserRecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
+    // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
         log.info("Invoke method 'UserRecommendationService: getUserRecommendations'");
 
@@ -46,14 +52,15 @@ public class UserRecommendationService {
                 .setRecommendations(RecommendationMapper.fromRecommendationList(userRecommendations));
     }
 
+    // Проверка соответствованя всех требований для правила рекомендации банковского продукта
     private boolean isComplianceRule(UUID userId, List<Query> rule) {
-
         for (Query query : rule) {
             if (!isCompliance(userId, query)) return false;
         }
         return true;
     }
 
+    // Проверка соответствованя требования для правила рекомендации банковского продукта
     private boolean isCompliance(UUID userId, Query query) {
         String querySQL = queryGenerator(query);
 
@@ -62,24 +69,27 @@ public class UserRecommendationService {
         return checkNegate(isCompliance, query.getNegate());
     }
 
+    // Генерация SQL-запроса
     private String queryGenerator(Query query) {
-
         String queryPattern = QueryType.QUERY_TYPES.get(query.getQuery());
+
         String[] arguments = query.getArguments();
+
         for (String argument : arguments) {
             queryPattern = StringUtils.replaceOnce(queryPattern, "-?-", argument);
         }
         return queryPattern;
     }
 
+    // Проверка идентификатора отрицания для SQL-запроса
     private boolean checkNegate(boolean isCompliance, boolean negate) {
         if (isCompliance && negate) return false;
         if (!isCompliance && negate) return true;
         return isCompliance;
     }
 
+    // Валидация пользователя по его идентификатору
     private void validateUserId(UUID userId) {
-
         if (userRepository.userIsExists(userId)) {
             log.info("User id validation: successfully");
             return;

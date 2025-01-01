@@ -1,3 +1,8 @@
+/*
+Файл сервиса для создания, сохранения, получения и удаления правил рекомендации банковских продуктов
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,7 @@ public class QueryService {
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
+    // Создание правила рекомендации банковского продукта
     public List<Query> createRule(List<QueryData> queryData, Recommendation recommendation) {
         log.info("Invoke method 'QueryService: createRule'");
 
@@ -28,18 +34,21 @@ public class QueryService {
         return saveQuery(savedQuery);
     }
 
+    // Сохранение правила рекомендации банковского продукта
     public List<Query> saveQuery(List<Query> queries) {
         log.info("Invoke method 'QueryRepository: saveQuery'");
 
         return queryRepository.saveAll(queries);
     }
 
+    // Получение правила по идентификатору рекомендации банковского продукта
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: findAllByRecommendationId'");
 
         return queryRepository.findAllByRecommendationId(recommendationId);
     }
 
+    // Удаление правила по идентификатору рекомендации банковского продукта
     public void deleteBYRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: deleteBYRecommendationId'");
 

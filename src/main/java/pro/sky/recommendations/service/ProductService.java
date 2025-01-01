@@ -1,3 +1,8 @@
+/*
+Файл сервиса для получения данных о банковском продукте
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +22,7 @@ public class ProductService {
 
     private final Logger log = LoggerFactory.getLogger(ProductService.class);
 
+    // Получение данных о банковском продукте по его идентификатору
     public Product findById(UUID id) {
         log.info("Invoke method ProductRepository: 'findById");
 
