@@ -1,3 +1,8 @@
+/*
+Файл преобразования объекта передачи данных для рекомендуемого банковского продукта в сущность для сохранения в базу данных
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.mapper.castom_mapper;
 
 import org.slf4j.Logger;
