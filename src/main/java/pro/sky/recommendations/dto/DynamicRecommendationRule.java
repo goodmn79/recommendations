@@ -1,3 +1,8 @@
+/*
+Объект передачи данных для динамического правила рекомендации
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.dto;
 
 import lombok.Data;

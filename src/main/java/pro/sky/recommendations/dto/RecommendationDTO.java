@@ -1,8 +1,12 @@
+/*
+Объект передачи данных для рекомендации банковского продукта
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import pro.sky.recommendations.model.Product;
 
 import java.util.UUID;
 

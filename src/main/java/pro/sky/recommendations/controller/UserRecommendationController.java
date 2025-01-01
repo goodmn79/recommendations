@@ -29,6 +29,7 @@ public class UserRecommendationController {
     @GetMapping("{user_id}")
     public UserRecommendation userRecommendation(@PathVariable("user_id") UUID userId) {
         log.info("Invoke method UserRecommendationController: 'getUserRecommendation'");
+
         return userRecommendationService.getUserRecommendations(userId);
     }
 }

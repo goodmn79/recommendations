@@ -1,8 +1,12 @@
+/*
+Объект передачи данных для списка рекомендаций клиента по его идентификатору
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import pro.sky.recommendations.model.Recommendation;
 
 import java.util.List;
 import java.util.UUID;
