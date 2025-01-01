@@ -12,10 +12,11 @@ import pro.sky.recommendations.model.Product;
 import java.util.Optional;
 import java.util.UUID;
 
-import static pro.sky.recommendations.constant.SQLQuery.FIND_PRODUCT_BY_ID;
-
 @Repository
 public class ProductRepository {
+    public static final String FIND_PRODUCT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = ?";
+
+
     private final JdbcTemplate jdbcTemplate;
     private final ProductRowMapper mapper;
 

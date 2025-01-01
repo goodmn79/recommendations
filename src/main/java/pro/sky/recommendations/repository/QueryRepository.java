@@ -19,7 +19,7 @@ import java.util.UUID;
 public class QueryRepository {
     public static final String SAVE_QUERY_SQL = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
     public static final String FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
-    public static final String EXIST_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT EXISTS (SELECT 1 FROM QUERIES WHERE RECOMMENDATION_ID = ?)";
+    public static final String EXISTS_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT EXISTS (SELECT 1 FROM QUERIES WHERE RECOMMENDATION_ID = ?)";
     public static final String DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -69,12 +69,12 @@ public class QueryRepository {
         }
     }
 
-    public boolean isExistByRecommendationId(UUID recommendationId) {
+    public boolean isExistsByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: isExistByRecommendationId");
 
         try {
             return Boolean.TRUE.equals(jdbcTemplate
-                    .queryForObject(EXIST_QUERIES_BY_RECOMMENDATION_ID_SQL, Boolean.class, recommendationId));
+                    .queryForObject(EXISTS_QUERIES_BY_RECOMMENDATION_ID_SQL, Boolean.class, recommendationId));
         } catch (Exception e) {
             log.error(e.getMessage());
         }
