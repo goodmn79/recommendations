@@ -1,3 +1,8 @@
+/*
+Файл сервиса для создания, сохранения, получения и удаления рекомендации банковских продуктов
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -7,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.sky.recommendations.dto.DynamicRecommendationRule;
 import pro.sky.recommendations.dto.QueryData;
-import pro.sky.recommendations.exception.DynamicRuleNotFoundException;
+import pro.sky.recommendations.exception.DynamicRecommendationRuleNotFoundException;
 import pro.sky.recommendations.exception.RecommendationNotFoundException;
 import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
 import pro.sky.recommendations.model.Product;
@@ -28,6 +33,7 @@ public class RecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
+    // Создание рекомендации банковского продукта
     public DynamicRecommendationRule createRecommendation(DynamicRecommendationRule drr) {
         log.info("Invoke method 'RecommendationService: createRecommendation'");
 
@@ -51,20 +57,26 @@ public class RecommendationService {
                 .setRule(QueryMapper.toQueryData(savedRule));
     }
 
+    // Получение рекомендации банковского продукта по её идентификатору
     public DynamicRecommendationRule findById(UUID recommendationId) {
         log.info("Invoke method 'RecommendationService: findById'");
 
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
-                .orElseThrow(DynamicRuleNotFoundException::new);
+                .orElseThrow(()-> {
+                    log.error("dynamic recommendation with id {} not found", recommendationId);
+                    return new DynamicRecommendationRuleNotFoundException();
+                });
 
         return dynamicRecommendationRuleBuilder(recommendation);
     }
 
+    // Получение всех рекомендаций банковских продуктов
     public List<DynamicRecommendationRule> findAll() {
         log.info("Invoke method 'RecommendationService: findAll'");
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
+            log.error("dynamic recommendation list is empty");
             throw new RecommendationNotFoundException();
         }
 
@@ -74,6 +86,7 @@ public class RecommendationService {
                 .toList();
     }
 
+    // Удаление рекомендации банковского продукта по её идентификатору
     @Transactional
     public void deleteById(UUID recommendationId) {
         log.info("Invoke method 'RecommendationService: deleteById'");
@@ -83,6 +96,7 @@ public class RecommendationService {
         recommendationRepository.deleteById(recommendationId);
     }
 
+    // Создание динамического правила рекомендации банковского продукта
     private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
         log.info("Invoke method 'DynamicRecommendationRule.dynamicRecommendationRuleBuilder'");
 

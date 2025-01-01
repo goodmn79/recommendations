@@ -1,3 +1,8 @@
+/*
+Файл типов транзакций для создания SQL-запросов
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.constant;
 
 import java.util.Set;

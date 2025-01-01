@@ -1,3 +1,8 @@
+/*
+Файл сервиса для получения данных о транзакциях
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +16,7 @@ import java.util.UUID;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
 
+    // Проверка соответствия требованию правила рекомендации банковского продукта
     public boolean isCompliance(String query, UUID userId) {
         return transactionRepository.isCompliance(query, userId);
     }

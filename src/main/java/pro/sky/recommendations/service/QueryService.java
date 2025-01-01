@@ -1,10 +1,14 @@
+/*
+Файл сервиса для создания, сохранения, получения и удаления правил рекомендации банковских продуктов
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.dto.DynamicRecommendationRule;
 import pro.sky.recommendations.dto.QueryData;
 import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
 import pro.sky.recommendations.model.Query;
@@ -21,6 +25,7 @@ public class QueryService {
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
+    // Создание правила рекомендации банковского продукта
     public List<Query> createRule(List<QueryData> queryData, Recommendation recommendation) {
         log.info("Invoke method 'QueryService: createRule'");
 
@@ -29,24 +34,21 @@ public class QueryService {
         return saveQuery(savedQuery);
     }
 
+    // Сохранение правила рекомендации банковского продукта
     public List<Query> saveQuery(List<Query> queries) {
         log.info("Invoke method 'QueryRepository: saveQuery'");
 
         return queryRepository.saveAll(queries);
     }
 
-    public boolean isExistByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: isExistByRecommendationId'");
-
-        return queryRepository.isExistByRecommendationId(recommendationId);
-    }
-
+    // Получение правила по идентификатору рекомендации банковского продукта
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: findAllByRecommendationId'");
 
         return queryRepository.findAllByRecommendationId(recommendationId);
     }
 
+    // Удаление правила по идентификатору рекомендации банковского продукта
     public void deleteBYRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: deleteBYRecommendationId'");
 

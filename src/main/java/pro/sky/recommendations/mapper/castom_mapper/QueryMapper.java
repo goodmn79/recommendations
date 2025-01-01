@@ -1,3 +1,8 @@
+/*
+Файл преобразования объекта передачи данных для правила рекомендации банковского продукта в сущность для сохранения в базу данных
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.mapper.castom_mapper;
 
 import org.slf4j.Logger;
@@ -6,7 +11,6 @@ import pro.sky.recommendations.dto.QueryData;
 import pro.sky.recommendations.exception.InvalidQueryDataException;
 import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
-import pro.sky.recommendations.service.QueryService;
 
 import java.util.List;
 
@@ -23,7 +27,6 @@ public final class QueryMapper {
                         .setQuery(data.getQuery())
                         .setArguments(data.getArguments())
                         .setNegate(data.getNegate())).toList();
-
     }
 
     public static List<QueryData> toQueryData(List<Query> queries) {
@@ -36,6 +39,4 @@ public final class QueryMapper {
                         .setArguments(data.getArguments())
                         .setNegate(data.getNegate())).toList();
     }
-
-
 }

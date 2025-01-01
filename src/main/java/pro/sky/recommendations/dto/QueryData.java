@@ -1,3 +1,8 @@
+/*
+Объект передачи и валидации данных для создания SQL-запросов для динамических правил рекомендаций
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.dto;
 
 import lombok.Data;

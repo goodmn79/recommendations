@@ -1,3 +1,8 @@
+/*
+Файл репозитория для сохранения, получения и удаления данных из таблицы RECOMMENDATIONS, базы данных recommendation.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
@@ -5,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.exception.DataRetentionException;
+import pro.sky.recommendations.exception.RecommendationNotFoundException;
 import pro.sky.recommendations.mapper.row_mapper.RecommendationRowMapper;
 import pro.sky.recommendations.model.Recommendation;
 
@@ -22,6 +27,7 @@ public class RecommendationRepository {
     public static final String DELETE_RECOMMENDATION_BY_ID_SQL = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
+
     private final RecommendationRowMapper mapper;
 
     private final Logger log = LoggerFactory.getLogger(RecommendationRepository.class);
@@ -32,6 +38,7 @@ public class RecommendationRepository {
         this.mapper = mapper;
     }
 
+    // Сохранение рекомендации банковского продукта
     public Recommendation save(Recommendation recommendation) {
         log.info("Invoke method 'RecommendationRepository.save'");
 
@@ -41,12 +48,15 @@ public class RecommendationRepository {
             jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, id, recommendation.getProduct().getId(), recommendation.getProductText());
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new DataRetentionException();
         }
 
-        return findById(id).orElse(null);
+        return findById(id).orElseThrow(()-> {
+            log.error("recommendation with id {} not found", id);
+            return new RecommendationNotFoundException();
+        });
     }
 
+    // Получение рекомендации банковского продукта по её идентификатору
     public Optional<Recommendation> findById(UUID id) {
         log.info("Invoke method 'RecommendationRepository.findById'");
 
@@ -58,6 +68,7 @@ public class RecommendationRepository {
         }
     }
 
+    // Получение коллекции рекомендаций банковских продуктов
     public List<Recommendation> findAll() {
         log.info("Invoke method 'RecommendationRepository.findAll'");
 
@@ -70,6 +81,7 @@ public class RecommendationRepository {
         }
     }
 
+    // Удаление рекомендации банковского продукта по её идентификатору
     public void deleteById(UUID id) {
         log.info("Invoke method 'RecommendationRepository.deleteById'");
 

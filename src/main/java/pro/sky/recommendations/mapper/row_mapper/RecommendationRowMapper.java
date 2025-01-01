@@ -1,3 +1,8 @@
+/*
+Файл преобразования результата SQL-запроса в объект
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.mapper.row_mapper;
 
 import lombok.RequiredArgsConstructor;

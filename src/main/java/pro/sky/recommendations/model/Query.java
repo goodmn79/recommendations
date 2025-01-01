@@ -1,3 +1,7 @@
+/*
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.model;
 
 import lombok.Data;
@@ -16,12 +20,14 @@ public class Query {
     private String[] arguments;
     private Boolean negate;
 
+    // Преобразование массива аргументов в строку для сохранения в базу данных
+    public String argsToString() {
+        return StringUtils.join(this.arguments, " ");
+    }
+
+    // Преобразование строки с аргументами в массив аргументов
     public Query stringToArgs(String args) {
         this.arguments = args.split(" ");
         return this;
-    }
-
-    public String argsToString() {
-        return StringUtils.join(this.arguments, " ");
     }
 }

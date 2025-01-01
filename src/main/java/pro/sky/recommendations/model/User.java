@@ -1,3 +1,7 @@
+/*
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.model;
 
 import lombok.Data;

@@ -1,3 +1,9 @@
+/*
+Контроллер для обработки входящих HTTP-запросов и возвращения ответа
+Обеспечивает передачу данных для получения рекомендаций банковских продуктов клиента по его идентификатору
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +29,7 @@ public class UserRecommendationController {
     @GetMapping("{user_id}")
     public UserRecommendation userRecommendation(@PathVariable("user_id") UUID userId) {
         log.info("Invoke method UserRecommendationController: 'getUserRecommendation'");
+
         return userRecommendationService.getUserRecommendations(userId);
     }
 }

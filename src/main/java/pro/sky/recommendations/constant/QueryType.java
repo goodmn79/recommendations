@@ -1,8 +1,14 @@
+/*
+Файл типов запросов для создания SQL-запросов
+Предоставляет определённый шаблон SQL-запрса, в зависимости от типа запроса
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.constant;
 
 import java.util.Map;
 
-import static pro.sky.recommendations.constant.SQLQuery.*;
+import static pro.sky.recommendations.constant.QueryPattern.*;
 
 public class QueryType {
     public static final String USER_OF = "USER_OF";

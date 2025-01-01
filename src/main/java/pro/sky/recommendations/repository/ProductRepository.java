@@ -1,3 +1,8 @@
+/*
+Файл репозитория для получения данных из таблицы PRODUCTS, базы данных transaction.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
@@ -12,14 +17,14 @@ import pro.sky.recommendations.model.Product;
 import java.util.Optional;
 import java.util.UUID;
 
-import static pro.sky.recommendations.constant.SQLQuery.FIND_PRODUCT_BY_ID;
-
 @Repository
 public class ProductRepository {
+    public static final String FIND_PRODUCT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = ?";
+
     private final JdbcTemplate jdbcTemplate;
     private final ProductRowMapper mapper;
 
-    Logger logger = LoggerFactory.getLogger(ProductRepository.class);
+    private final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
 
     public ProductRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate,
                              ProductRowMapper mapper) {
@@ -27,6 +32,7 @@ public class ProductRepository {
         this.mapper = mapper;
     }
 
+    // Получение данных о банковском продукте по его идентификатору
     public Optional<Product> findById(UUID id) {
         try {
             Product product = jdbcTemplate.queryForObject(FIND_PRODUCT_BY_ID, mapper, id);

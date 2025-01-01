@@ -1,3 +1,8 @@
+/*
+Файл репозитория для сохранения, получения и удаления данных из таблицы QUERIES, базы данных recommendation.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
@@ -19,7 +24,6 @@ import java.util.UUID;
 public class QueryRepository {
     public static final String SAVE_QUERY_SQL = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
     public static final String FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
-    public static final String EXIST_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT EXISTS (SELECT 1 FROM QUERIES WHERE RECOMMENDATION_ID = ?)";
     public static final String DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -34,6 +38,7 @@ public class QueryRepository {
         this.mapper = mapper;
     }
 
+    // Сохранение коллекции запросов для динамического правила рекомендации
     public List<Query> saveAll(List<Query> queries) {
         log.info("Invoke method 'QueryRepository: saveAll");
 
@@ -69,18 +74,7 @@ public class QueryRepository {
         }
     }
 
-    public boolean isExistByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: isExistByRecommendationId");
-
-        try {
-            return Boolean.TRUE.equals(jdbcTemplate
-                    .queryForObject(EXIST_QUERIES_BY_RECOMMENDATION_ID_SQL, Boolean.class, recommendationId));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return Boolean.FALSE;
-    }
-
+    // Получение коллекции запросов для динамического правила по идентификатору рекомендации
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: findAllByRecommendationId");
 
@@ -93,6 +87,7 @@ public class QueryRepository {
         return Collections.emptyList();
     }
 
+    // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
     public void deleteAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: deleteAllByRecommendationId");
 
