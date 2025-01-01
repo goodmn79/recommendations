@@ -1,3 +1,9 @@
+/*
+Контроллер для обработки входящих HTTP-запросов и возвращения ответа
+Обеспечивает передачу данных для получения рекомендаций банковских продуктов клиента по его идентификатору
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.controller;
 
 import lombok.RequiredArgsConstructor;
