@@ -1,3 +1,8 @@
+/*
+Файл шаблонов SQL-запросов
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.constant;
 
 public final class QueryPattern {

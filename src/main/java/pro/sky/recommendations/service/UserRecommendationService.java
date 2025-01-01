@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.constant.QueryType;
 import pro.sky.recommendations.dto.UserRecommendation;
+import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.mapper.castom_mapper.RecommendationMapper;
 import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.repository.RecommendationRepository;
+import pro.sky.recommendations.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +22,14 @@ import java.util.UUID;
 public class UserRecommendationService {
     private final TransactionService transactionService;
     private final RecommendationRepository recommendationRepository;
+    private final UserRepository userRepository;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
     public UserRecommendation getUserRecommendations(UUID userId) {
+        log.info("Invoke method 'UserRecommendationService: getUserRecommendations'");
+
+        validateUserId(userId);
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
 
@@ -31,9 +37,7 @@ public class UserRecommendationService {
                 .stream()
                 .filter(r -> {
                     List<Query> rule = r.getRule();
-                    boolean isCompliance = isComplianceRule(userId, rule);
-                    log.info("Result of checking rule for user with id: '{}' - '{}'", userId, isCompliance);
-                    return isCompliance;
+                    return isComplianceRule(userId, rule);
                 })
                 .toList();
 
@@ -54,7 +58,6 @@ public class UserRecommendationService {
         String querySQL = queryGenerator(query);
 
         boolean isCompliance = transactionService.isCompliance(querySQL, userId);
-        log.info("Result of query '{}' - '{}'", querySQL, isCompliance);
 
         return checkNegate(isCompliance, query.getNegate());
     }
@@ -66,8 +69,6 @@ public class UserRecommendationService {
         for (String argument : arguments) {
             queryPattern = StringUtils.replaceOnce(queryPattern, "-?-", argument);
         }
-
-        log.info("Query Pattern: '{}'", queryPattern);
         return queryPattern;
     }
 
@@ -75,5 +76,14 @@ public class UserRecommendationService {
         if (isCompliance && negate) return false;
         if (!isCompliance && negate) return true;
         return isCompliance;
+    }
+
+    private void validateUserId(UUID userId) {
+
+        if (userRepository.userIsExists(userId)) {
+            log.info("User id validation: successfully");
+            return;
+        }
+        throw new UserNotFoundException();
     }
 }
