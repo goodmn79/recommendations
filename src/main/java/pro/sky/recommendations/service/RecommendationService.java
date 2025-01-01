@@ -1,3 +1,5 @@
+
+
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.sky.recommendations.dto.DynamicRecommendationRule;
 import pro.sky.recommendations.dto.QueryData;
-import pro.sky.recommendations.exception.DynamicRuleNotFoundException;
+import pro.sky.recommendations.exception.DynamicRecommendationRuleNotFoundException;
 import pro.sky.recommendations.exception.RecommendationNotFoundException;
 import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
 import pro.sky.recommendations.model.Product;
@@ -55,7 +57,10 @@ public class RecommendationService {
         log.info("Invoke method 'RecommendationService: findById'");
 
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
-                .orElseThrow(DynamicRuleNotFoundException::new);
+                .orElseThrow(()-> {
+                    log.error("dynamic recommendation with id {} not found", recommendationId);
+                    return new DynamicRecommendationRuleNotFoundException();
+                });
 
         return dynamicRecommendationRuleBuilder(recommendation);
     }
@@ -65,6 +70,7 @@ public class RecommendationService {
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
+            log.error("dynamic recommendation list is empty");
             throw new RecommendationNotFoundException();
         }
 

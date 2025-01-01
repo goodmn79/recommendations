@@ -1,3 +1,8 @@
+/*
+Файл репозитория для сохранения, получения и удаления данных из таблицы QUERIES, базы данных recommendation.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
@@ -33,6 +38,7 @@ public class QueryRepository {
         this.mapper = mapper;
     }
 
+    // Сохранение коллекции запросов для динамического правила рекомендации
     public List<Query> saveAll(List<Query> queries) {
         log.info("Invoke method 'QueryRepository: saveAll");
 
@@ -68,6 +74,7 @@ public class QueryRepository {
         }
     }
 
+    // Получение коллекции запросов для динамического правила по идентификатору рекомендации
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: findAllByRecommendationId");
 
@@ -80,6 +87,7 @@ public class QueryRepository {
         return Collections.emptyList();
     }
 
+    // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
     public void deleteAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: deleteAllByRecommendationId");
 

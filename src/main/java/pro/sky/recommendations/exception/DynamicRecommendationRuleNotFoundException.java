@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class DynamicRuleNotFoundException extends RuntimeException {
-    public DynamicRuleNotFoundException() {
+public class DynamicRecommendationRuleNotFoundException extends RuntimeException {
+    public DynamicRecommendationRuleNotFoundException() {
     }
 }

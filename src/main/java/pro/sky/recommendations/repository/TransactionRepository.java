@@ -1,3 +1,8 @@
+/*
+Файл репозитория для получения данных из таблицы TRANSACTIONS, базы данных transaction.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +19,7 @@ public class TransactionRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Проверка соответствия требованию правила рекомендации банковского продукта
     public boolean isCompliance(String query, UUID userId) {
         return Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
     }

@@ -1,3 +1,8 @@
+/*
+Файл репозитория для получения данных из таблицы USERS, базы данных transaction.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
@@ -21,6 +26,7 @@ public class UserRepository {
         this.transactionJdbcTemplate = transactionJdbcTemplate;
     }
 
+    // Валидация пользователя по его идентификатору
     public boolean userIsExists(UUID id) {
         log.info("Invoke method 'UserRepository: userIsExists'");
 
