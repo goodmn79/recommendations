@@ -1,3 +1,8 @@
+/*
+Файл конфигурации для подключения к базе данных recommendation.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -11,6 +16,8 @@ import javax.sql.DataSource;
 
 @Configuration
 public class Recommendation_dbDataSourceConfiguration {
+
+    // Регистрация бина управляющего соединением с базой данных
     @Bean(name = "recommendationDataSource")
     public DataSource recommendationDataSource(
             @Value("${application.recommendation-db.url}") String recommendationUrl) {
@@ -21,6 +28,7 @@ public class Recommendation_dbDataSourceConfiguration {
         return dataSource;
     }
 
+    // Регистрация бина обеспечивающего взаимодействие с базой данных
     @Bean(name = "recommendationJdbcTemplate")
     public JdbcTemplate recommendationJdbcTemplate(@Qualifier("recommendationDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
