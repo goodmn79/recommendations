@@ -34,12 +34,6 @@ public class QueryService {
         return queryRepository.saveAll(queries);
     }
 
-    public boolean isExistByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: isExistByRecommendationId'");
-
-        return queryRepository.isExistsByRecommendationId(recommendationId);
-    }
-
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.info("Invoke method 'QueryRepository: findAllByRecommendationId'");
 
