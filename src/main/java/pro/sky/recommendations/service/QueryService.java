@@ -27,7 +27,7 @@ public class QueryService {
 
     // Создание правила рекомендации банковского продукта
     public List<Query> createRule(List<QueryData> queryData, Recommendation recommendation) {
-        log.info("Invoke method 'QueryService: createRule'");
+        log.info("Invoke method: 'createRule'");
 
         List<Query> savedQuery = QueryMapper.toQuery(queryData, recommendation);
 
@@ -36,21 +36,21 @@ public class QueryService {
 
     // Сохранение правила рекомендации банковского продукта
     public List<Query> saveQuery(List<Query> queries) {
-        log.info("Invoke method 'QueryRepository: saveQuery'");
+        log.info("Invoke method: 'saveQuery'");
 
         return queryRepository.saveAll(queries);
     }
 
     // Получение правила по идентификатору рекомендации банковского продукта
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: findAllByRecommendationId'");
+        log.info("Invoke method: 'findAllByRecommendationId'");
 
         return queryRepository.findAllByRecommendationId(recommendationId);
     }
 
     // Удаление правила по идентификатору рекомендации банковского продукта
     public void deleteBYRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: deleteBYRecommendationId'");
+        log.info("Invoke method: 'deleteBYRecommendationId'");
 
         queryRepository.deleteAllByRecommendationId(recommendationId);
     }

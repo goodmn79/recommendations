@@ -24,11 +24,8 @@ public class ProductService {
 
     // Получение данных о банковском продукте по его идентификатору
     public Product findById(UUID id) {
-        log.info("Invoke method ProductRepository: 'findById");
+        log.info("Invoke method:'findById'");
 
-        return productRepository.findById(id).orElseThrow(()->{
-            log.info("Invoke method ProductRepository: 'findById'");
-            return new ProductNotFoundException();
-        });
+        return productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 }

@@ -25,15 +25,16 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationService {
-    private final TransactionService transactionService;
     private final RecommendationRepository recommendationRepository;
+
+    private final TransactionService transactionService;
     private final UserRepository userRepository;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
     // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
-        log.info("Invoke method 'UserRecommendationService: getUserRecommendations'");
+        log.info("Invoke method: 'getUserRecommendations'");
 
         validateUserId(userId);
 
@@ -54,6 +55,8 @@ public class UserRecommendationService {
 
     // Проверка соответствованя всех требований для правила рекомендации банковского продукта
     private boolean isComplianceRule(UUID userId, List<Query> rule) {
+        log.info("Invoke method: 'isComplianceRule'");
+
         for (Query query : rule) {
             if (!isCompliance(userId, query)) return false;
         }
@@ -90,10 +93,6 @@ public class UserRecommendationService {
 
     // Валидация пользователя по его идентификатору
     private void validateUserId(UUID userId) {
-        if (userRepository.userIsExists(userId)) {
-            log.info("User id validation: successfully");
-            return;
-        }
-        throw new UserNotFoundException();
+        if (!userRepository.userIsExists(userId)) throw new UserNotFoundException();
     }
 }

@@ -19,12 +19,12 @@ import java.util.UUID;
 
 @Repository
 public class ProductRepository {
-    public static final String FIND_PRODUCT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = ?";
+    private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final ProductRowMapper mapper;
 
-    private final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
+    private final Logger log = LoggerFactory.getLogger(ProductRepository.class);
 
     public ProductRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate,
                              ProductRowMapper mapper) {
@@ -34,13 +34,16 @@ public class ProductRepository {
 
     // Получение данных о банковском продукте по его идентификатору
     public Optional<Product> findById(UUID id) {
+        log.info("Fetching product by id...");
+
         try {
             Product product = jdbcTemplate.queryForObject(FIND_PRODUCT_BY_ID, mapper, id);
-            logger.info("Product found: {}", product);
+            log.info("Product successfully found");
             return Optional.ofNullable(product);
-        } catch (EmptyResultDataAccessException e) {
-            logger.info("Product with id '{}' not found", id);
-            return Optional.empty();
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
+        log.warn("Product not found");
+        return Optional.empty();
     }
 }
