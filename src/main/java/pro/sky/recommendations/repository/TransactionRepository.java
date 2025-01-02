@@ -1,35 +1,35 @@
+/*
+Файл репозитория для получения данных из таблицы TRANSACTIONS, базы данных transaction.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.mapper.TransactionMapper;
-import pro.sky.recommendations.model.Transaction;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
-
-import static pro.sky.recommendations.repository.constant.SQLQuery.FIND_ALL_TRANSACTION_BY_USER_ID;
 
 @Repository
 public class TransactionRepository {
-    private final JdbcTemplate transactionDataSource;
-    private final TransactionMapper mapper;
+    private final JdbcTemplate jdbcTemplate;
 
-    public TransactionRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionDataSource,
-                                 TransactionMapper mapper) {
-        this.transactionDataSource = transactionDataSource;
-        this.mapper = mapper;
+    private final Logger log = LoggerFactory.getLogger(QueryRepository.class);
+
+    public TransactionRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Transaction> findAllTransactionByUserId(UUID id) {
-        try {
-            return transactionDataSource.queryForStream(FIND_ALL_TRANSACTION_BY_USER_ID, mapper, id)
-                    .toList();
-        } catch (EmptyResultDataAccessException e) {
-            return Collections.emptyList();
-        }
+    // Проверка соответствия требованию правила рекомендации банковского продукта
+    public boolean isCompliance(String query, UUID userId) {
+        log.info("Checking compliance...");
+
+        boolean isCompliance = Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
+
+        log.info("Compliance check result: '{}'", isCompliance);
+        return isCompliance;
     }
 }

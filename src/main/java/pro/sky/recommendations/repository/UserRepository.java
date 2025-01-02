@@ -1,40 +1,38 @@
+/*
+Файл репозитория для получения данных из таблицы USERS, базы данных transaction.mv.db
+Powered by ©AYE.team
+ */
+
 package pro.sky.recommendations.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.mapper.UserMapper;
-import pro.sky.recommendations.model.User;
 
-import java.util.Optional;
 import java.util.UUID;
 
-import static pro.sky.recommendations.repository.constant.SQLQuery.FIND_USER_BY_ID;
-
 @Repository
+
 public class UserRepository {
-    private final JdbcTemplate transactionDataSource;
-    private final UserMapper mapper;
+    public static final String USER_BY_ID_IS_EXISTS = "SELECT EXISTS(SELECT 1 FROM USERS WHERE ID = ?)AS user_is_exist";
 
-    Logger logger= LoggerFactory.getLogger(UserRepository.class);
+    private final JdbcTemplate transactionJdbcTemplate;
 
-    public UserRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionDataSource,
-                          UserMapper mapper) {
-        this.transactionDataSource = transactionDataSource;
-        this.mapper = mapper;
+    Logger log = LoggerFactory.getLogger(UserRepository.class);
+
+    public UserRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionJdbcTemplate) {
+        this.transactionJdbcTemplate = transactionJdbcTemplate;
     }
 
-    public Optional<User> findById(UUID id) {
-        try {
-            User user = transactionDataSource.queryForObject(FIND_USER_BY_ID, mapper, id);
-            logger.info("User found: {}", user);
-            return Optional.ofNullable(user);
-        } catch (EmptyResultDataAccessException e) {
-            logger.info("User with id '{}' not found", id);
-            return Optional.empty();
-        }
+    // Валидация пользователя по его идентификатору
+    public boolean userIsExists(UUID id) {
+        log.info("Validating user by id...");
+
+        boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(USER_BY_ID_IS_EXISTS, Boolean.class, id));
+
+        log.info("User validation: '{}'", userIsExists);
+        return userIsExists;
     }
 }
