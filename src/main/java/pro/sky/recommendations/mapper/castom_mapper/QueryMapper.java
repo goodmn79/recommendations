@@ -18,7 +18,7 @@ public final class QueryMapper {
     private static final Logger log = LoggerFactory.getLogger(QueryMapper.class);
 
     public static List<Query> toQuery(List<QueryData> queryData, Recommendation recommendation) throws InvalidQueryDataException {
-        log.info("Invoke method QueryMapper.toQuery");
+        log.info("Mapping QueryData.class to Query.class");
 
         return queryData
                 .stream()
@@ -30,7 +30,7 @@ public final class QueryMapper {
     }
 
     public static List<QueryData> toQueryData(List<Query> queries) {
-        log.info("Invoke method QueryMapper.toQueryData");
+        log.info("Mapping Query.class to QueryData.class");
 
         return queries
                 .stream()

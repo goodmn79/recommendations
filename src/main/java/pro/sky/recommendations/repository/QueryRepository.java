@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import pro.sky.recommendations.exception.SaveErrorException;
 import pro.sky.recommendations.mapper.row_mapper.QueryRowMapper;
 import pro.sky.recommendations.model.Query;
 
@@ -22,9 +23,9 @@ import java.util.UUID;
 
 @Repository
 public class QueryRepository {
-    public static final String SAVE_QUERY_SQL = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
-    public static final String FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
-    public static final String DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
+    private static final String SAVE_QUERY_SQL = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
+    private static final String FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
+    private static final String DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -40,7 +41,7 @@ public class QueryRepository {
 
     // Сохранение коллекции запросов для динамического правила рекомендации
     public List<Query> saveAll(List<Query> queries) {
-        log.info("Invoke method 'QueryRepository: saveAll");
+        log.info("Saving rule queries...");
 
         UUID recommendationId = queries
                 .stream()
@@ -66,32 +67,39 @@ public class QueryRepository {
                     return queries.size();
                 }
             });
-
-            return findAllByRecommendationId(recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return Collections.emptyList();
         }
+        List<Query>savedQueries = findAllByRecommendationId(recommendationId);
+        if (savedQueries.isEmpty()) {
+            log.warn("Recommendation rule save error");
+            throw new SaveErrorException();
+        }
+        log.info("Recommendation rule successfully saved");
+        return savedQueries;
     }
 
     // Получение коллекции запросов для динамического правила по идентификатору рекомендации
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: findAllByRecommendationId");
+        log.info("Fetching recommendation rule...");
 
         try {
+            log.info("Recommendation rule successfully found");
             return jdbcTemplate
                     .query(FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL, mapper, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+        log.info("Recommendation rule not found");
         return Collections.emptyList();
     }
 
     // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
     public void deleteAllByRecommendationId(UUID recommendationId) {
-        log.info("Invoke method 'QueryRepository: deleteAllByRecommendationId");
+        log.info("Deleting recommendation rule...");
 
         try {
+            log.info("Recommendation rule was successfully deleted");
             jdbcTemplate.update(DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());

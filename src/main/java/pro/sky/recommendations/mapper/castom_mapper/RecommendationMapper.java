@@ -16,7 +16,7 @@ public class RecommendationMapper {
     private static final Logger log = LoggerFactory.getLogger(RecommendationMapper.class);
 
     public static RecommendationDTO fromRecommendation(Recommendation recommendation) {
-        log.info("Invoke method RecommendationMapper: 'fromRecommendation'");
+        log.info("Mapping Recommendation.class to RecommendationDTO.class");
 
         return new RecommendationDTO()
                 .setId(recommendation.getId())
@@ -25,8 +25,6 @@ public class RecommendationMapper {
     }
 
     public static List<RecommendationDTO> fromRecommendationList(List<Recommendation> recommendations) {
-        log.info("Invoke method RecommendationMapper: 'fromRecommendationList'");
-
         return recommendations
                 .stream()
                 .map(RecommendationMapper::fromRecommendation)

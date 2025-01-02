@@ -35,7 +35,7 @@ public class RecommendationService {
 
     // Создание рекомендации банковского продукта
     public DynamicRecommendationRule createRecommendation(DynamicRecommendationRule drr) {
-        log.info("Invoke method 'RecommendationService: createRecommendation'");
+        log.info("Invoke method: 'createRecommendation'");
 
         List<QueryData> queryData = drr.getRule();
         queryData.forEach(QueryData::validate);
@@ -59,24 +59,20 @@ public class RecommendationService {
 
     // Получение рекомендации банковского продукта по её идентификатору
     public DynamicRecommendationRule findById(UUID recommendationId) {
-        log.info("Invoke method 'RecommendationService: findById'");
+        log.info("Invoke method: 'findById'");
 
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
-                .orElseThrow(()-> {
-                    log.error("dynamic recommendation with id {} not found", recommendationId);
-                    return new DynamicRecommendationRuleNotFoundException();
-                });
+                .orElseThrow(DynamicRecommendationRuleNotFoundException::new);
 
         return dynamicRecommendationRuleBuilder(recommendation);
     }
 
     // Получение всех рекомендаций банковских продуктов
     public List<DynamicRecommendationRule> findAll() {
-        log.info("Invoke method 'RecommendationService: findAll'");
+        log.info("Invoke method: 'findAll'");
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
-            log.error("dynamic recommendation list is empty");
             throw new RecommendationNotFoundException();
         }
 
@@ -89,7 +85,7 @@ public class RecommendationService {
     // Удаление рекомендации банковского продукта по её идентификатору
     @Transactional
     public void deleteById(UUID recommendationId) {
-        log.info("Invoke method 'RecommendationService: deleteById'");
+        log.info("Invoke method: 'deleteById'");
 
         queryService.deleteBYRecommendationId(recommendationId);
 
@@ -98,7 +94,7 @@ public class RecommendationService {
 
     // Создание динамического правила рекомендации банковского продукта
     private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
-        log.info("Invoke method 'DynamicRecommendationRule.dynamicRecommendationRuleBuilder'");
+        log.info("Invoke method: 'dynamicRecommendationRuleBuilder'");
 
         return new DynamicRecommendationRule()
                 .setId(recommendation.getId())
