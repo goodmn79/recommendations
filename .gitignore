@@ -35,3 +35,4 @@ build/
 /mvnw
 /mvnw.cmd
 /db/recommendation_db/recommendation.mv.db
+/db/recommendation_db/recommendation.trace.db
