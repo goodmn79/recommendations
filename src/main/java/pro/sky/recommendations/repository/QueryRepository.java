@@ -70,7 +70,7 @@ public class QueryRepository {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        List<Query>savedQueries = findAllByRecommendationId(recommendationId);
+        List<Query> savedQueries = findAllByRecommendationId(recommendationId);
         if (savedQueries.isEmpty()) {
             log.warn("Recommendation rule save error");
             throw new SaveErrorException();

@@ -5,6 +5,7 @@ Powered by ©AYE.team
 
 package pro.sky.recommendations.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,17 @@ import static pro.sky.recommendations.constant.RecommendationDataBase.RECOMMENDA
 @RequiredArgsConstructor
 public class InitService {
     private final InitRepository initRepository;
+
+
+    // Создание таблиц при запуске приложения
+    @PostConstruct
+    public void initializeTables() {
+        log.info("Initializing tables...");
+
+        createTableRecommendations();
+
+        createTableQueries();
+    }
 
     private final Logger log = LoggerFactory.getLogger(InitService.class);
 
