@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.dto.UserRecommendation;
 import pro.sky.recommendations.enums.QueryType;
@@ -32,6 +33,8 @@ public class UserRecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
+    // Кэширование результатов работы метода getUserRecommendations по идентификатору пользователя
+    @Cacheable(value = "userRecommendationCache", key = "#userId")
     // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
         validateUserId(userId);
@@ -47,15 +50,14 @@ public class UserRecommendationService {
                         })
                         .toList();
 
-        if (userRecommendations.isEmpty()) {
-            log.warn("No user recommendations found");
-        } else {
-            log.info("User recommendations successfully found");
-        }
+        if (userRecommendations.isEmpty()) log.warn("No user recommendations found");
 
-        return new UserRecommendation()
+        UserRecommendation userRecommendation = new UserRecommendation()
                 .setUserId(userId)
                 .setRecommendations(recommendationMapper.fromRecommendationList(userRecommendations));
+
+        log.info("User recommendations successfully fetched");
+        return userRecommendation;
     }
 
     // Проверка соответствованя всех требований для правила рекомендации банковского продукта
