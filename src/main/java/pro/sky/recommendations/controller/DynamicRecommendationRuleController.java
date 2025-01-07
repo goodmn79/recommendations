@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recommendations.dto.DynamicRecommendationRule;
-import pro.sky.recommendations.service.RecommendationService;
+import pro.sky.recommendations.service.DynamicRecommendationRuleService;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,36 +21,36 @@ import java.util.UUID;
 @RequestMapping("rule")
 @RequiredArgsConstructor
 public class DynamicRecommendationRuleController {
-    private final RecommendationService recommendationService;
+    private final DynamicRecommendationRuleService dynamicRecommendationRuleService;
 
     private final Logger log = LoggerFactory.getLogger(DynamicRecommendationRuleController.class);
 
     @PostMapping
-    public DynamicRecommendationRule createRule(@RequestBody DynamicRecommendationRule dynamicRecommendationRule) {
-        log.info("Invoke method: 'createRule'");
+    public DynamicRecommendationRule saveDynamicRecommendationRule(@RequestBody DynamicRecommendationRule dynamicRecommendationRule) {
+        log.info("Invoke method: 'saveDynamicRecommendationRule'");
 
-        return recommendationService.createRecommendation(dynamicRecommendationRule);
+        return dynamicRecommendationRuleService.saveRecommendation(dynamicRecommendationRule);
     }
 
     @GetMapping("{rule_id}")
-    public DynamicRecommendationRule getRule(@PathVariable(name = "rule_id") UUID ruleId) {
-        log.info("Invoke method: 'getRule'");
+    public DynamicRecommendationRule getDynamicRecommendationRule(@PathVariable(name = "rule_id") UUID ruleId) {
+        log.info("Invoke method: 'getDynamicRecommendationRule'");
 
-        return recommendationService.findById(ruleId);
+        return dynamicRecommendationRuleService.getById(ruleId);
     }
 
     @GetMapping
-    public List<DynamicRecommendationRule> getAllRules() {
-        log.info("Invoke method: 'getAllRules'");
+    public List<DynamicRecommendationRule> getAllDynamicRecommendationRule() {
+        log.info("Invoke method: 'getAllDynamicRecommendationRule'");
 
-        return recommendationService.findAll();
+        return dynamicRecommendationRuleService.getAll();
     }
 
     @DeleteMapping("{rule_id}")
-    public ResponseEntity<String> deleteRuleById(@PathVariable(name = "rule_id") UUID ruleId) {
-        log.info("Invoke method: 'deleteRuleById'");
+    public ResponseEntity<String> deleteDynamicRecommendationRuleById(@PathVariable(name = "rule_id") UUID ruleId) {
+        log.info("Invoke method: 'deleteDynamicRecommendationRuleById'");
 
-        recommendationService.deleteById(ruleId);
+        dynamicRecommendationRuleService.deleteById(ruleId);
         return ResponseEntity.ok(String.format("Правило рекомендации: id='%s' удалено!", ruleId));
     }
 }

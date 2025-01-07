@@ -6,19 +6,18 @@ Powered by ©AYE.team
 package pro.sky.recommendations.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class RecommendationDataSourceConfiguration {
-    private final Logger log= LoggerFactory.getLogger(RecommendationDataSourceConfiguration.class);
 
     // Регистрация бина управляющего соединением с базой данных
     @Bean(name = "recommendationDataSource")
@@ -34,23 +33,16 @@ public class RecommendationDataSourceConfiguration {
     // Регистрация бина обеспечивающего взаимодействие с базой данных
     @Bean(name = "recommendationJdbcTemplate")
     public JdbcTemplate recommendationJdbcTemplate(@Qualifier("recommendationDataSource") DataSource dataSource) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        initializeRecommendations(jdbcTemplate);
-        initializeQueries(jdbcTemplate);
-        return jdbcTemplate;
+        return new JdbcTemplate(dataSource);
     }
 
-    public void initializeRecommendations(JdbcTemplate jdbcTemplate) {
-        log.info("Creating a table RECOMMENDATIONS");
-
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS RECOMMENDATIONS (ID UUID PRIMARY KEY, PRODUCT_ID   UUID NOT NULL UNIQUE, PRODUCT_TEXT TEXT NOT NULL)";
-        jdbcTemplate.execute(createTableSQL);
+    @Bean
+    public DataSourceTransactionManager recommendationTransactionManager(@Qualifier("recommendationDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
-    public void initializeQueries(JdbcTemplate jdbcTemplate) {
-        log.info("Creating a table QUERIES");
-
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS QUERIES (ID UUID PRIMARY KEY, RECOMMENDATION_ID   UUID NOT NULL, QUERY VARCHAR(100) NOT NULL, ARGUMENTS VARCHAR(255), NEGATE BOOLEAN NOT NULL)";
-        jdbcTemplate.execute(createTableSQL);
+    @Bean
+    public TransactionTemplate transactionTemplate(DataSourceTransactionManager transactionManager) {
+        return new TransactionTemplate(transactionManager);
     }
 }

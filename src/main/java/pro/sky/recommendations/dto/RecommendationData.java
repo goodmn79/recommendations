@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
-public class RecommendationDTO {
+public class RecommendationData {
     private UUID id;
     private String productName;
     private String productText;

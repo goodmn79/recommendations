@@ -8,15 +8,12 @@ package pro.sky.recommendations.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
-import pro.sky.recommendations.constant.ComparisonOperator;
-import pro.sky.recommendations.constant.ProductType;
-import pro.sky.recommendations.constant.TransactionType;
+import pro.sky.recommendations.enums.ComparisonOperator;
+import pro.sky.recommendations.enums.ProductType;
+import pro.sky.recommendations.enums.QueryType;
+import pro.sky.recommendations.enums.TransactionType;
 import pro.sky.recommendations.exception.InvalidQueryDataException;
 
-import static pro.sky.recommendations.constant.QueryType.*;
-
-@Component
 @Data
 @Accessors(chain = true)
 public class QueryData {
@@ -24,32 +21,48 @@ public class QueryData {
     private String[] arguments;
     private Boolean negate;
 
-    public void validate() {
-        if (!QUERY_TYPES.containsKey(this.query)
-                || !validArgs()
-                || this.negate == null) {
-            throw new InvalidQueryDataException();
+    public QueryData setQuery(String query) {
+        if (QueryType.hasType(query)) {
+            this.query = query;
+            return this;
         }
+        throw new InvalidQueryDataException();
     }
 
-    private boolean validArgs() {
+    public QueryData setArguments(String[] arguments) {
+        if (validArguments(arguments)) {
+            this.arguments = arguments;
+            return this;
+        }
+        throw new InvalidQueryDataException();
+    }
+
+    public QueryData setNegate(Boolean negate) {
+        if (negate == null) {
+            throw new InvalidQueryDataException();
+        }
+        this.negate = negate;
+        return this;
+    }
+
+    private boolean validArguments(String[] arguments) {
 
         return switch (this.query) {
-            case (USER_OF), (ACTIVE_USER_OF) -> arguments.length == 1
-                    && ProductType.PRODUCT_TYPES.contains(arguments[0]);
-            case (TRANSACTION_SUM_COMPARE) -> arguments.length == 4
-                    && ProductType.PRODUCT_TYPES.contains(arguments[0])
-                    && TransactionType.TRANSACTION_TYPES.contains(arguments[1])
-                    && ComparisonOperator.COMPARISON_OPERATORS.contains(arguments[2])
+            case ("USER_OF"), ("ACTIVE_USER_OF") -> arguments.length == 1
+                    && ProductType.hasType(arguments[0]);
+            case ("TRANSACTION_SUM_COMPARE") -> arguments.length == 4
+                    && ProductType.hasType(arguments[0])
+                    && TransactionType.hasType(arguments[1])
+                    && ComparisonOperator.hasOperator(arguments[2])
                     && isPositiveNumber(arguments[3]);
-            case (TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW) -> arguments.length == 2
-                    && ProductType.PRODUCT_TYPES.contains(arguments[0])
-                    && ComparisonOperator.COMPARISON_OPERATORS.contains(arguments[1]);
+            case ("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW") -> arguments.length == 2
+                    && ProductType.hasType(arguments[0])
+                    && ComparisonOperator.hasOperator(arguments[1]);
             default -> false;
         };
     }
 
-    public boolean isPositiveNumber(String num) {
+    private boolean isPositiveNumber(String num) {
         if (StringUtils.isNumeric(num)) {
             try {
                 return Integer.parseInt(num) > 0;

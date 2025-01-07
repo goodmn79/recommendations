@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.exception.SaveErrorException;
 import pro.sky.recommendations.mapper.row_mapper.RecommendationRowMapper;
 import pro.sky.recommendations.model.Recommendation;
 
@@ -39,64 +38,40 @@ public class RecommendationRepository {
     }
 
     // Сохранение рекомендации банковского продукта
-    public Recommendation save(Recommendation recommendation) {
-        log.info("Saving recommendation...");
+    public void save(Recommendation recommendation) {
+        log.debug("Invoke method 'save' for recommendation with id='{}'", recommendation.getId());
 
-        UUID id = UUID.randomUUID();
-
-        try {
-            jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, id, recommendation.getProduct().getId(), recommendation.getProductText());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-
-        return findById(id).map(r -> {
-                    log.info("Recommendation successfully saved");
-                    return r;
-                }).orElseThrow(()->{
-            log.warn("Recommendation save error");
-            return new SaveErrorException();
-        });
+        jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
     public Optional<Recommendation> findById(UUID id) {
-        log.info("Fetching recommendation...");
+        log.debug("Invoke method 'findById' with id {}", id);
 
         try {
-            log.info("Recommendation successfully found");
             return Optional.ofNullable(jdbcTemplate.queryForObject(FIND_RECOMMENDATION_BY_ID_SQL, mapper, id));
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        log.warn("Recommendation not found");
         return Optional.empty();
     }
 
     // Получение коллекции рекомендаций банковских продуктов
     public List<Recommendation> findAll() {
-        log.info("Fetching all recommendations...");
+        log.debug("Invoke method 'findAll'");
 
         try {
-            log.info("Recommendations successfully found");
-            return jdbcTemplate.queryForStream(FIND_ALL_RECOMMENDATION_SQL, mapper)
-                    .toList();
+            return jdbcTemplate.query(FIND_ALL_RECOMMENDATION_SQL, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        log.warn("Recommendations not found");
         return Collections.emptyList();
     }
 
     // Удаление рекомендации банковского продукта по её идентификатору
     public void deleteById(UUID id) {
-        log.info("Deleting recommendation...");
+        log.debug("Deleting recommendation id={}", id);
 
-        try {
-            log.info("Recommendation was successfully deleted");
-            jdbcTemplate.update(DELETE_RECOMMENDATION_BY_ID_SQL, id);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        jdbcTemplate.update(DELETE_RECOMMENDATION_BY_ID_SQL, id);
     }
 }
