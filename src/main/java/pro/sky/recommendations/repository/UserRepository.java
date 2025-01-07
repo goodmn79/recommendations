@@ -28,11 +28,11 @@ public class UserRepository {
 
     // Валидация пользователя по его идентификатору
     public boolean userIsExists(UUID id) {
-        log.info("Validating user by id...");
+        log.debug("Validating user by id='{}'", id);
 
         boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(USER_BY_ID_IS_EXISTS, Boolean.class, id));
 
-        log.info("User validation: '{}'", userIsExists);
+        log.debug("User validation: '{}'", userIsExists);
         return userIsExists;
     }
 }
