@@ -27,8 +27,8 @@ public class UserRecommendationController {
     private final Logger log = LoggerFactory.getLogger(UserRecommendationController.class);
 
     @GetMapping("{user_id}")
-    public UserRecommendation userRecommendation(@PathVariable("user_id") UUID userId) {
-        log.info("Invoke method: 'getUserRecommendation'");
+    public UserRecommendation userRecommendations(@PathVariable("user_id") UUID userId) {
+        log.info("Invoke method: 'getUserRecommendations'");
 
         return userRecommendationService.getUserRecommendations(userId);
     }

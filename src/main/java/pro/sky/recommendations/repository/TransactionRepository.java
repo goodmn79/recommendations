@@ -25,11 +25,11 @@ public class TransactionRepository {
 
     // Проверка соответствия требованию правила рекомендации банковского продукта
     public boolean isCompliance(String query, UUID userId) {
-        log.info("Checking compliance...");
+        log.debug("Checking compliance for user {}", userId);
 
         boolean isCompliance = Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
 
-        log.info("Compliance check result: '{}'", isCompliance);
+        log.debug("Compliance check result: '{}'", isCompliance);
         return isCompliance;
     }
 }

@@ -28,6 +28,8 @@ public class UserRecommendationService {
 
     private final UserService userService;
 
+    private final RecommendationMapper recommendationMapper;
+
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
     // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
@@ -53,7 +55,7 @@ public class UserRecommendationService {
 
         return new UserRecommendation()
                 .setUserId(userId)
-                .setRecommendations(RecommendationMapper.fromRecommendationList(userRecommendations));
+                .setRecommendations(recommendationMapper.fromRecommendationList(userRecommendations));
     }
 
     // Проверка соответствованя всех требований для правила рекомендации банковского продукта

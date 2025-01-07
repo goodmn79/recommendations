@@ -15,5 +15,5 @@ import java.util.UUID;
 @Accessors(chain = true)
 public class UserRecommendation {
     private UUID userId;
-    private List<RecommendationDTO> recommendations;
+    private List<RecommendationData> recommendations;
 }

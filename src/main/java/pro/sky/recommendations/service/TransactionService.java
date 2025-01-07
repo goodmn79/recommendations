@@ -22,7 +22,7 @@ public class TransactionService {
 
     // Проверка соответствия требованию правила рекомендации банковского продукта
     public boolean isCompliance(String query, UUID userId) {
-        log.info("Invoke method: 'isCompliance'");
+        log.debug("Invoke method: 'isCompliance'");
 
         return transactionRepository.isCompliance(query, userId);
     }

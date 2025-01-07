@@ -7,27 +7,29 @@ package pro.sky.recommendations.mapper.castom_mapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.sky.recommendations.dto.RecommendationDTO;
+import org.springframework.stereotype.Component;
+import pro.sky.recommendations.dto.RecommendationData;
 import pro.sky.recommendations.model.Recommendation;
 
 import java.util.List;
 
+@Component
 public class RecommendationMapper {
-    private static final Logger log = LoggerFactory.getLogger(RecommendationMapper.class);
+    private final Logger log = LoggerFactory.getLogger(RecommendationMapper.class);
 
-    public static RecommendationDTO fromRecommendation(Recommendation recommendation) {
+    public RecommendationData fromRecommendation(Recommendation recommendation) {
         log.info("Mapping Recommendation.class to RecommendationDTO.class");
 
-        return new RecommendationDTO()
+        return new RecommendationData()
                 .setId(recommendation.getId())
                 .setProductName(recommendation.getProduct().getName())
                 .setProductText(recommendation.getProductText());
     }
 
-    public static List<RecommendationDTO> fromRecommendationList(List<Recommendation> recommendations) {
+    public List<RecommendationData> fromRecommendationList(List<Recommendation> recommendations) {
         return recommendations
                 .stream()
-                .map(RecommendationMapper::fromRecommendation)
+                .map(this::fromRecommendation)
                 .toList();
     }
 }
