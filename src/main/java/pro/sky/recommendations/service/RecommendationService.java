@@ -21,9 +21,6 @@ import java.util.UUID;
 public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
 
-    private final ProductService productService;
-    private final QueryService queryService;
-
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
     // Сохранение рекомендации банковского продукта в базе данных
