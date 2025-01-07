@@ -65,7 +65,7 @@ public class DynamicRecommendationRuleService {
 
         List<Recommendation> recommendations = recommendationService.findAll();
         if (recommendations.isEmpty()) {
-            log.error("No dynamic recommendation rules found");
+            log.error("Dynamic recommendation rules not found");
             throw new RecommendationNotFoundException();
         }
 
