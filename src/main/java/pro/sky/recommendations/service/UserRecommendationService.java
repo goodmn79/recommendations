@@ -10,14 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.constant.QueryType;
 import pro.sky.recommendations.dto.UserRecommendation;
+import pro.sky.recommendations.enums.QueryType;
 import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.mapper.castom_mapper.RecommendationMapper;
 import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
-import pro.sky.recommendations.repository.RecommendationRepository;
-import pro.sky.recommendations.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,56 +23,70 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationService {
-    private final RecommendationRepository recommendationRepository;
-
+    private final RecommendationService recommendationService;
     private final TransactionService transactionService;
-    private final UserRepository userRepository;
+
+    private final UserService userService;
+
+    private final RecommendationMapper recommendationMapper;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
     // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
-        log.info("Invoke method: 'getUserRecommendations'");
-
         validateUserId(userId);
 
-        List<Recommendation> recommendations = recommendationRepository.findAll();
+        log.info("Fetching user recommendations...");
 
-        List<Recommendation> userRecommendations = recommendations
-                .stream()
-                .filter(r -> {
-                    List<Query> rule = r.getRule();
-                    return isComplianceRule(userId, rule);
-                })
-                .toList();
+        List<Recommendation> userRecommendations =
+                recommendationService.findAll()
+                        .stream()
+                        .filter(r -> {
+                            List<Query> rule = r.getRule();
+                            return isComplianceRule(userId, rule);
+                        })
+                        .toList();
+
+        if (userRecommendations.isEmpty()) {
+            log.warn("No user recommendations found");
+        } else {
+            log.info("User recommendations successfully found");
+        }
 
         return new UserRecommendation()
                 .setUserId(userId)
-                .setRecommendations(RecommendationMapper.fromRecommendationList(userRecommendations));
+                .setRecommendations(recommendationMapper.fromRecommendationList(userRecommendations));
     }
 
     // Проверка соответствованя всех требований для правила рекомендации банковского продукта
     private boolean isComplianceRule(UUID userId, List<Query> rule) {
-        log.info("Invoke method: 'isComplianceRule'");
+        log.info("Rule compliance check...");
 
         for (Query query : rule) {
-            if (!isCompliance(userId, query)) return false;
+            if (!isCompliance(userId, query)) {
+                log.warn("Rule compliance check failed");
+                return false;
+            }
         }
+        log.info("Check completed successfully");
         return true;
     }
 
     // Проверка соответствованя требования для правила рекомендации банковского продукта
     private boolean isCompliance(UUID userId, Query query) {
+        log.debug("Checking compliance for user {}", userId);
         String querySQL = queryGenerator(query);
 
         boolean isCompliance = transactionService.isCompliance(querySQL, userId);
 
+        log.debug("Checking complete with result - '{}'", isCompliance);
         return checkNegate(isCompliance, query.getNegate());
     }
 
     // Генерация SQL-запроса
     private String queryGenerator(Query query) {
-        String queryPattern = QueryType.QUERY_TYPES.get(query.getQuery());
+        String queryType = query.getQuery();
+        String queryPattern = QueryType.getQueryPattern(queryType);
 
         String[] arguments = query.getArguments();
 
@@ -93,6 +105,9 @@ public class UserRecommendationService {
 
     // Валидация пользователя по его идентификатору
     private void validateUserId(UUID userId) {
-        if (!userRepository.userIsExists(userId)) throw new UserNotFoundException();
+        if (!userService.userExists(userId)) {
+            log.error("User does not exist");
+            throw new UserNotFoundException();
+        }
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 
@@ -32,5 +34,15 @@ public class RecommendationDataSourceConfiguration {
     @Bean(name = "recommendationJdbcTemplate")
     public JdbcTemplate recommendationJdbcTemplate(@Qualifier("recommendationDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public DataSourceTransactionManager recommendationTransactionManager(@Qualifier("recommendationDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    public TransactionTemplate transactionTemplate(DataSourceTransactionManager transactionManager) {
+        return new TransactionTemplate(transactionManager);
     }
 }

@@ -9,14 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pro.sky.recommendations.dto.DynamicRecommendationRule;
-import pro.sky.recommendations.dto.QueryData;
-import pro.sky.recommendations.exception.DynamicRecommendationRuleNotFoundException;
 import pro.sky.recommendations.exception.RecommendationNotFoundException;
-import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
-import pro.sky.recommendations.model.Product;
-import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
 import pro.sky.recommendations.repository.RecommendationRepository;
 
@@ -28,79 +21,45 @@ import java.util.UUID;
 public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
 
-    private final ProductService productService;
-    private final QueryService queryService;
-
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
-    // Создание рекомендации банковского продукта
-    public DynamicRecommendationRule createRecommendation(DynamicRecommendationRule drr) {
-        log.info("Invoke method: 'createRecommendation'");
+    // Сохранение рекомендации банковского продукта в базе данных
+    public void saveRecommendation(Recommendation recommendation) {
+        log.info("Saving recommendation...");
 
-        List<QueryData> queryData = drr.getRule();
-        queryData.forEach(QueryData::validate);
-
-        Product product = productService.findById(drr.getProductId());
-
-        Recommendation savedRecommendation = recommendationRepository.save(new Recommendation()
-                .setProduct(product)
-                .setProductText(drr.getProductText()));
-
-        List<Query> savedRule = queryService.createRule(queryData, savedRecommendation);
-
-
-        return new DynamicRecommendationRule()
-                .setId(savedRecommendation.getId())
-                .setProductName(product.getName())
-                .setProductId(product.getId())
-                .setProductText(savedRecommendation.getProductText())
-                .setRule(QueryMapper.toQueryData(savedRule));
+        recommendationRepository.save(recommendation);
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
-    public DynamicRecommendationRule findById(UUID recommendationId) {
-        log.info("Invoke method: 'findById'");
+    public Recommendation findById(UUID recommendationId) {
+        log.info("Fetching recommendation...");
 
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
-                .orElseThrow(DynamicRecommendationRuleNotFoundException::new);
-
-        return dynamicRecommendationRuleBuilder(recommendation);
+                .orElseThrow(() -> {
+                    log.error("Recommendation not found");
+                    return new RecommendationNotFoundException();
+                });
+        log.info("Recommendation successfully fetched");
+        return recommendation;
     }
 
     // Получение всех рекомендаций банковских продуктов
-    public List<DynamicRecommendationRule> findAll() {
-        log.info("Invoke method: 'findAll'");
+    public List<Recommendation> findAll() {
+        log.info("Fetching recommendations...");
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
-            throw new RecommendationNotFoundException();
+            log.warn("Recommendations not found");
+        } else {
+            log.info("Recommendations successfully fetched");
         }
-
-        return recommendations
-                .stream()
-                .map(this::dynamicRecommendationRuleBuilder)
-                .toList();
+        return recommendations;
     }
 
     // Удаление рекомендации банковского продукта по её идентификатору
-    @Transactional
     public void deleteById(UUID recommendationId) {
-        log.info("Invoke method: 'deleteById'");
-
-        queryService.deleteBYRecommendationId(recommendationId);
+        log.info("Deleting recommendation by id...");
 
         recommendationRepository.deleteById(recommendationId);
-    }
-
-    // Создание динамического правила рекомендации банковского продукта
-    private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
-        log.info("Invoke method: 'dynamicRecommendationRuleBuilder'");
-
-        return new DynamicRecommendationRule()
-                .setId(recommendation.getId())
-                .setProductName(recommendation.getProduct().getName())
-                .setProductId(recommendation.getProduct().getId())
-                .setProductText(recommendation.getProductText())
-                .setRule(QueryMapper.toQueryData(recommendation.getRule()));
     }
 }

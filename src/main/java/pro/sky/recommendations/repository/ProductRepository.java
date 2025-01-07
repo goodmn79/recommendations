@@ -33,16 +33,14 @@ public class ProductRepository {
 
     // Получение данных о банковском продукте по его идентификатору
     public Optional<Product> findById(UUID id) {
-        log.info("Fetching product by id...");
+        log.debug("Invoke method:'findById'");
 
         try {
             Product product = jdbcTemplate.queryForObject(FIND_PRODUCT_BY_ID, mapper, id);
-            log.info("Product successfully found");
             return Optional.ofNullable(product);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        log.warn("Product not found");
         return Optional.empty();
     }
 }

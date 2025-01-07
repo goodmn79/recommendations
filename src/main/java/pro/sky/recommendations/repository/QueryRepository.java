@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.exception.SaveErrorException;
 import pro.sky.recommendations.mapper.row_mapper.QueryRowMapper;
 import pro.sky.recommendations.model.Query;
 
@@ -41,7 +40,7 @@ public class QueryRepository {
 
     // Сохранение коллекции запросов для динамического правила рекомендации
     public List<Query> saveAll(List<Query> queries) {
-        log.info("Saving rule queries...");
+        log.debug("Invoke method 'saveAll'");
 
         UUID recommendationId = queries
                 .stream()
@@ -70,36 +69,29 @@ public class QueryRepository {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        List<Query> savedQueries = findAllByRecommendationId(recommendationId);
-        if (savedQueries.isEmpty()) {
-            log.warn("Recommendation rule save error");
-            throw new SaveErrorException();
-        }
-        log.info("Recommendation rule successfully saved");
-        return savedQueries;
+
+        return this.findAllByRecommendationId(recommendationId);
     }
 
     // Получение коллекции запросов для динамического правила по идентификатору рекомендации
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
-        log.info("Fetching recommendation rule...");
+        log.debug("Invoke method 'findAllByRecommendationId'");
 
         try {
-            log.info("Recommendation rule successfully found");
             return jdbcTemplate
                     .query(FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL, mapper, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        log.info("Recommendation rule not found");
         return Collections.emptyList();
     }
 
     // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
     public void deleteAllByRecommendationId(UUID recommendationId) {
-        log.info("Deleting recommendation rule...");
+        log.debug("Invoke method 'deleteAllByRecommendationId'");
 
         try {
-            log.info("Recommendation rule was successfully deleted");
+            log.debug("Recommendation rule with recommendation id={} was successfully deleted", recommendationId);
             jdbcTemplate.update(DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
