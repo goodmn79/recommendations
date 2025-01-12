@@ -20,10 +20,6 @@ import java.util.UUID;
 
 @Repository
 public class RecommendationRepository {
-    public static final String SAVE_RECOMMENDATION_SQL = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
-    public static final String FIND_RECOMMENDATION_BY_ID_SQL = "SELECT * FROM RECOMMENDATIONS WHERE ID = ?";
-    public static final String FIND_ALL_RECOMMENDATION_SQL = "SELECT * FROM RECOMMENDATIONS";
-    public static final String DELETE_RECOMMENDATION_BY_ID_SQL = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -41,15 +37,19 @@ public class RecommendationRepository {
     public void save(Recommendation recommendation) {
         log.debug("Invoke method 'save' for recommendation with id='{}'", recommendation.getId());
 
-        jdbcTemplate.update(SAVE_RECOMMENDATION_SQL, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
+        String saveRecommendationSql = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
+
+        jdbcTemplate.update(saveRecommendationSql, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
     public Optional<Recommendation> findById(UUID id) {
         log.debug("Invoke method 'findById' with id {}", id);
 
+        String findRecommendationByIdSql = "SELECT * FROM RECOMMENDATIONS WHERE ID = ?";
+
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(FIND_RECOMMENDATION_BY_ID_SQL, mapper, id));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(findRecommendationByIdSql, mapper, id));
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -60,8 +60,10 @@ public class RecommendationRepository {
     public List<Recommendation> findAll() {
         log.debug("Invoke method 'findAll'");
 
+        String findAllRecommendationSql = "SELECT * FROM RECOMMENDATIONS";
+
         try {
-            return jdbcTemplate.query(FIND_ALL_RECOMMENDATION_SQL, mapper);
+            return jdbcTemplate.query(findAllRecommendationSql, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -72,6 +74,8 @@ public class RecommendationRepository {
     public void deleteById(UUID id) {
         log.debug("Deleting recommendation id={}", id);
 
-        jdbcTemplate.update(DELETE_RECOMMENDATION_BY_ID_SQL, id);
+        String deleteRecommendationByIdSql = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
+
+        jdbcTemplate.update(deleteRecommendationByIdSql, id);
     }
 }
