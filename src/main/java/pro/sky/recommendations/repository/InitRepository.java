@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class InitRepository {
-    private static final String CREATE_TABLE_RECOMMENDATIONS = "CREATE TABLE IF NOT EXISTS RECOMMENDATIONS (ID UUID PRIMARY KEY, PRODUCT_ID   UUID NOT NULL UNIQUE, PRODUCT_TEXT TEXT NOT NULL)";
-    private static final String CREATE_TABLE_QUERIES = "CREATE TABLE IF NOT EXISTS QUERIES (ID UUID PRIMARY KEY, RECOMMENDATION_ID   UUID NOT NULL, QUERY VARCHAR(100) NOT NULL, ARGUMENTS VARCHAR(255), NEGATE BOOLEAN NOT NULL)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -30,11 +28,13 @@ public class InitRepository {
     private void createTableRecommendationsIfNotExists() {
         log.info("Creating table \"RECOMMENDATIONS\"...");
 
+        String createTableRecommendationsSql = "CREATE TABLE IF NOT EXISTS RECOMMENDATIONS (ID UUID PRIMARY KEY, PRODUCT_ID UUID NOT NULL UNIQUE, PRODUCT_TEXT TEXT NOT NULL)";
+
         if (tableExists("RECOMMENDATIONS")) {
             log.info("Table \"RECOMMENDATIONS\" already exists.");
         } else {
             try {
-                jdbcTemplate.execute(CREATE_TABLE_RECOMMENDATIONS);
+                jdbcTemplate.execute(createTableRecommendationsSql);
                 log.info("Table \"RECOMMENDATIONS\" has been created");
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -47,11 +47,13 @@ public class InitRepository {
     private void createTableQueriesIfNotExists() {
         log.info("Creating table \"QUERIES\"...");
 
+        String createTableQueriesSql = "CREATE TABLE IF NOT EXISTS QUERIES (ID UUID PRIMARY KEY, RECOMMENDATION_ID UUID NOT NULL, QUERY VARCHAR(100) NOT NULL, ARGUMENTS VARCHAR(255), NEGATE BOOLEAN NOT NULL)";
+
         if (tableExists("QUERIES")) {
             log.info("Table \"QUERIES\" already exists.");
         } else {
             try {
-                jdbcTemplate.execute(CREATE_TABLE_QUERIES);
+                jdbcTemplate.execute(createTableQueriesSql);
                 log.info("Table \"QUERIES\" has been created");
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -62,7 +64,6 @@ public class InitRepository {
     // Проверка существования таблицы в базе данных
     private boolean tableExists(String tableName) {
         log.debug("Checking if table \"{}\" exists...", tableName);
-
 
         String createTableQuery = "SELECT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE table_name = ?)AS table_exists;";
 

@@ -18,7 +18,6 @@ import java.util.UUID;
 
 @Repository
 public class ProductRepository {
-    private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = ?";
 
     private final JdbcTemplate jdbcTemplate;
     private final ProductRowMapper mapper;
@@ -35,8 +34,10 @@ public class ProductRepository {
     public Optional<Product> findById(UUID id) {
         log.debug("Invoke method:'findById'");
 
+        String findProductByIdSql = "SELECT * FROM PRODUCTS WHERE ID = ?";
+
         try {
-            Product product = jdbcTemplate.queryForObject(FIND_PRODUCT_BY_ID, mapper, id);
+            Product product = jdbcTemplate.queryForObject(findProductByIdSql, mapper, id);
             return Optional.ofNullable(product);
         } catch (Exception e) {
             log.error(e.getMessage());
