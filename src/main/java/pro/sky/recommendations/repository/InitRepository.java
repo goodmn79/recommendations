@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class InitRepository {
-    private static final String CREATE_TABLE_RECOMMENDATIONS = "CREATE TABLE IF NOT EXISTS RECOMMENDATIONS (ID UUID PRIMARY KEY, PRODUCT_ID   UUID NOT NULL UNIQUE, PRODUCT_TEXT TEXT NOT NULL)";
-    private static final String CREATE_TABLE_QUERIES = "CREATE TABLE IF NOT EXISTS QUERIES (ID UUID PRIMARY KEY, RECOMMENDATION_ID   UUID NOT NULL, QUERY VARCHAR(100) NOT NULL, ARGUMENTS VARCHAR(255), NEGATE BOOLEAN NOT NULL)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -34,7 +32,7 @@ public class InitRepository {
             log.info("Table \"RECOMMENDATIONS\" already exists.");
         } else {
             try {
-                jdbcTemplate.execute(CREATE_TABLE_RECOMMENDATIONS);
+                jdbcTemplate.execute(createTableRecommendationsSql);
                 log.info("Table \"RECOMMENDATIONS\" has been created");
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -51,7 +49,7 @@ public class InitRepository {
             log.info("Table \"QUERIES\" already exists.");
         } else {
             try {
-                jdbcTemplate.execute(CREATE_TABLE_QUERIES);
+                jdbcTemplate.execute(createTableQueriesSql);
                 log.info("Table \"QUERIES\" has been created");
             } catch (Exception e) {
                 log.error(e.getMessage());

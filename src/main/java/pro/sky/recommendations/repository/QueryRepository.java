@@ -22,10 +22,6 @@ import java.util.UUID;
 
 @Repository
 public class QueryRepository {
-    private static final String SAVE_QUERY_SQL = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
-    private static final String FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
-    private static final String DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
-
     private final JdbcTemplate jdbcTemplate;
 
     private final QueryRowMapper mapper;
@@ -42,6 +38,8 @@ public class QueryRepository {
     public List<Query> saveAll(List<Query> queries) {
         log.debug("Invoke method 'saveAll'");
 
+        String saveQuerySql = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
+
         UUID recommendationId = queries
                 .stream()
                 .map(query -> query.getRecommendation().getId())
@@ -49,7 +47,8 @@ public class QueryRepository {
                 .orElse(null);
 
         try {
-            jdbcTemplate.batchUpdate(SAVE_QUERY_SQL, new BatchPreparedStatementSetter() {
+
+            jdbcTemplate.batchUpdate(saveQuerySql, new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     Query query = queries.get(i);
@@ -77,9 +76,11 @@ public class QueryRepository {
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.debug("Invoke method 'findAllByRecommendationId'");
 
+        String findAllQueriesByRecommendationIdSql = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
+
         try {
             return jdbcTemplate
-                    .query(FIND_ALL_QUERIES_BY_RECOMMENDATION_ID_SQL, mapper, recommendationId);
+                    .query(findAllQueriesByRecommendationIdSql, mapper, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -90,9 +91,11 @@ public class QueryRepository {
     public void deleteAllByRecommendationId(UUID recommendationId) {
         log.debug("Invoke method 'deleteAllByRecommendationId'");
 
+        String deleteQueriesByRecommendationIdSql = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
+
         try {
             log.debug("Recommendation rule with recommendation id={} was successfully deleted", recommendationId);
-            jdbcTemplate.update(DELETE_QUERIES_BY_RECOMMENDATION_ID_SQL, recommendationId);
+            jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
