@@ -18,8 +18,6 @@ public class RecommendationMapper {
     private final Logger log = LoggerFactory.getLogger(RecommendationMapper.class);
 
     public RecommendationData fromRecommendation(Recommendation recommendation) {
-        log.info("Mapping Recommendation.class to RecommendationDTO.class");
-
         return new RecommendationData()
                 .setId(recommendation.getId())
                 .setProductName(recommendation.getProduct().getName())
@@ -27,6 +25,8 @@ public class RecommendationMapper {
     }
 
     public List<RecommendationData> fromRecommendationList(List<Recommendation> recommendations) {
+        log.info("Mapping Recommendation.class to RecommendationData.class");
+
         return recommendations
                 .stream()
                 .map(this::fromRecommendation)
