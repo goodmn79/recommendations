@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.recommendations.dto.UserRecommendation;
 import pro.sky.recommendations.service.UserRecommendationService;
+import pro.sky.recommendations.stats.service.StatsService;
 
 import java.util.UUID;
 
@@ -25,11 +26,15 @@ public class UserRecommendationController {
     private final UserRecommendationService userRecommendationService;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationController.class);
+    private final StatsService statsService;
 
     @GetMapping("{user_id}")
     public UserRecommendation userRecommendations(@PathVariable("user_id") UUID userId) {
         log.info("Invoke method: 'getUserRecommendations'");
 
-        return userRecommendationService.getUserRecommendations(userId);
+        UserRecommendation userRecommendation = userRecommendationService.getUserRecommendations(userId);
+        statsService.incrementor(userRecommendation);
+
+        return userRecommendation;
     }
 }
