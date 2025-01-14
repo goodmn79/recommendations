@@ -19,6 +19,7 @@ import pro.sky.recommendations.mapper.castom_mapper.QueryMapper;
 import pro.sky.recommendations.model.Product;
 import pro.sky.recommendations.model.Query;
 import pro.sky.recommendations.model.Recommendation;
+import pro.sky.recommendations.stats.service.StatsService;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class DynamicRecommendationRuleService {
     private final QueryMapper queryMapper;
 
     private final Logger log = LoggerFactory.getLogger(DynamicRecommendationRuleService.class);
+    private final StatsService statsService;
 
     // Создание рекомендации банковского продукта
     public DynamicRecommendationRule saveRecommendation(DynamicRecommendationRule drr) {
@@ -69,10 +71,7 @@ public class DynamicRecommendationRuleService {
             throw new RecommendationNotFoundException();
         }
 
-        List<DynamicRecommendationRule> drrList = recommendations
-                .stream()
-                .map(this::dynamicRecommendationRuleBuilder)
-                .toList();
+        List<DynamicRecommendationRule> drrList = recommendations.stream().map(this::dynamicRecommendationRuleBuilder).toList();
         log.info("Dynamic recommendation rules successfully fetched");
         return drrList;
     }
@@ -81,7 +80,9 @@ public class DynamicRecommendationRuleService {
     public void deleteById(UUID recommendationId) {
         log.info("Deleting dynamic recommendation rule...");
 
-        transactionTemplate.execute(new TransactionDeleteCallback(recommendationId));
+        Recommendation recommendation = recommendationService.findById(recommendationId);
+
+        transactionTemplate.execute(new TransactionDeleteCallback(recommendation));
 
         log.info("Dynamic recommendation rule successfully deleted");
     }
@@ -91,10 +92,7 @@ public class DynamicRecommendationRuleService {
         Product product = productService.findById(drr.getProductId());
 
         log.info("Creating recommendation...");
-        Recommendation recommendation = new Recommendation()
-                .setId(UUID.randomUUID())
-                .setProduct(product)
-                .setProductText(drr.getProductText());
+        Recommendation recommendation = new Recommendation().setId(UUID.randomUUID()).setProduct(product).setProductText(drr.getProductText());
 
         log.info("Creating rule...");
         List<Query> rule = queryMapper.toQuery(drr.getRule(), recommendation);
@@ -110,12 +108,7 @@ public class DynamicRecommendationRuleService {
     private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
         log.info("Building dynamic recommendation rule...");
 
-        DynamicRecommendationRule drr = new DynamicRecommendationRule()
-                .setId(recommendation.getId())
-                .setProductName(recommendation.getProduct().getName())
-                .setProductId(recommendation.getProduct().getId())
-                .setProductText(recommendation.getProductText())
-                .setRule(queryMapper.toQueryData(recommendation.getRule()));
+        DynamicRecommendationRule drr = new DynamicRecommendationRule().setId(recommendation.getId()).setProductName(recommendation.getProduct().getName()).setProductId(recommendation.getProduct().getId()).setProductText(recommendation.getProductText()).setRule(queryMapper.toQueryData(recommendation.getRule()));
 
         log.info("Dynamic recommendation rule successfully built");
         return drr;
@@ -136,6 +129,9 @@ public class DynamicRecommendationRuleService {
 
                 queryService.saveRule(recommendation);
                 log.info("Rule was successfully saved");
+
+                statsService.createCounter(recommendation);
+                log.info("Counter was successfully created");
             } catch (Exception e) {
                 status.setRollbackOnly();
                 log.error("Dynamic recommendation rule saving failed. Rollback operation", e);
@@ -145,20 +141,23 @@ public class DynamicRecommendationRuleService {
     }
 
     private class TransactionDeleteCallback extends TransactionCallbackWithoutResult {
-        private final UUID recommendationId;
+        private final Recommendation recommendation;
 
-        public TransactionDeleteCallback(UUID recommendationId) {
-            this.recommendationId = recommendationId;
+        public TransactionDeleteCallback(Recommendation recommendation) {
+            this.recommendation = recommendation;
         }
 
         @Override
         public void doInTransactionWithoutResult(TransactionStatus status) {
             try {
-                recommendationService.deleteById(recommendationId);
+                recommendationService.deleteById(recommendation.getId());
                 log.info("Recommendation was successfully deleted");
 
-                queryService.deleteBYRecommendationId(recommendationId);
+                queryService.deleteBYRecommendationId(recommendation.getId());
                 log.info("Rule was successfully deleted");
+
+                statsService.deleteCounter(recommendation);
+                log.info("Counter was successfully deleted");
             } catch (Exception e) {
                 status.setRollbackOnly();
                 log.error("Dynamic recommendation rule deletion failed. Rollback operation", e);

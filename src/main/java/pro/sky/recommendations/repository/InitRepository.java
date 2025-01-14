@@ -61,11 +61,30 @@ public class InitRepository {
         }
     }
 
+
+    @PostConstruct
+    private void createTableStatisticsIfNotForExist() {
+        log.info("Creating table \"STATISTICS\"...");
+
+        String createTableStatisticSql = "CREATE TABLE IF NOT EXISTS STATISTICS (ID UUID PRIMARY KEY, RECOMMENDATION_ID UUID NOT NULL, COUNT INT DEFAULT 0)";
+
+        if (tableExists("STATISTICS")) {
+            log.info("Table \"STATISTICS\" already exists.");
+        } else {
+            try {
+                jdbcTemplate.execute(createTableStatisticSql);
+                log.info("Table \"STATISTICS\" has been created");
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
+    }
+
     // Проверка существования таблицы в базе данных
     private boolean tableExists(String tableName) {
         log.debug("Checking if table \"{}\" exists...", tableName);
 
-        String createTableQuery = "SELECT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE table_name = ?)AS table_exists;";
+        String createTableQuery = "SELECT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE table_name = ?) AS table_exists";
 
         boolean isExists = Boolean.TRUE.equals(jdbcTemplate.queryForObject(createTableQuery, Boolean.class, tableName));
 
