@@ -16,7 +16,6 @@ import java.util.UUID;
 @Repository
 
 public class UserRepository {
-    public static final String USER_BY_ID_IS_EXISTS = "SELECT EXISTS(SELECT 1 FROM USERS WHERE ID = ?)AS user_is_exist";
 
     private final JdbcTemplate transactionJdbcTemplate;
 
@@ -30,7 +29,9 @@ public class UserRepository {
     public boolean userIsExists(UUID id) {
         log.debug("Validating user by id='{}'", id);
 
-        boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(USER_BY_ID_IS_EXISTS, Boolean.class, id));
+        String userByIdIsExistsSql = "SELECT EXISTS(SELECT 1 FROM USERS WHERE ID = ?)AS user_is_exist";
+
+        boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(userByIdIsExistsSql, Boolean.class, id));
 
         log.debug("User validation: '{}'", userIsExists);
         return userIsExists;
