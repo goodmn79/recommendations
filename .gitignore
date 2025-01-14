@@ -36,3 +36,4 @@ build/
 /mvnw.cmd
 /db/recommendation_db/recommendation.mv.db
 /db/recommendation_db/recommendation.trace.db
+/src/main/resources/build-info.properties

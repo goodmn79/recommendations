@@ -92,6 +92,9 @@
                         <goals>
                             <goal>build-info</goal>
                         </goals>
+                        <configuration>
+                            <outputFile>src/main/resources/build-info.properties</outputFile>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
@@ -103,6 +106,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
