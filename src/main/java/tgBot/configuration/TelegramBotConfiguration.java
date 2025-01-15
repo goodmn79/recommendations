@@ -1,9 +1,9 @@
 /*
-Файл конфигурации для подключения телеграм-бота
+Файл конфигурации для подключения Телеграм-бота
 Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.configuration;
+package tgBot.configuration;
 
 import com.pengrad.telegrambot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public TelegramBot telegramBot() {
-        TelegramBot bot = new TelegramBot(token);
-        return bot;
+        return new TelegramBot(token);
+
     }
 }
