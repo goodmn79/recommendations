@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.exception.RecommendationRuleNotExistException;
-import pro.sky.recommendations.exception.SaveDataException;
-import pro.sky.recommendations.model.Query;
-import pro.sky.recommendations.model.Recommendation;
-import pro.sky.recommendations.repository.QueryRepository;
+import pro.sky.recommendations.recommendation.exception.RecommendationRuleNotExistException;
+import pro.sky.recommendations.recommendation.model.Query;
+import pro.sky.recommendations.recommendation.model.Recommendation;
+import pro.sky.recommendations.recommendation.repository.QueryRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,11 +29,7 @@ public class QueryService {
         log.info("Saving rule...");
 
         List<Query> rule = recommendation.getRule();
-        List<Query> savedRule = this.saveRule(rule);
-        if (savedRule.isEmpty()) {
-            log.error("Rule could not be saved.");
-            throw new SaveDataException();
-        }
+        this.saveRule(rule);
     }
 
     // Получение правила по идентификатору рекомендации банковского продукта
@@ -58,9 +53,9 @@ public class QueryService {
     }
 
     // Сохранение правила рекомендации банковского продукта
-    private List<Query> saveRule(List<Query> queries) {
+    private void saveRule(List<Query> queries) {
         log.debug("Invoke method: 'saveRule'");
 
-        return queryRepository.saveAll(queries);
+        queryRepository.saveAll(queries);
     }
 }
