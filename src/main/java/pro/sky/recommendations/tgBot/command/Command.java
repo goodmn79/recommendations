@@ -3,8 +3,8 @@
 Powered by ©AYE.team
  */
 
-package tgBot.command;
+package pro.sky.recommendations.tgBot.command;
 
 public interface Command {
-    String execute(String message);
+    String execute(String message, Long chatId);
 }

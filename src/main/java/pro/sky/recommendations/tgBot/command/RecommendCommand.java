@@ -2,12 +2,12 @@
 Класс для ответа на команду /recommend в Телеграм-боте
 Powered by ©AYE.team
  */
-package tgBot.command;
+package pro.sky.recommendations.tgBot.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tgBot.exceptions.BadMessageException;
-import tgBot.service.RecommendationBotService;
+import pro.sky.recommendations.tgBot.exceptions.BadMessageException;
+import pro.sky.recommendations.tgBot.service.RecommendationBotService;
 
 @Component
 public class RecommendCommand implements Command {
@@ -19,9 +19,9 @@ public class RecommendCommand implements Command {
     }
 
     @Override
-    public String execute(String message) {
+    public String execute(String message, Long chatId) {
         try {
-            return recommendationBotService.processMessage(message);
+            return recommendationBotService.processMessage(message, chatId);
         } catch (BadMessageException e) {
             return "Ошибка: " + e.getMessage();
         }
