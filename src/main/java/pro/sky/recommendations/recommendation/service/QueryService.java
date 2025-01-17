@@ -3,7 +3,7 @@
 Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.service;
+package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
