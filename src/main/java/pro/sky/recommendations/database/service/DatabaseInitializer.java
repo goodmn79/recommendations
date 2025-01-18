@@ -3,7 +3,7 @@
 Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.data_base_service;
+package pro.sky.recommendations.database.service;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;

@@ -1,9 +1,9 @@
 /*
-Файл конфигурации для подключения к базе данных transaction.mv.db
+Файл конфигурации для подключения к базе данных recommendation.mv.db
 Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.data_base_configuration;
+package pro.sky.recommendations.database.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,22 +15,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class TransactionDataSourceConfiguration {
+public class RecommendationDataSourceConfiguration {
 
     // Регистрация бина управляющего соединением с базой данных
-    @Bean(name = "transactionDataSource")
-    public DataSource transactionDataSource(
-            @Value("${application.transaction-db.url}") String transactionUrl) {
+    @Bean(name = "recommendationDataSource")
+    public DataSource recommendationDataSource(
+            @Value("${application.recommendation-db.url}") String recommendationUrl) {
         var dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(transactionUrl);
+        dataSource.setJdbcUrl(recommendationUrl);
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setReadOnly(true);
         return dataSource;
     }
 
     // Регистрация бина обеспечивающего взаимодействие с базой данных
-    @Bean(name = "transactionJdbcTemplate")
-    public JdbcTemplate transactionJdbcTemplate(@Qualifier("transactionDataSource") DataSource dataSource) {
+    @Bean(name = "recommendationJdbcTemplate")
+    public JdbcTemplate recommendationJdbcTemplate(@Qualifier("recommendationDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 }
