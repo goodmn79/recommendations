@@ -55,7 +55,7 @@ public class StatsService {
         this.statsCounters.put(recommendation.getId(), new Stats().setRecommendation(recommendation));
     }
 
-    private List<Stats> getStatsList() {
+    public List<Stats> getStatsList() {
         return new ArrayList<>(statsCounters.values());
     }
 
