@@ -6,11 +6,15 @@ package pro.sky.recommendations.tgBot.service;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.dto.RecommendationData;
 import pro.sky.recommendations.dto.UserRecommendation;
 
+import pro.sky.recommendations.exception.UserNotFoundException;
 import pro.sky.recommendations.service.UserService;
 import pro.sky.recommendations.service.UserRecommendationService;
 import pro.sky.recommendations.tgBot.exceptions.BadMessageException;
@@ -22,18 +26,20 @@ import java.util.UUID;
 @Service
 public class RecommendationBotService {
 
+    private final Logger logger = LoggerFactory.getLogger(RecommendationBotService.class);
+
     private final UserService userService;
     private final UserRecommendationService userRecommendationService;
-    ;
+
     private final CommandManager commandManager;
-    private final TelegramService telegramService;
+    private final TelegramSenderService telegramSenderService;
 
     @Autowired
-    public RecommendationBotService(UserService userService, UserRecommendationService userRecommendationService, CommandManager commandManager, TelegramService telegramService) {
+    public RecommendationBotService(UserService userService, UserRecommendationService userRecommendationService, @Lazy CommandManager commandManager, TelegramSenderService telegramSenderService) {
         this.userService = userService;
         this.userRecommendationService = userRecommendationService;
         this.commandManager = commandManager;
-        this.telegramService = telegramService;
+        this.telegramSenderService = telegramSenderService;
     }
 
     /**
@@ -47,6 +53,9 @@ public class RecommendationBotService {
         // Если команда начинается с /recommend, обрабатываем по-особенному
         if (message.startsWith("/recommend")) {
             return responseToRecommendCommand(message, chatId);
+        }
+        if (message.startsWith("/start")) {
+            return commandManager.executeCommand(message, chatId);
         }
         return commandManager.executeCommand(message, chatId);
     }
@@ -63,6 +72,7 @@ public class RecommendationBotService {
             // Извлекаем firstName и lastName из массива
             firstName = names[0];
             lastName = names[1];
+            logger.debug("User firstname and lastname: {} {}", firstName, lastName);
 
             // Проверка валидности данных
             boolean isValidData = validData(firstName, lastName);
@@ -70,23 +80,28 @@ public class RecommendationBotService {
                 formattedFirstName = StringUtils.capitalize(StringUtils.lowerCase(firstName));
                 formattedLastName = StringUtils.capitalize(StringUtils.lowerCase(lastName));
             }
+            // Получаем id пользователя
             UUID userId = userService.userId(formattedFirstName, formattedLastName);
+            logger.debug("User id: {}", userId);
+
             if (userId == null) {
                 String userNotFoundMessage = "Пользователь не найден";
-                telegramService.sendMessage(chatId, userNotFoundMessage);
+                telegramSenderService.sendMessage(chatId, userNotFoundMessage);
+                logger.error("User not found");
                 return userNotFoundMessage;
             }
 
             String userFoundMessage = createResponse(formattedFirstName, formattedLastName, chatId);
-            telegramService.sendMessage(chatId, userFoundMessage);
+            telegramSenderService.sendMessage(chatId, userFoundMessage);
+            logger.debug("Message sent");
             return userFoundMessage;
 
-        } catch (BadMessageException e) {
-            String errorMessage = "Вы ввели некорректные данные";
-            telegramService.sendMessage(chatId, errorMessage);
+        } catch (UserNotFoundException e) {
+            String errorMessage = "Пользователь не найден";
+            telegramSenderService.sendMessage(chatId, errorMessage);
+            logger.error("Uncorrected user data");
             return errorMessage;
         }
-
     }
 
     public boolean validData(String firstName, String lastName) {
@@ -128,11 +143,13 @@ public class RecommendationBotService {
         UserRecommendation userRecommendation = userRecommendationService.getUserRecommendations(userId);
         if (userRecommendation == null || userRecommendation.getRecommendations().isEmpty()) {
             String recommendationsNotFoundMessage = "Доступных для Вас рекомендаций нет";
-            telegramService.sendMessage(chatId, recommendationsNotFoundMessage);
+            telegramSenderService.sendMessage(chatId, recommendationsNotFoundMessage);
             return recommendationsNotFoundMessage;
         }
         // Получаем список рекомендаций
         List<RecommendationData> recommendations = userRecommendation.getRecommendations();
+        int size = recommendations.size();
+        logger.debug("Amount of recommendations {}", size);
 
         // Возвращаем информацию о рекомендациях
         StringBuilder recommendationsInfo = new StringBuilder("Новые продукты для вас:\n");
@@ -140,7 +157,7 @@ public class RecommendationBotService {
             recommendationsInfo.append(recommendation.getProductName())
                     .append("\n").append(recommendation.getProductText()).append("\n");
         }
-        telegramService.sendMessage(chatId, recommendationsInfo.toString());
+        telegramSenderService.sendMessage(chatId, recommendationsInfo.toString());
         return recommendationsInfo.toString();
     }
 

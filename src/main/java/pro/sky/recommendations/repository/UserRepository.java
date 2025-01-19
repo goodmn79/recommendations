@@ -64,7 +64,8 @@ public class UserRepository {
             return Optional.of(userIds.get(0));
 
         } catch (Exception e) {
-            throw new UserNotFoundException();
+            log.error("Database error", e);
+            return Optional.empty();
         }
     }
 }

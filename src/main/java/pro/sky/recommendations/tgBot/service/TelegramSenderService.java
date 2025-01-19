@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TelegramService {
+public class TelegramSenderService {
     private final TelegramBot telegramBot;
 
     @Autowired
-    public TelegramService(TelegramBot telegramBot) {
+    public TelegramSenderService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
 

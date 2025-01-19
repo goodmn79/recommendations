@@ -53,7 +53,7 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
         if (message != null) {
             String userMessage = message.text();
             Long chatId = message.chat().id();
-
+            logger.debug("ChatId: {}", chatId);
             botService.processMessage(userMessage, chatId);
         }
     }
