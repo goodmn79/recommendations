@@ -37,6 +37,7 @@ public class UserRepository {
         log.debug("Validating user by id='{}'", id);
 
         String userByIdIsExistsSql = "SELECT EXISTS (SELECT 1 FROM USERS u WHERE u.ID = ?) AS user_is_exist";
+
         boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(userByIdIsExistsSql, Boolean.class, id));
 
         log.debug("User validation: '{}'", userIsExists);
