@@ -9,10 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StartCommand implements Command {
-    public static final String START = "/start";
-
-    private final Logger log = LoggerFactory.getLogger(StartCommand.class);
+public class Start implements Command {
+    private final Logger log = LoggerFactory.getLogger(Start.class);
 
     /**
      * передаёт текст ответного сообщения
@@ -22,7 +20,7 @@ public class StartCommand implements Command {
      */
     @Override
     public String respond(String text) {
-        log.info("Ответ на команду '/start' упешно сформирован");
+        log.info("Ответ на команду '/start' упешно сформирован.");
 
         return "Для получения информации о доступных Вам новых продуктах введите:\n/recommend <Имя Фамилия>";
     }
