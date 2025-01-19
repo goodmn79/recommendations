@@ -9,10 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.dto.RecommendationData;
-import pro.sky.recommendations.dto.UserRecommendation;
-import pro.sky.recommendations.service.UserRecommendationService;
+import pro.sky.recommendations.recommendation.dto.RecommendationData;
 import pro.sky.recommendations.tgBot.service.BotService;
+import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
+import pro.sky.recommendations.user_recommendation.service.UserRecommendationService;
 
 import java.util.List;
 import java.util.Optional;

@@ -3,8 +3,8 @@ package pro.sky.recommendations.stats.mapper.rowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.model.Recommendation;
-import pro.sky.recommendations.service.RecommendationService;
+import pro.sky.recommendations.recommendation.model.Recommendation;
+import pro.sky.recommendations.recommendation.service.RecommendationService;
 import pro.sky.recommendations.stats.model.Stats;
 
 import java.sql.ResultSet;

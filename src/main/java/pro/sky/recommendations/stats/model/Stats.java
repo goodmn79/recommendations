@@ -2,7 +2,7 @@ package pro.sky.recommendations.stats.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import pro.sky.recommendations.model.Recommendation;
+import pro.sky.recommendations.recommendation.model.Recommendation;
 
 import java.util.UUID;
 

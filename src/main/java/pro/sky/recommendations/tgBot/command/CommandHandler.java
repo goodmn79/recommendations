@@ -10,10 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.dto.RecommendationData;
-import pro.sky.recommendations.model.User;
-import pro.sky.recommendations.service.UserRecommendationService;
-import pro.sky.recommendations.service.UserService;
+import pro.sky.recommendations.recommendation.dto.RecommendationData;
+import pro.sky.recommendations.recommendation.model.User;
+import pro.sky.recommendations.recommendation.service.UserService;
+import pro.sky.recommendations.user_recommendation.service.UserRecommendationService;
 
 import java.util.List;
 import java.util.Map;
