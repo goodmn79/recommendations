@@ -1,11 +1,14 @@
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pro.sky.recommendations.recommendation.model.User;
 import pro.sky.recommendations.recommendation.repository.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,5 +28,19 @@ public class UserService {
             log.info("User validation completed successfully");
         }
         return exist;
+    }
+
+    public List<User> getUserByNameKey(String NameKey) {
+        log.info("Fetching user by NameKey='{}'", StringUtils.substringBefore(NameKey, "%"));
+
+        List<User> users = userRepository.findUsersByNameKey(NameKey);
+
+        if (users.isEmpty()) {
+            log.warn("User not found");
+            return users;
+        }
+
+        log.info("User successfully found");
+        return users;
     }
 }
