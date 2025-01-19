@@ -1,27 +1,29 @@
-/*
-Класс для ответа на команду /start в Телеграм-боте
-Powered by ©AYE.team
+/**
+ * @author Powered by ©AYE.team
  */
 
 package pro.sky.recommendations.tgBot.command;
 
-import org.springframework.context.annotation.Lazy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.tgBot.service.RecommendationBotService;
-import pro.sky.recommendations.tgBot.service.TelegramSenderService;
 
 @Component
 public class StartCommand implements Command {
+    public static final String START = "/start";
 
-    private final TelegramSenderService telegramSenderService;
-    public StartCommand(TelegramSenderService telegramSenderService) {
-        this.telegramSenderService = telegramSenderService;
-    }
+    private final Logger log = LoggerFactory.getLogger(StartCommand.class);
 
+    /**
+     * передаёт текст ответного сообщения
+     *
+     * @param text текст входящего сообщения
+     * @return сообщение с инструкцией
+     */
     @Override
-    public String execute(String message, Long chatId) {
-        String welcomeMessage = "Для получения доступных Вам рекомендаций введите: '/recommend Имя Фамилия' (пример: /recommend Иван Иванов)";
-        telegramSenderService.sendMessage(chatId, welcomeMessage);
-        return welcomeMessage;
+    public String respond(String text) {
+        log.info("Ответ на команду '/start' упешно сформирован");
+
+        return "Для получения информации о доступных Вам новых продуктах введите:\n/recommend <Имя Фамилия>";
     }
 }

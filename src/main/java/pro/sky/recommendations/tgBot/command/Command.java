@@ -1,10 +1,10 @@
-/*
-Файл интерфейса для команд в Телеграм-боте
-Powered by ©AYE.team
+/**
+ * @author Powered by ©AYE.team
  */
 
 package pro.sky.recommendations.tgBot.command;
 
+@FunctionalInterface
 public interface Command {
-    String execute(String message, Long chatId);
+    String respond(String text);
 }

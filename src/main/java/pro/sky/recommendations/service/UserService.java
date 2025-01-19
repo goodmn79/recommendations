@@ -1,13 +1,14 @@
 package pro.sky.recommendations.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.exception.UserNotFoundException;
+import pro.sky.recommendations.model.User;
 import pro.sky.recommendations.repository.UserRepository;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,6 +18,7 @@ public class UserService {
 
     Logger log = LoggerFactory.getLogger(UserService.class);
 
+    // Проверка наличия пользователя в базе данных
     public boolean userExists(UUID userId) {
         log.info("Validating user by id...");
 
@@ -29,16 +31,17 @@ public class UserService {
         return exist;
     }
 
-    public UUID userId (String lastName, String firstName) {
-        log.info("Validating user by name...");
+    public List<User> getUserByNameKey(String NameKey) {
+        log.info("Fetching user by NameKey='{}'", StringUtils.substringBefore(NameKey, "%"));
 
-        Optional<UUID> userId = userRepository.getUserId(lastName, firstName);
-        if (userId.isPresent()) {
-            return userId.get();
-        } else {
+        List<User> users = userRepository.findUsersByNameKey(NameKey);
+
+        if (users.isEmpty()) {
             log.warn("User not found");
-            throw new UserNotFoundException();
+            return users;
         }
-    }
 
+        log.info("User successfully found");
+        return users;
+    }
 }

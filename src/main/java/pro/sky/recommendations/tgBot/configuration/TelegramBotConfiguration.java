@@ -1,6 +1,5 @@
-/*
-Файл конфигурации для подключения Телеграм-бота
-Powered by ©AYE.team
+/**
+ * @author Powered by ©AYE.team
  */
 
 package pro.sky.recommendations.tgBot.configuration;
@@ -18,6 +17,5 @@ public class TelegramBotConfiguration {
     @Bean
     public TelegramBot telegramBot() {
         return new TelegramBot(token);
-
     }
 }
