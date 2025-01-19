@@ -2,7 +2,7 @@
  * @author Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.tgBot.command;
+package pro.sky.recommendations.tg_bot.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

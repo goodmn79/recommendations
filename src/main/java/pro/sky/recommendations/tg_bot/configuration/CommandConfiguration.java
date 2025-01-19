@@ -1,9 +1,9 @@
-package pro.sky.recommendations.tgBot.configuration;
+package pro.sky.recommendations.tg_bot.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pro.sky.recommendations.tgBot.command.Command;
+import pro.sky.recommendations.tg_bot.command.Command;
 
 import java.util.Map;
 import java.util.stream.Collectors;

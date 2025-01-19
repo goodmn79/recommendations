@@ -2,7 +2,7 @@
  * @author Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.tgBot.listener;
+package pro.sky.recommendations.tg_bot.listener;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.tgBot.service.BotService;
+import pro.sky.recommendations.tg_bot.service.BotService;
 
 import java.util.List;
 

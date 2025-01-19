@@ -2,7 +2,7 @@
  * @author Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.tgBot.configuration;
+package pro.sky.recommendations.tg_bot.configuration;
 
 import com.pengrad.telegrambot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;

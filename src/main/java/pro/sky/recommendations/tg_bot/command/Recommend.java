@@ -2,7 +2,7 @@
  * @author Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.tgBot.command;
+package pro.sky.recommendations.tg_bot.command;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import pro.sky.recommendations.recommendation.dto.RecommendationData;
 import pro.sky.recommendations.recommendation.model.User;
 import pro.sky.recommendations.recommendation.service.UserService;
-import pro.sky.recommendations.tgBot.service.BotService;
+import pro.sky.recommendations.tg_bot.service.BotService;
 import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 import pro.sky.recommendations.user_recommendation.service.UserRecommendationService;
 

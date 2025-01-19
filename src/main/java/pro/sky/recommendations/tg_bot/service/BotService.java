@@ -2,7 +2,7 @@
  * @author Powered by ©AYE.team
  */
 
-package pro.sky.recommendations.tgBot.service;
+package pro.sky.recommendations.tg_bot.service;
 
 
 import com.pengrad.telegrambot.model.Message;
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.tgBot.command.Command;
+import pro.sky.recommendations.tg_bot.command.Command;
 
 import java.util.Map;
 import java.util.Optional;
