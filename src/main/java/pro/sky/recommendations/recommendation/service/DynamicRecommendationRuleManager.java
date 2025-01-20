@@ -30,87 +30,87 @@ public class DynamicRecommendationRuleManager {
     private final RecommendationService recommendationService;
     private final QueryService queryService;
     private final ProductService productService;
+    private final StatsService statsService;
 
     private final TransactionTemplate transactionTemplate;
 
     private final QueryMapper queryMapper;
 
     private final Logger log = LoggerFactory.getLogger(DynamicRecommendationRuleManager.class);
-    private final StatsService statsService;
 
     // Создание рекомендации банковского продукта
     public DynamicRecommendationRule saveRecommendation(DynamicRecommendationRule drr) {
-        log.info("Saving dynamic recommendation rule...");
+        log.info("Сохранение динамического правила рекомендации...");
 
         Recommendation recommendation = this.createRecommendation(drr);
         transactionTemplate.execute(new TransactionSaveCallback(recommendation));
 
         DynamicRecommendationRule savedDrr = this.dynamicRecommendationRuleBuilder(recommendation);
-        log.info("Dynamic recommendation rule successfully saved");
+        log.info("Динамическое правило рекомендации успешно сохранено.");
         return savedDrr;
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
     public DynamicRecommendationRule getById(UUID recommendationId) {
-        log.info("Fetching dynamic recommendation rule...");
+        log.info("Получение динамических правил рекомендаций по идентификатору...");
 
         Recommendation recommendation = recommendationService.findById(recommendationId);
 
         DynamicRecommendationRule drr = dynamicRecommendationRuleBuilder(recommendation);
-        log.info("Dynamic recommendation rule successfully fetched");
+        log.info("Динамическое правило рекомендации успешно получено.");
         return drr;
     }
 
     // Получение всех рекомендаций банковских продуктов
     public List<DynamicRecommendationRule> getAll() {
-        log.info("Fetching all dynamic recommendation rules...");
+        log.info("Получение динамических правил рекомендаций...");
 
         List<Recommendation> recommendations = recommendationService.findAll();
         if (recommendations.isEmpty()) {
-            log.error("Dynamic recommendation rules not found");
+            log.error("Динамических правил рекомендации не найдено!");
             throw new RecommendationNotFoundException();
         }
 
         List<DynamicRecommendationRule> drrList = recommendations.stream().map(this::dynamicRecommendationRuleBuilder).toList();
-        log.info("Dynamic recommendation rules successfully fetched");
+        log.info("Динамические правила рекомендаций успешно получены.");
         return drrList;
     }
 
     // Удаление рекомендации банковского продукта по её идентификатору
     public void deleteById(UUID recommendationId) {
-        log.info("Deleting dynamic recommendation rule...");
+        log.info("Удаление динамического правила рекомендации...");
 
         Recommendation recommendation = recommendationService.findById(recommendationId);
 
         transactionTemplate.execute(new TransactionDeleteCallback(recommendation));
 
-        log.info("Dynamic recommendation rule successfully deleted");
+        log.info("Динамическое правило рекомендации успешно удалено.");
     }
 
     private Recommendation createRecommendation(DynamicRecommendationRule drr) {
 
         Product product = productService.findById(drr.getProductId());
 
-        log.info("Creating recommendation...");
+        log.info("Создание рекомендации...");
         Recommendation recommendation = new Recommendation().setId(UUID.randomUUID()).setProduct(product).setProductText(drr.getProductText());
 
-        log.info("Creating rule...");
+        log.info("Создание правила...");
         List<Query> rule = queryMapper.toQuery(drr.getRule(), recommendation);
 
-        log.info("Rule successfully created");
+        log.info("Правило успешно создано.");
         recommendation.setRule(rule);
 
-        log.info("Recommendation successfully created");
+        log.info("Рекомендация успешно создана.");
         return recommendation;
     }
 
     // Создание динамического правила рекомендации банковского продукта
     private DynamicRecommendationRule dynamicRecommendationRuleBuilder(Recommendation recommendation) {
-        log.info("Building dynamic recommendation rule...");
+        log.info("Создание динамического правила рекомендации...");
 
         DynamicRecommendationRule drr = new DynamicRecommendationRule().setId(recommendation.getId()).setProductName(recommendation.getProduct().getName()).setProductId(recommendation.getProduct().getId()).setProductText(recommendation.getProductText()).setRule(queryMapper.toQueryData(recommendation.getRule()));
 
-        log.info("Dynamic recommendation rule successfully built");
+        log.info("Динамическое правило рекомендации успешно создано.");
         return drr;
     }
 
@@ -123,20 +123,24 @@ public class DynamicRecommendationRuleManager {
 
         @Override
         public void doInTransactionWithoutResult(TransactionStatus status) {
+            log.info("Процесс выполнения транзакции сохранения...");
+
             try {
                 recommendationService.saveRecommendation(recommendation);
-                log.info("Recommendation was successfully saved");
+                log.info("Рекомендация успешно сохранена.");
 
                 queryService.saveRule(recommendation);
-                log.info("Rule was successfully saved");
+                log.info("Правило рекомендации успешно сохранено.");
 
                 statsService.createCounter(recommendation);
-                log.info("Counter was successfully created");
+                log.info("Счётчик запросов успешно сохранён.");
+
             } catch (Exception e) {
                 status.setRollbackOnly();
-                log.error("Dynamic recommendation rule saving failed. Rollback operation", e);
+                log.error("Не удалось сохранить динамическое правило рекомендации . Откат операции.", e);
                 throw new TransactionExecuteException();
             }
+            log.info("Процесс сохранения успешно завершён.");
         }
     }
 
@@ -151,16 +155,16 @@ public class DynamicRecommendationRuleManager {
         public void doInTransactionWithoutResult(TransactionStatus status) {
             try {
                 recommendationService.deleteById(recommendation.getId());
-                log.info("Recommendation was successfully deleted");
+                log.info("Рекомендация успешно удалена.");
 
                 queryService.deleteBYRecommendationId(recommendation.getId());
-                log.info("Rule was successfully deleted");
+                log.info("Правило рекомендации успешно удалено.");
 
                 statsService.deleteCounter(recommendation);
-                log.info("Counter was successfully deleted");
+                log.info("Счётчик запросов успешно удалён.");
             } catch (Exception e) {
                 status.setRollbackOnly();
-                log.error("Dynamic recommendation rule deletion failed. Rollback operation", e);
+                log.error("Не удалось удалить динамическое правило рекомендации . Откат операции.", e);
                 throw new TransactionExecuteException();
             }
         }

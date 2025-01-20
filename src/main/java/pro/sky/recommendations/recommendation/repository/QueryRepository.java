@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.recommendation.model.Query;
 import pro.sky.recommendations.recommendation.mapper.row_mapper.QueryRowMapper;
+import pro.sky.recommendations.recommendation.model.Query;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -46,27 +46,23 @@ public class QueryRepository {
                 .findAny()
                 .orElse(null);
 
-        try {
-            jdbcTemplate.batchUpdate(saveQuerySql, new BatchPreparedStatementSetter() {
-                @Override
-                public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Query query = queries.get(i);
+        jdbcTemplate.batchUpdate(saveQuerySql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                Query query = queries.get(i);
 
-                    ps.setObject(1, UUID.randomUUID());
-                    ps.setObject(2, recommendationId);
-                    ps.setString(3, query.getQuery());
-                    ps.setString(4, query.argsToString());
-                    ps.setBoolean(5, query.getNegate());
-                }
+                ps.setObject(1, UUID.randomUUID());
+                ps.setObject(2, recommendationId);
+                ps.setString(3, query.getQuery());
+                ps.setString(4, query.argsToString());
+                ps.setBoolean(5, query.getNegate());
+            }
 
-                @Override
-                public int getBatchSize() {
-                    return queries.size();
-                }
-            });
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+            @Override
+            public int getBatchSize() {
+                return queries.size();
+            }
+        });
     }
 
     // Получение коллекции запросов для динамического правила по идентификатору рекомендации
@@ -90,11 +86,7 @@ public class QueryRepository {
 
         String deleteQueriesByRecommendationIdSql = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
-        try {
-            log.debug("Recommendation rule with recommendation id={} was successfully deleted", recommendationId);
-            jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        log.debug("Recommendation rule with recommendation id={} was successfully deleted", recommendationId);
+        jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
     }
 }

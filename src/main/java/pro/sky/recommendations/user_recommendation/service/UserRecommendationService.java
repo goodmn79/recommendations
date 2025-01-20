@@ -42,7 +42,7 @@ public class UserRecommendationService {
     public UserRecommendation getUserRecommendations(UUID userId) {
         validateUserId(userId);
 
-        log.info("Fetching user recommendations...");
+        log.info("Получение рекомендаций для пользователя...");
 
         List<Recommendation> userRecommendations =
                 recommendationService.findAll()
@@ -53,38 +53,38 @@ public class UserRecommendationService {
                         })
                         .toList();
 
-        if (userRecommendations.isEmpty()) log.warn("No user recommendations found");
+        if (userRecommendations.isEmpty()) log.warn("Рекомендаций для пользователя не найдено.");
 
         UserRecommendation userRecommendation = new UserRecommendation()
                 .setUserId(userId)
                 .setRecommendations(recommendationMapper.fromRecommendationList(userRecommendations));
 
-        log.info("User recommendations successfully fetched");
+        log.info("Рекомендации для пользователя успешно получены.");
         return userRecommendation;
     }
 
     // Проверка соответствованя всех требований для правила рекомендации банковского продукта
     private boolean isComplianceRule(UUID userId, List<Query> rule) {
-        log.info("Rule compliance check...");
+        log.warn("Проверка на соответствие правилу...");
 
         for (Query query : rule) {
             if (!isCompliance(userId, query)) {
-                log.warn("Rule compliance check failed");
+                log.error("Проверка не пройдена!");
                 return false;
             }
         }
-        log.info("Check completed successfully");
+        log.info("Проверка прошла успешно");
         return true;
     }
 
     // Проверка соответствованя требования для правила рекомендации банковского продукта
     private boolean isCompliance(UUID userId, Query query) {
-        log.debug("Checking compliance for user {}", userId);
+        log.debug("Проверка соответствия правилу для пользователя с id = {}", userId);
         String querySQL = queryGenerator(query);
 
         boolean isCompliance = transactionService.isCompliance(querySQL, userId);
 
-        log.debug("Checking complete with result - '{}'", isCompliance);
+        log.debug("Проверка завершена с результатом - '{}'", isCompliance);
         return checkNegate(isCompliance, query.getNegate());
     }
 
@@ -111,7 +111,7 @@ public class UserRecommendationService {
     // Валидация пользователя по его идентификатору
     private void validateUserId(UUID userId) {
         if (!userService.userExists(userId)) {
-            log.error("User does not exist");
+            log.error("Пользователь не существует");
             throw new UserNotFoundException();
         }
     }
