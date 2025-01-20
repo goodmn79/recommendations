@@ -38,11 +38,7 @@ public class RecommendationRepository {
 
         String saveRecommendationSql = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
 
-        try {
-            jdbcTemplate.update(saveRecommendationSql, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        jdbcTemplate.update(saveRecommendationSql, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
