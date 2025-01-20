@@ -39,7 +39,7 @@ public class Recommend implements Command {
     public String respond(String text) {
         String respond = recommend(text);
 
-        log.info("Ответ на команду '/recommend' упешно сформирован.");
+        log.info("Ответ на команду '/recommend' успешно сформирован.");
         return respond;
     }
 

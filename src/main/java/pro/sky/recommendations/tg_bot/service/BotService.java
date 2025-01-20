@@ -44,7 +44,14 @@ public class BotService {
     }
 
     public Optional<Command> getCommand(String text) {
-        String command = StringUtils.substringBetween(text, "/", " ");
+        if (StringUtils.isBlank(text)) return Optional.empty();
+        String command;
+        if (text.contains(" ")) {
+            command = StringUtils.substringBetween(text, "/", " ");
+        } else {
+            command = StringUtils.substringAfter(text, "/");
+        }
+        log.info("Получена команда: '{}'", command);
 
         return Optional.ofNullable(commands.get(command));
     }
