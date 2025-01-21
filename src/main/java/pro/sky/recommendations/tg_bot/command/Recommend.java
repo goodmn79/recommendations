@@ -20,7 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+/**
+ * Класс реализует интерфейс {@link Command} и предоставляет логику для обработки команды "/recommend".
+ */
 @Component
 @RequiredArgsConstructor
 public class Recommend implements Command {
@@ -30,10 +32,10 @@ public class Recommend implements Command {
     private final Logger log = LoggerFactory.getLogger(Recommend.class);
 
     /**
-     * передаёт текст ответного сообщения
+     * Обработка команды "/recommend".
      *
      * @param text текст входящего сообщения
-     * @return ответного сообщения
+     * @return строка с рекомендациями для пользователя, или сообщение об ошибке в случае неправильных данных.
      */
     @Override
     public String respond(String text) {
@@ -44,13 +46,11 @@ public class Recommend implements Command {
     }
 
     /**
-     * формирует текст ответного сообщения
-     * использует(@linc CommandHandler#extractFullName(text)) для извлечения имени и фамилии пользователя
-     * использует(@linc CommandHandler#getUserId(fullName)) для получения идентификатора пользователя
-     * использует(@linc UserRecommendation#getUserRecommendations(userId.get())) для получения доступных рекомендаций
+     * Формирование текста ответного сообщения с рекомендациями для пользователя.
+     * Метод использует имя и фамилию для поиска пользователя и формирования рекомендаций.
      *
      * @param text текст входящего сообщения
-     * @return сформированный текст ответного сообщения в зависимости от полученных параметров
+     * @return строка с рекомендациями для пользователя, или сообщение об ошибке.
      */
     private String recommend(String text) {
         log.info("Формирование ответа на команду '/recommend'...");
@@ -86,12 +86,24 @@ public class Recommend implements Command {
         }
     }
 
+    /**
+     * Извлечение полного имени пользователя из текста команды.
+     *
+     * @param text текст входящего сообщения
+     * @return полное имя пользователя.
+     */
     public String extractFullName(String text) {
         log.info("Извлечение имени и фамилии пользователя из текста сообщения...");
 
         return StringUtils.substringAfter(text, " ");
     }
 
+    /**
+     * Получение идентификатора пользователя по его полному имени.
+     *
+     * @param fullName полное имя пользователя
+     * @return идентификатор пользователя, если найден, иначе {@link Optional#empty()}.
+     */
     public Optional<UUID> getUserId(String fullName) {
         log.info("Получение идентификатора пользователя...");
 
@@ -106,7 +118,12 @@ public class Recommend implements Command {
         }
     }
 
-    // Создание текста рекомендации
+    /**
+     * Формирование строки с текстом рекомендаций для пользователя.
+     *
+     * @param userRecommendations список рекомендаций для пользователя
+     * @return строка с текстом рекомендаций.
+     */
     public String recommendationsTextBuilder(List<RecommendationData> userRecommendations) {
         log.info("Создание презентации рекомендаций для пользователя...");
 
@@ -120,6 +137,12 @@ public class Recommend implements Command {
         return builder.toString();
     }
 
+    /**
+     * Поиск пользователя в базе данных по имени и фамилии.
+     *
+     * @param fullName полное имя пользователя
+     * @return список пользователей, чьи имена соответствуют полному имени.
+     */
     private List<User> getUserByFullName(String fullName) {
         log.info("Поиск пользователя в базе данных по имени и фамилии...");
         String nameKey = this.extractNameKey(fullName);
@@ -131,6 +154,12 @@ public class Recommend implements Command {
                 }).toList();
     }
 
+    /**
+     * Извлечение ключа для поиска из имени и фамилии пользователя.
+     *
+     * @param fullName полное имя пользователя
+     * @return строка с ключом для поиска.
+     */
     private String extractNameKey(String fullName) {
         log.info("Извлечение ключа для поиска из имени и фамилии пользователя...");
         String nameKey = StringUtils.substringBefore(fullName, " ") + "%";
@@ -139,6 +168,12 @@ public class Recommend implements Command {
         return nameKey;
     }
 
+    /**
+     * Форматирование полного имени пользователя, делая каждое слово с заглавной буквы.
+     *
+     * @param fullName полное имя пользователя
+     * @return отформатированное полное имя.
+     */
     private String formatFullName(String fullName) {
         String[] formatFullName = Arrays.stream(StringUtils.split(fullName, " "))
                 .map(s -> {

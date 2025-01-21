@@ -18,9 +18,13 @@ import pro.sky.recommendations.tg_bot.service.BotService;
 
 import java.util.List;
 
+/**
+ * Обработчик обновлений для бота, который отвечает на запросы пользователей с рекомендациями.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationsBotUpdateListener implements UpdatesListener {
+
     private final TelegramBot telegramBot;
 
     private final BotService botService;
@@ -28,7 +32,7 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
     private final Logger log = LoggerFactory.getLogger(UserRecommendationsBotUpdateListener.class);
 
     /**
-     * инициализация телеграм-бота
+     * Инициализация обработчика обновлений. Метод вызывается после создания бина.
      */
     @PostConstruct
     public void init() {
@@ -36,7 +40,10 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
     }
 
     /**
-     * обработка сообщений телеграм-бота
+     * Обработка входящих обновлений от Telegram.
+     *
+     * @param updates список обновлений, содержащий сообщения от пользователей.
+     * @return {@link UpdatesListener#CONFIRMED_UPDATES_ALL} для подтверждения обработки всех обновлений.
      */
     @Override
     public int process(List<Update> updates) {
