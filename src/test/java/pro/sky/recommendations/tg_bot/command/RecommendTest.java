@@ -1,4 +1,4 @@
-package pro.sky.recommendations;
+package pro.sky.recommendations.tg_bot.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pro.sky.recommendations.recommendation.dto.RecommendationData;
 import pro.sky.recommendations.recommendation.model.User;
 import pro.sky.recommendations.recommendation.service.UserService;
-import pro.sky.recommendations.tg_bot.command.Recommend;
 import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 import pro.sky.recommendations.user_recommendation.service.UserRecommendationService;
 
@@ -57,7 +56,6 @@ public class RecommendTest {
                 new RecommendationData().setProductName("Продукт 2").setProductText("Описание 2").setId(UUID.randomUUID()));
         notRecommendations = Collections.emptyList();
     }
-
 
     //Тестирование метода respond, который вызывает метод recommend
     @Test

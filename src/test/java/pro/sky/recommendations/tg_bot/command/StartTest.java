@@ -1,10 +1,9 @@
-package pro.sky.recommendations;
+package pro.sky.recommendations.tg_bot.command;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pro.sky.recommendations.tg_bot.command.Start;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
