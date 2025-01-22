@@ -58,6 +58,7 @@ public class RecommendTest {
         notRecommendations = Collections.emptyList();
     }
 
+
     //Тестирование метода respond, который вызывает метод recommend
     @Test
     void shouldReturnRecommendationsWhenUserExistsAndHasRecommendations() {
