@@ -7,7 +7,7 @@ import pro.sky.recommendations.tg_bot.command.Command;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 /**
  * Конфигурация для создания карты команд.
