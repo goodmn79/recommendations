@@ -2,6 +2,7 @@ package pro.sky.recommendations;
 
 
 import com.pengrad.telegrambot.model.Message;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,10 +36,19 @@ class BotServiceTest {
     @InjectMocks
     private BotService botService;
 
+    private String startCommandText;
+    private String recommendCommandText;
+    private String  unknownCommandText;
+
+    @BeforeEach
+    void SetUp() {
+        startCommandText = "/start";
+        recommendCommandText = "/recommend";
+        unknownCommandText = "/unknown";
+    }
 
     @Test
     void testGetUserRecommendations_withStartCommand() {
-        String startCommandText = "/start";
         when(message.text()).thenReturn(startCommandText);
         when(commands.get("start")).thenReturn(startCommand);
 
@@ -52,7 +62,6 @@ class BotServiceTest {
 
     @Test
     void testGetUserRecommendations_withRecommendCommand() {
-        String recommendCommandText = "/recommend";
         when(message.text()).thenReturn(recommendCommandText);
         when(commands.get("recommend")).thenReturn(recommendCommand);
 
@@ -66,7 +75,7 @@ class BotServiceTest {
 
     @Test
     void testGetUserRecommendations_withUnknownCommand() {
-        when(message.text()).thenReturn("/unknown");
+        when(message.text()).thenReturn(unknownCommandText);
         when(commands.get("unknown")).thenReturn(null);
 
         String result = botService.getUserRecommendations(message);
@@ -77,7 +86,7 @@ class BotServiceTest {
 
     @Test
     void testGetCommand_withStartCommand() {
-        String text = "/start ";
+        String text = "/start arg1 arg2";
         when(commands.get("start")).thenReturn(startCommand);
 
         Optional<Command> result = botService.getCommand(text);
@@ -99,9 +108,7 @@ class BotServiceTest {
 
     @Test
     void testGetCommand_withUnknownCommand() {
-        String text = "/unknown";
-
-        Optional<Command> result = botService.getCommand(text);
+        Optional<Command> result = botService.getCommand(unknownCommandText);
 
         assertThat(result).isNotPresent();
         verify(commands).get("unknown");
