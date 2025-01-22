@@ -1,5 +1,6 @@
 package pro.sky.recommendations;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,17 +37,30 @@ public class RecommendTest {
     @InjectMocks
     private Recommend recommend;
 
+    private String text;
+    private UUID userId;
+    private UUID userId2;
+    private String fullName;
+    private User user;
+    private List<RecommendationData> recommendations;
+    private List<RecommendationData> notRecommendations;
+
+    @BeforeEach
+    void SetUp() {
+        text = "/recommend Иван Иванов";
+        fullName = "Иван Иванов";
+        userId = UUID.randomUUID();
+        userId2 = UUID.randomUUID();
+        user = new User().setId(userId).setFirstName("Иван").setLastName("Иванов");
+        recommendations = List.of(
+                new RecommendationData().setProductName("Продукт 1").setProductText("Описание 1").setId(UUID.randomUUID()),
+                new RecommendationData().setProductName("Продукт 2").setProductText("Описание 2").setId(UUID.randomUUID()));
+        notRecommendations = Collections.emptyList();
+    }
+
     //Тестирование метода respond, который вызывает метод recommend
     @Test
     void shouldReturnRecommendationsWhenUserExistsAndHasRecommendations() {
-        String text = "/recommend Иван Иванов";
-        UUID userId = UUID.randomUUID();
-
-        User user = new User().setId(userId).setFirstName("Иван").setLastName("Иванов");
-        List<RecommendationData> recommendations = List.of(
-                new RecommendationData().setProductName("Продукт 1").setProductText("Описание 1").setId(UUID.randomUUID()),
-                new RecommendationData().setProductName("Продукт 2").setProductText("Описание 2").setId(UUID.randomUUID()));
-
         when(userService.getUserByNameKey(anyString())).thenReturn(List.of(user)); // Возвращаем пользователя
         when(userRecommendationService.getUserRecommendations(userId)).thenReturn(userRecommendation);
         when(userRecommendation.getRecommendations()).thenReturn(recommendations);
@@ -65,8 +79,6 @@ public class RecommendTest {
 
     @Test
     void shouldReturnUserNotFoundWhenUserDoesNotExist() {
-        String text = "/recommend Иван Иванов";
-
         when(userService.getUserByNameKey(anyString())).thenReturn(Collections.emptyList());
 
         String result = recommend.respond(text);
@@ -77,15 +89,9 @@ public class RecommendTest {
 
     @Test
     void shouldReturnNoRecommendationsWhenUserExistsButNoRecommendations() {
-        String text = "/recommend Иван Иванов";
-        UUID userId = UUID.randomUUID();
-
-        User user = new User().setId(userId).setFirstName("Иван").setLastName("Иванов");
-        List<RecommendationData> recommendations = Collections.emptyList();
-
         when(userService.getUserByNameKey(anyString())).thenReturn(List.of(user));
         when(userRecommendationService.getUserRecommendations(userId)).thenReturn(userRecommendation);
-        when(userRecommendation.getRecommendations()).thenReturn(recommendations);
+        when(userRecommendation.getRecommendations()).thenReturn(notRecommendations);
 
         String result = recommend.respond(text);
 
@@ -97,9 +103,9 @@ public class RecommendTest {
 
     @Test
     void shouldReturnIncorrectDataWhenInputIsInvalid() {
-        String text = "/recommend ";
+        String IncorrectData = "/recommend ";
 
-        String result = recommend.respond(text);
+        String result = recommend.respond(IncorrectData);
 
         assertThat(result).isEqualTo("Проверьте корректность введенных данных и повторите попытку");
     }
@@ -107,7 +113,6 @@ public class RecommendTest {
     //Тестирование метода extractFullName
     @Test
     void shouldExtractFullNameCorrectly() {
-        String text = "/recommend Иван Иванов";
         String result = recommend.extractFullName(text);
         assertThat(result).isEqualTo("Иван Иванов");
     }
@@ -115,10 +120,7 @@ public class RecommendTest {
     //Тестирование сценариев метода getUserId
     @Test
     void shouldReturnUserIdWhenUserExists() {
-        String fullName = "Иван Иванов";
-        UUID userId = UUID.randomUUID();
-
-        when(userService.getUserByNameKey(anyString())).thenReturn(List.of(new User().setId(userId).setFirstName("Иван").setLastName("Иванов")));
+        when(userService.getUserByNameKey(anyString())).thenReturn(List.of(user));
 
         Optional<UUID> result = recommend.getUserId(fullName);
 
@@ -128,12 +130,8 @@ public class RecommendTest {
 
     @Test
     void shouldReturnEmptyWhenMultipleUsersFound() {
-        String fullName = "Иван Иванов";
-        UUID userId1 = UUID.randomUUID();
-        UUID userId2 = UUID.randomUUID();
-
         when(userService.getUserByNameKey(anyString())).thenReturn(List.of(
-                new User().setId(userId1).setFirstName("Иван").setLastName("Иванов"),
+                new User().setId(userId).setFirstName("Иван").setLastName("Иванов"),
                 new User().setId(userId2).setFirstName("Иван").setLastName("Иванов")));
 
         Optional<UUID> result = recommend.getUserId(fullName);
@@ -144,23 +142,17 @@ public class RecommendTest {
 
     @Test
     void shouldReturnEmptyWhenUserNotFound() {
-        String fullName = "Неизвестный Пользователь";
-
         when(userService.getUserByNameKey(anyString())).thenReturn(Collections.emptyList());
 
         Optional<UUID> result = recommend.getUserId(fullName);
 
         assertThat(result).isEmpty();
-        verify(userService).getUserByNameKey("Неизвестный%");
+        verify(userService).getUserByNameKey("Иван%");
     }
 
     //Тестирование сценариев метода recommendationsTextBuilder
     @Test
     void shouldBuildRecommendationsTextCorrectly() {
-        List<RecommendationData> recommendations = List.of(
-                new RecommendationData().setProductName("Продукт 1").setProductText("Описание 1"),
-                new RecommendationData().setProductName("Продукт 2").setProductText("Описание 2"));
-
         String result = recommend.recommendationsTextBuilder(recommendations);
 
         assertThat(result).contains("Продукт 1").contains("Описание 1");
@@ -169,9 +161,7 @@ public class RecommendTest {
 
     @Test
     void shouldReturnEmptyStringWhenNoRecommendations() {
-        List<RecommendationData> recommendations = Collections.emptyList();
-
-        String result = recommend.recommendationsTextBuilder(recommendations);
+        String result = recommend.recommendationsTextBuilder(notRecommendations);
 
         assertThat(result).isEmpty();
     }
