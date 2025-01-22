@@ -1,4 +1,4 @@
-package pro.sky.recommendations;
+package pro.sky.recommendations.tg_bot.service;
 
 
 import com.pengrad.telegrambot.model.Message;
@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import pro.sky.recommendations.tg_bot.command.Command;
-import pro.sky.recommendations.tg_bot.service.BotService;
 
 
 import java.util.Map;
