@@ -6,12 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 import pro.sky.recommendations.recommendation.model.Recommendation;
 import pro.sky.recommendations.stats.dto.StatsData;
 import pro.sky.recommendations.stats.mapper.StatsMapper;
 import pro.sky.recommendations.stats.model.Stats;
 import pro.sky.recommendations.stats.repository.StatsRepository;
+import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.*;
 
@@ -59,8 +59,8 @@ public class StatsService {
         return new ArrayList<>(statsCounters.values());
     }
 
-    public void deleteCounter(Recommendation recommendation) {
-        this.statsCounters.remove(recommendation.getId());
+    public void deleteCounter(UUID recommendationId) {
+        this.statsCounters.remove(recommendationId);
     }
 
     @PreDestroy
