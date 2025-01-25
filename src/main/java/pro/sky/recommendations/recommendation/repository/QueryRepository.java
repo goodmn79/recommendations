@@ -36,7 +36,7 @@ public class QueryRepository {
 
     // Сохранение коллекции запросов для динамического правила рекомендации
     public void saveAll(List<Query> queries) {
-        log.debug("Invoke method 'saveAll'");
+        log.debug("Вызван метод #saveAll.");
 
         String saveQuerySql = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
 
@@ -67,7 +67,7 @@ public class QueryRepository {
 
     // Получение коллекции запросов для динамического правила по идентификатору рекомендации
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
-        log.debug("Invoke method 'findAllByRecommendationId'");
+        log.debug("Вызван метод #findAllByRecommendationId.");
 
         String findAllQueriesByRecommendationIdSql = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
@@ -76,17 +76,17 @@ public class QueryRepository {
                     .query(findAllQueriesByRecommendationIdSql, mapper, recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
     // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
     public void deleteAllByRecommendationId(UUID recommendationId) {
-        log.debug("Invoke method 'deleteAllByRecommendationId'");
+        log.debug("Вызван метод #deleteAllByRecommendationId.");
 
         String deleteQueriesByRecommendationIdSql = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
-        log.debug("Recommendation rule with recommendation id={} was successfully deleted", recommendationId);
+        log.debug("Правило для рекомендации с идентификатором '{}' успешно удалено", recommendationId);
         jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
     }
 }

@@ -19,28 +19,29 @@ public class UserService {
     Logger log = LoggerFactory.getLogger(UserService.class);
 
     public boolean userExists(UUID userId) {
-        log.info("Validating user by id...");
+        log.warn("Валидация пользователя по идентификатору...");
 
         boolean exist = userRepository.userIsExists(userId);
         if (!exist) {
-            log.warn("User validation failed");
+            log.error("Неудачная валидация, пользователь не существует!");
         } else {
-            log.info("User validation completed successfully");
+            log.info("Валидация пользователя успешно завершена.");
         }
         return exist;
     }
 
     public List<User> getUserByNameKey(String NameKey) {
-        log.info("Fetching user by NameKey='{}'", StringUtils.substringBefore(NameKey, "%"));
+        String keyword = StringUtils.substringBefore(NameKey, "%");
+        log.warn("Получение списка пользователей с именем '{}'...", keyword);
 
         List<User> users = userRepository.findUsersByNameKey(NameKey);
 
         if (users.isEmpty()) {
-            log.warn("User not found");
+            log.error("Пользователи не найдены!");
             return users;
         }
 
-        log.info("User successfully found");
+        log.info("Список прльзователей с именем '{}' успешно получен.", keyword);
         return users;
     }
 }

@@ -8,9 +8,9 @@ package pro.sky.recommendations.recommendation.mapper.castom_mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.recommendation.model.Query;
 import pro.sky.recommendations.recommendation.dto.QueryData;
 import pro.sky.recommendations.recommendation.exception.InvalidQueryDataException;
+import pro.sky.recommendations.recommendation.model.Query;
 import pro.sky.recommendations.recommendation.model.Recommendation;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public final class QueryMapper {
     private final Logger log = LoggerFactory.getLogger(QueryMapper.class);
 
     public List<Query> toQuery(List<QueryData> queryData, Recommendation recommendation) throws InvalidQueryDataException {
-        log.info("Mapping QueryData.class to Query.class");
+        log.info("Преобразование QueryData.class в Query.class");
 
         return queryData
                 .stream()
@@ -32,7 +32,7 @@ public final class QueryMapper {
     }
 
     public List<QueryData> toQueryData(List<Query> queries) {
-        log.info("Mapping Query.class to QueryData.class");
+        log.info("Преобразование Query.class в QueryData.class");
 
         return queries
                 .stream()

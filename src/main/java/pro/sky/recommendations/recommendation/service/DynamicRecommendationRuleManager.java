@@ -98,7 +98,6 @@ public class DynamicRecommendationRuleManager {
             log.error(e.getMessage());
             throw new TransactionExecuteException();
         }
-
         log.info("Динамическое правило рекомендации успешно удалено.");
     }
 

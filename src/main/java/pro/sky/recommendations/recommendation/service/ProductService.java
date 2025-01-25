@@ -24,13 +24,13 @@ public class ProductService {
 
     // Получение данных о банковском продукте по его идентификатору
     public Product findById(UUID id) {
-        log.info("Fetching product by id...");
+        log.info("Получение продукта по его идентификатору...");
 
         Product foundProduct = productRepository.findById(id).orElseThrow(() -> {
-            log.error("Product not found");
+            log.error("Продукт не найден!");
             return new ProductNotFoundException();
         });
-        log.info("Product successfully found");
+        log.info("Продукт успешно получен.");
         return foundProduct;
     }
 }
