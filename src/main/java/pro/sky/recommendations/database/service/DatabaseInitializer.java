@@ -28,13 +28,13 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
-        log.info("Create tables 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS' on database recommendations.mv...");
+        log.info("Инициализация таблиц 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS'...");
 
         try {
             String sql = new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("schema.sql")).toURI())));
 
             jdbcTemplate.execute(sql);
-            log.info("The tables were successfully created or already exist.");
+            log.info("Инициализация таблиц успешно завершена.");
         } catch (Exception e) {
             log.error(e.getMessage());
         }

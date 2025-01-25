@@ -25,7 +25,7 @@ public class StatsService {
 
     @PostConstruct
     public void initStatsDataStore() {
-        log.info("Initializing stats data store");
+        log.info("Инициализация хранилища данных статистики.");
         List<Stats> stats = statsRepository.findAll();
         if (stats.isEmpty()) {
             statsCounters = new HashMap<>();
@@ -34,10 +34,20 @@ public class StatsService {
                     .stream()
                     .collect(HashMap::new, (map, stat) -> map.put(stat.getId(), stat), HashMap::putAll);
         }
-        log.info("Stats data store initialize successful");
+        log.info("Хранилища данных статистики успешно инициализировано.");
+    }
+
+    @PreDestroy
+    public void save() {
+        log.info("Сохранение данных статистики выдачи рекомендаций в базе данных.");
+
+        List<Stats> statsList = this.getStatsList();
+        statsRepository.saveAll(statsList);
     }
 
     public void incrementor(UserRecommendation userRecommendation) {
+        log.info("Инкремент счётчика выдачи рекомендаций продукта.");
+
         userRecommendation.getRecommendations().forEach(recommendation -> {
             Stats stats = statsCounters.get(recommendation.getId());
             if (stats != null) {
@@ -47,25 +57,27 @@ public class StatsService {
     }
 
     public List<StatsData> getAll() {
+        log.info("Получение данных статистики выдачи рекомендаций.");
+
         List<Stats> statsDataList = this.getStatsList();
         return statsMapper.toStatsDataList(statsDataList);
     }
 
     public void createCounter(Recommendation recommendation) {
+        log.info("Создание счётчика выдачи рекомендаций.");
+
         this.statsCounters.put(recommendation.getId(), new Stats().setRecommendation(recommendation));
     }
 
-    private List<Stats> getStatsList() {
-        return new ArrayList<>(statsCounters.values());
-    }
-
     public void deleteCounter(UUID recommendationId) {
+        log.info("Удаление данных статистики выдачи рекомендаций из хранилища.");
+
         this.statsCounters.remove(recommendationId);
     }
 
-    @PreDestroy
-    public void save() {
-        List<Stats> statsList = this.getStatsList();
-        statsRepository.saveAll(statsList);
+    private List<Stats> getStatsList() {
+        log.info("Извлечение данных статистики выдачи рекомендаций из хранилища.");
+
+        return new ArrayList<>(statsCounters.values());
     }
 }

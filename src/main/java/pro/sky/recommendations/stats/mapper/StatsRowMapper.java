@@ -1,4 +1,4 @@
-package pro.sky.recommendations.stats.mapper.rowMapper;
+package pro.sky.recommendations.stats.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;

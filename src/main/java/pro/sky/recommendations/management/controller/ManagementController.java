@@ -26,13 +26,15 @@ public class ManagementController {
     // Очистка кэша
     @PostMapping("clear-cache")
     public void clearCache() {
-        log.info("Calling the cache clearing process");
+        log.info("Запущен процесс очистки кэша.");
 
         managementService.clearCache();
     }
 
     @GetMapping("info")
     public InfoManager info() {
+        log.info("Вызван метод #info.");
+
         return managementService.infoManager();
     }
 }

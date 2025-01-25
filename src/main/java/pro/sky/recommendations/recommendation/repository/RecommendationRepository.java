@@ -34,7 +34,7 @@ public class RecommendationRepository {
 
     // Сохранение рекомендации банковского продукта
     public void save(Recommendation recommendation) {
-        log.debug("Invoke method 'save' for recommendation with id='{}'", recommendation.getId());
+        log.debug("Вызван метод #save");
 
         String saveRecommendationSql = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
 
@@ -43,7 +43,7 @@ public class RecommendationRepository {
 
     // Получение рекомендации банковского продукта по её идентификатору
     public Optional<Recommendation> findById(UUID id) {
-        log.debug("Invoke method 'findById' with id {}", id);
+        log.debug("Вызван метод #findById");
 
         String findRecommendationByIdSql = "SELECT * FROM RECOMMENDATIONS WHERE ID = ?";
 
@@ -51,13 +51,13 @@ public class RecommendationRepository {
             return Optional.ofNullable(jdbcTemplate.queryForObject(findRecommendationByIdSql, mapper, id));
         } catch (Exception e) {
             log.error(e.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     // Получение коллекции рекомендаций банковских продуктов
     public List<Recommendation> findAll() {
-        log.debug("Invoke method 'findAll'");
+        log.debug("Вызван метод #findAll");
 
         String findAllRecommendationSql = "SELECT * FROM RECOMMENDATIONS";
 
@@ -65,13 +65,13 @@ public class RecommendationRepository {
             return jdbcTemplate.query(findAllRecommendationSql, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
     // Удаление рекомендации банковского продукта по её идентификатору
     public void deleteById(UUID id) {
-        log.debug("Deleting recommendation id={}", id);
+        log.debug("Вызван метод #deleteById");
 
         String deleteRecommendationByIdSql = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
 

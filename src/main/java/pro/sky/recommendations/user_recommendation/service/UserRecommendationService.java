@@ -11,14 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import pro.sky.recommendations.recommendation.service.RecommendationService;
-import pro.sky.recommendations.recommendation.service.TransactionService;
-import pro.sky.recommendations.recommendation.service.UserService;
 import pro.sky.recommendations.recommendation.enums.QueryType;
 import pro.sky.recommendations.recommendation.exception.UserNotFoundException;
 import pro.sky.recommendations.recommendation.mapper.castom_mapper.RecommendationMapper;
 import pro.sky.recommendations.recommendation.model.Query;
 import pro.sky.recommendations.recommendation.model.Recommendation;
+import pro.sky.recommendations.recommendation.service.RecommendationService;
+import pro.sky.recommendations.recommendation.service.TransactionService;
+import pro.sky.recommendations.recommendation.service.UserService;
 import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.List;
@@ -29,7 +29,6 @@ import java.util.UUID;
 public class UserRecommendationService {
     private final RecommendationService recommendationService;
     private final TransactionService transactionService;
-
     private final UserService userService;
 
     private final RecommendationMapper recommendationMapper;

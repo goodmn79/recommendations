@@ -34,25 +34,24 @@ public class UserRepository {
 
     // Валидация пользователя по его идентификатору
     public boolean userIsExists(UUID id) {
-        log.debug("Validating user by id='{}'", id);
+        log.debug("Валидация пользователя по идентификатору '{}'", id);
 
         String userByIdIsExistsSql = "SELECT EXISTS (SELECT 1 FROM USERS u WHERE u.ID = ?) AS user_is_exist";
 
         boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(userByIdIsExistsSql, Boolean.class, id));
 
-        log.debug("User validation: '{}'", userIsExists);
+        log.debug("Валидация пользователя завершена с результатом: '{}'", userIsExists);
         return userIsExists;
     }
 
-    // Получение пользователя по его логину
     public List<User> findUsersByNameKey(String key) {
-        log.debug("Fetching user by key='{}'", StringUtils.substringBefore(key, "%"));
+        log.debug("Получение списка пользователей по ключу = '{}'", StringUtils.substringBefore(key, "%"));
 
         String findUserByKeySql = "SELECT * FROM USERS u WHERE LOWER(u.FIRST_NAME) LIKE lower(?)";
 
         try {
             List<User> users = transactionJdbcTemplate.query(findUserByKeySql, userRowMapper, key);
-            log.debug("Fetched user:'{}'", users);
+            log.debug("Список пользователей получен. Количество пользователей: '{}'", users.size());
             return users;
         } catch (Exception e) {
             log.debug(e.getMessage());
