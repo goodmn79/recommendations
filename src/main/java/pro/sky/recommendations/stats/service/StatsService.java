@@ -45,7 +45,7 @@ public class StatsService {
         statsRepository.saveAll(statsList);
     }
 
-    public void incrementor(UserRecommendation userRecommendation) {
+    public void statsAccumulator(UserRecommendation userRecommendation) {
         log.info("Инкремент счётчика выдачи рекомендаций продукта.");
 
         userRecommendation.getRecommendations().forEach(recommendation -> {
