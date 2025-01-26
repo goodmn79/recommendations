@@ -25,7 +25,6 @@ public class BotService {
 
     private static final Logger log = LoggerFactory.getLogger(BotService.class);
 
-    // Генерация сообщений
     public String getUserRecommendations(Message message) {
         log.info("Генерация ответного сообщения...");
 
@@ -43,7 +42,7 @@ public class BotService {
                 });
     }
 
-    public Optional<Command> getCommand(String text) {
+    private Optional<Command> getCommand(String text) {
         if (StringUtils.isBlank(text)) return Optional.empty();
         String command;
         if (text.contains(" ")) {
