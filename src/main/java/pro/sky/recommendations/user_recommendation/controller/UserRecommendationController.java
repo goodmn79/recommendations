@@ -33,7 +33,7 @@ public class UserRecommendationController {
         log.info("Вызван метод #getUserRecommendations.");
 
         UserRecommendation userRecommendation = userRecommendationService.getUserRecommendations(userId);
-        statsService.incrementor(userRecommendation);
+        statsService.statsAccumulator(userRecommendation);
 
         return userRecommendation;
     }
