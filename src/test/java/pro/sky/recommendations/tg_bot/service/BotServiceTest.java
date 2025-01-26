@@ -2,115 +2,84 @@ package pro.sky.recommendations.tg_bot.service;
 
 
 import com.pengrad.telegrambot.model.Message;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import pro.sky.recommendations.tg_bot.command.Command;
 
-
 import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class BotServiceTest {
-
     @Mock
     private Map<String, Command> commands;
-
     @Mock
     private Command startCommand;
     @Mock
     private Command recommendCommand;
-
     @Mock
     private Message message;
-
     @InjectMocks
     private BotService botService;
 
-    private String startCommandText;
-    private String recommendCommandText;
-    private String  unknownCommandText;
+    private final String replyText = "Reply text";
 
-    @BeforeEach
-    void SetUp() {
-        startCommandText = "/start";
-        recommendCommandText = "/recommend";
-        unknownCommandText = "/unknown";
-    }
 
     @Test
     void testGetUserRecommendations_withStartCommand() {
-        when(message.text()).thenReturn(startCommandText);
-        when(commands.get("start")).thenReturn(startCommand);
+        String start = "start";
+        String command = command(start);
+        when(message.text()).thenReturn(command);
+        when(commands.get(start)).thenReturn(startCommand);
+        when(startCommand.respond(command)).thenReturn(replyText);
 
-        when(startCommand.respond(startCommandText)).thenReturn("Для получения информации...");
+        String actual = botService.getUserRecommendations(message);
 
-        String result = botService.getUserRecommendations(message);
-
-        assertThat(result).isEqualTo("Для получения информации...");
-        verify(startCommand).respond(startCommandText);
+        assertThat(actual).isEqualTo(replyText);
+        verify(startCommand).respond(command);
     }
 
     @Test
     void testGetUserRecommendations_withRecommendCommand() {
-        when(message.text()).thenReturn(recommendCommandText);
-        when(commands.get("recommend")).thenReturn(recommendCommand);
+        String recommend = "recommend";
+        String command = command(recommend);
+        when(message.text()).thenReturn(command);
+        when(commands.get(recommend)).thenReturn(recommendCommand);
+        when(recommendCommand.respond(command)).thenReturn(replyText);
 
-        when(recommendCommand.respond(recommendCommandText)).thenReturn("Новые продукты для Вас");
+        String actual = botService.getUserRecommendations(message);
+
+        assertThat(actual).isEqualTo(replyText);
+        verify(recommendCommand).respond(command);
+    }
+
+    @Test
+    void testGetUserRecommendations_whenTextIsBlank_shouldReturnIncorrectDataMessage() {
+        when(message.text()).thenReturn("");
 
         String result = botService.getUserRecommendations(message);
 
-        assertThat(result).isEqualTo("Новые продукты для Вас");
-        verify(recommendCommand).respond(recommendCommandText);
+        assertThat(result).isEqualTo(BotService.INCORRECT_DATA);
     }
 
     @Test
-    void testGetUserRecommendations_withUnknownCommand() {
-        when(message.text()).thenReturn(unknownCommandText);
-        when(commands.get("unknown")).thenReturn(null);
+    void testGetUserRecommendations_whenUnknownCommand_shouldReturnIncorrectDataMessage() {
+        String invalidCommand = "unknown command";
+        when(message.text()).thenReturn(invalidCommand);
 
         String result = botService.getUserRecommendations(message);
 
-        assertThat(result).isEqualTo("Проверьте корректность введенных данных и повторите попытку");
-        verify(commands).get("unknown");
+        assertThat(result).isEqualTo(BotService.INCORRECT_DATA);
     }
 
-    @Test
-    void testGetCommand_withStartCommand() {
-        String text = "/start arg1 arg2";
-        when(commands.get("start")).thenReturn(startCommand);
-
-        Optional<Command> result = botService.getCommand(text);
-
-        assertThat(result).hasValue(startCommand);
-        verify(commands).get("start");
-    }
-
-    @Test
-    void testGetCommand_withRecommendCommand() {
-        String text = "/recommend arg1 arg2";
-        when(commands.get("recommend")).thenReturn(recommendCommand);
-
-        Optional<Command> result = botService.getCommand(text);
-
-        assertThat(result).hasValue(recommendCommand);
-        verify(commands).get("recommend");
-    }
-
-    @Test
-    void testGetCommand_withUnknownCommand() {
-        Optional<Command> result = botService.getCommand(unknownCommandText);
-
-        assertThat(result).isNotPresent();
-        verify(commands).get("unknown");
+    private String command(String commandString) {
+        return "/" + commandString;
     }
 }
 
