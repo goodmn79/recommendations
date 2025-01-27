@@ -1,6 +1,8 @@
 /*
-Файл репозитория для сохранения, получения и удаления данных из таблицы RECOMMENDATIONS, базы данных recommendation.mv.db
-Powered by ©AYE.team
+ * Репозиторий для работы с таблицей RECOMMENDATIONS в базе данных.
+ * Этот класс предоставляет методы для сохранения, получения и удаления рекомендаций для банковских продуктов.
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.repository;
@@ -20,34 +22,52 @@ import java.util.UUID;
 
 @Repository
 public class RecommendationRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
     private final RecommendationRowMapper mapper;
 
     private final Logger log = LoggerFactory.getLogger(RecommendationRepository.class);
 
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param jdbcTemplate объект {@link JdbcTemplate}, используемый для работы с базой данных.
+     * @param mapper       объект {@link RecommendationRowMapper}, который используется для преобразования результата SQL-запроса в объект {@link Recommendation}.
+     */
     public RecommendationRepository(@Qualifier("recommendationJdbcTemplate") JdbcTemplate jdbcTemplate,
                                     RecommendationRowMapper mapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.mapper = mapper;
     }
 
-    // Сохранение рекомендации банковского продукта
+    /**
+     * Сохраняет рекомендацию банковского продукта.
+     *
+     * @param recommendation объект {@link Recommendation}, который необходимо сохранить в базе данных.
+     */
     public void save(Recommendation recommendation) {
         log.debug("Вызван метод #save");
 
         String saveRecommendationSql = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
 
+        // Сохранение рекомендации в базе данных
         jdbcTemplate.update(saveRecommendationSql, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
     }
 
-    // Получение рекомендации банковского продукта по её идентификатору
+    /**
+     * Получение рекомендации банковского продукта по её идентификатору.
+     *
+     * @param id уникальный идентификатор рекомендации.
+     * @return объект {@link Optional}, который может содержать найденную рекомендацию.
+     */
     public Optional<Recommendation> findById(UUID id) {
         log.debug("Вызван метод #findById");
 
         String findRecommendationByIdSql = "SELECT * FROM RECOMMENDATIONS WHERE ID = ?";
 
         try {
+            // Получение рекомендации по идентификатору
             return Optional.ofNullable(jdbcTemplate.queryForObject(findRecommendationByIdSql, mapper, id));
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -55,13 +75,18 @@ public class RecommendationRepository {
         }
     }
 
-    // Получение коллекции рекомендаций банковских продуктов
+    /**
+     * Получение всех рекомендаций банковских продуктов.
+     *
+     * @return список всех объектов {@link Recommendation} из базы данных.
+     */
     public List<Recommendation> findAll() {
         log.debug("Вызван метод #findAll");
 
         String findAllRecommendationSql = "SELECT * FROM RECOMMENDATIONS";
 
         try {
+            // Получение всех рекомендаций
             return jdbcTemplate.query(findAllRecommendationSql, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -69,12 +94,17 @@ public class RecommendationRepository {
         }
     }
 
-    // Удаление рекомендации банковского продукта по её идентификатору
+    /**
+     * Удаление рекомендации банковского продукта по её идентификатору.
+     *
+     * @param id уникальный идентификатор рекомендации.
+     */
     public void deleteById(UUID id) {
         log.debug("Вызван метод #deleteById");
 
         String deleteRecommendationByIdSql = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
 
+        // Удаление рекомендации по идентификатору
         jdbcTemplate.update(deleteRecommendationByIdSql, id);
     }
 }

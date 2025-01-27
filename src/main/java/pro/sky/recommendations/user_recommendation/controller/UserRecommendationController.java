@@ -1,7 +1,12 @@
-/*
-Контроллер для обработки входящих HTTP-запросов и возвращения ответа
-Обеспечивает передачу данных для получения рекомендаций банковских продуктов клиента по его идентификатору
-Powered by ©AYE.team
+/**
+ * Контроллер для обработки входящих HTTP-запросов, связанных с рекомендациями банковских продуктов.
+ * <p>
+ * Этот контроллер предоставляет API для получения рекомендаций для клиента по его идентификатору (UUID),
+ * а также обеспечивает обновление статистики по каждому запросу.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.user_recommendation.controller;
@@ -23,16 +28,29 @@ import java.util.UUID;
 @RequestMapping("recommendation")
 @RequiredArgsConstructor
 public class UserRecommendationController {
+
     private final UserRecommendationService userRecommendationService;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationController.class);
+
     private final StatsService statsService;
 
+    /**
+     * Обрабатывает GET-запрос для получения рекомендаций для клиента по его идентификатору.
+     * <p>
+     * Метод возвращает список рекомендаций для пользователя с указанным идентификатором,
+     * а также обновляет статистику по запросу.
+     * </p>
+     *
+     * @param userId Идентификатор пользователя (UUID), для которого необходимо получить рекомендации
+     * @return Объект {@link UserRecommendation} с рекомендациями для данного пользователя
+     */
     @GetMapping("{user_id}")
     public UserRecommendation userRecommendations(@PathVariable("user_id") UUID userId) {
         log.info("Вызван метод #getUserRecommendations.");
 
         UserRecommendation userRecommendation = userRecommendationService.getUserRecommendations(userId);
+
         statsService.statsAccumulator(userRecommendation);
 
         return userRecommendation;

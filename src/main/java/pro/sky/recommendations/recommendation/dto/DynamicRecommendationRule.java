@@ -1,6 +1,9 @@
-/*
-Объект передачи данных для динамического правила рекомендации
-Powered by ©AYE.team
+/**
+ * DTO класс для передачи данных о динамическом правиле рекомендации банковских продуктов.
+ * Содержит информацию о продукте и правилах его рекомендации.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.dto;
@@ -14,9 +17,28 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class DynamicRecommendationRule {
+    /**
+     * Уникальный идентификатор правила рекомендации
+     */
     private UUID id;
+
+    /**
+     * Название банковского продукта
+     */
     private String productName;
+
+    /**
+     * Уникальный идентификатор продукта
+     */
     private UUID productId;
+
+    /**
+     * Текстовое описание продукта
+     */
     private String productText;
+
+    /**
+     * Список правил запросов для определения рекомендации
+     */
     private List<QueryData> rule;
 }

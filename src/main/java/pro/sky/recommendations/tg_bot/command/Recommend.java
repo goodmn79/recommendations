@@ -18,11 +18,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Класс реализует интерфейс {@link Command} и предоставляет логику для обработки команды "/recommend".
+ * Команда для получения рекомендаций для пользователя.
+ * <p>
+ * Этот класс обрабатывает команду, извлекая имя пользователя из текста сообщения, находя соответствующие рекомендации
+ * для пользователя и возвращая ответ в виде текстового сообщения с рекомендациями или информацией об их отсутствии.
+ * </p>
+ * Реализует интерфейс {@link Command}.
  *
  * @author Powered by ©AYE.team
- * @see UserService
- * @see UserRecommendationService
+ * @version 1.0
  */
 @Component
 @RequiredArgsConstructor
@@ -33,10 +37,10 @@ public class Recommend implements Command {
     private final Logger log = LoggerFactory.getLogger(Recommend.class);
 
     /**
-     * Обработка команды "/recommend".
+     * Передаёт текст ответного сообщения
      *
      * @param text текст входящего сообщения
-     * @return строка с рекомендациями для пользователя, или сообщение об ошибке в случае неправильных данных.
+     * @return ответного сообщения
      */
     @Override
     public String respond(String text) {
@@ -47,11 +51,13 @@ public class Recommend implements Command {
     }
 
     /**
-     * Формирование текста ответного сообщения с рекомендациями для пользователя.
-     * Метод использует имя и фамилию для поиска пользователя и формирования рекомендаций.
+     * формирует текст ответного сообщения
+     * использует(@linc CommandHandler#extractFullName(text)) для извлечения имени и фамилии пользователя
+     * использует(@linc CommandHandler#getUserId(fullName)) для получения идентификатора пользователя
+     * использует(@linc UserRecommendation#getUserRecommendations(userId.get())) для получения доступных рекомендаций
      *
      * @param text текст входящего сообщения
-     * @return строка с рекомендациями для пользователя, или сообщение об ошибке.
+     * @return сформированный текст ответного сообщения в зависимости от полученных параметров
      */
     private String recommend(String text) {
         log.info("Формирование ответа на команду '/recommend'...");

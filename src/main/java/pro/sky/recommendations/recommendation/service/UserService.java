@@ -1,3 +1,9 @@
+/**
+ * Сервис для работы с пользователями.
+ * Этот класс предоставляет методы для валидации пользователя по его идентификатору и для поиска пользователей по ключевому слову в имени.
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -11,13 +17,21 @@ import pro.sky.recommendations.recommendation.repository.UserRepository;
 import java.util.List;
 import java.util.UUID;
 
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
-    Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
+    /**
+     * Валидация существования пользователя по его идентификатору.
+     * Метод проверяет, существует ли пользователь с данным идентификатором в базе данных.
+     *
+     * @param userId идентификатор пользователя, который требуется проверить.
+     * @return {@code true}, если пользователь существует, иначе {@code false}.
+     */
     public boolean userExists(UUID userId) {
         log.warn("Валидация пользователя по идентификатору...");
 
@@ -30,6 +44,13 @@ public class UserService {
         return exist;
     }
 
+    /**
+     * Получение списка пользователей по ключевому слову в имени.
+     * Метод находит пользователей, чьи имена содержат заданное ключевое слово.
+     *
+     * @param NameKey ключевое слово для поиска пользователей.
+     * @return список пользователей, соответствующих запросу.
+     */
     public List<User> getUserByNameKey(String NameKey) {
         String keyword = StringUtils.substringBefore(NameKey, "%");
         log.warn("Получение списка пользователей с именем '{}'...", keyword);
@@ -41,7 +62,7 @@ public class UserService {
             return users;
         }
 
-        log.info("Список прльзователей с именем '{}' успешно получен.", keyword);
+        log.info("Список пользователей с именем '{}' успешно получен.", keyword);
         return users;
     }
 }

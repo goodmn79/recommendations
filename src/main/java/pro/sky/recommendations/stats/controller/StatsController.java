@@ -1,3 +1,9 @@
+/**
+ * Контроллер для работы с метриками статистики рекомендаций.
+ * Этот контроллер предоставляет REST-методы для получения статистики по рекомендациям.
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 package pro.sky.recommendations.stats.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +25,12 @@ public class StatsController {
 
     private final Logger log = LoggerFactory.getLogger(StatsController.class);
 
+    /**
+     * Получение статистики по рекомендациям.
+     * Метод возвращает список статистических данных, связанных с рекомендациями.
+     *
+     * @return список объектов {@link StatsData}, представляющих статистику.
+     */
     @GetMapping("stats")
     public List<StatsData> getStats() {
         log.info("Вызван метод #getStats.");

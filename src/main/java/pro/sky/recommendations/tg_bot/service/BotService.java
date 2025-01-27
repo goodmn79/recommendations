@@ -1,6 +1,5 @@
 package pro.sky.recommendations.tg_bot.service;
 
-
 import com.pengrad.telegrambot.model.Message;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -13,26 +12,32 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Сервис для обработки команд телеграм-бота и генерации рекомендаций пользователю.
+ * Сервис для обработки и генерации ответных сообщений для Telegram-бота.
+ * <p>
+ * Этот сервис анализирует входящие сообщения, извлекает команду и передает её соответствующему обработчику команд для генерации ответного сообщения.
+ * Если команда неизвестна или данные некорректны, будет возвращено сообщение об ошибке.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @see Command
+ * @version 1.0
  */
 @Service
 @RequiredArgsConstructor
 public class BotService {
-
     public static final String INCORRECT_DATA = "Проверьте корректность введенных данных и повторите попытку";
 
     private final Map<String, Command> commands;
 
     private static final Logger log = LoggerFactory.getLogger(BotService.class);
-
     /**
-     * Генерация рекомендаций для пользователя на основе команды из сообщения.
+     * Генерация ответного сообщения для пользователя на основе входящего сообщения.
+     * <p>
+     * Сначала извлекается команда из текста сообщения, затем она передается соответствующему обработчику команд.
+     * В случае ошибки или неизвестной команды пользователю будет отправлено сообщение о неправильных данных.
+     * </p>
      *
-     * @param message сообщение от пользователя, содержащее текст команды.
-     * @return строка с рекомендацией или сообщение об ошибке, если команда не найдена.
+     * @param message входящее сообщение от пользователя
+     * @return текст ответного сообщения, который будет отправлен пользователю
      */
     public String getUserRecommendations(Message message) {
         log.info("Генерация ответного сообщения...");
@@ -57,7 +62,7 @@ public class BotService {
      * @param text текст сообщения от пользователя.
      * @return объект Optional, содержащий команду, если она найдена, или пустой Optional, если команда не найдена.
      */
-    public Optional<Command> getCommand(String text) {
+    private Optional<Command> getCommand(String text) {
         if (StringUtils.isBlank(text)) return Optional.empty();
         String command;
         if (text.contains(" ")) {

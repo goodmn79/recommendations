@@ -15,15 +15,17 @@ import pro.sky.recommendations.tg_bot.service.BotService;
 import java.util.List;
 
 /**
- * Обработчик обновлений для бота, который отвечает на запросы пользователей с рекомендациями.
+ * Слушатель обновлений для обработки сообщений Telegram-бота.
+ * <p>
+ * Этот сервис обрабатывает входящие обновления от пользователей, используя {@link TelegramBot}, и отвечает пользователям рекомендациями банковских продуктов.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @see BotService
+ * @version 1.0
  */
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationsBotUpdateListener implements UpdatesListener {
-
     private final TelegramBot telegramBot;
 
     private final BotService botService;
@@ -31,7 +33,8 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
     private final Logger log = LoggerFactory.getLogger(UserRecommendationsBotUpdateListener.class);
 
     /**
-     * Инициализация обработчика обновлений. Метод вызывается после создания бина.
+     * Инициализация слушателя обновлений и настройка бота для получения сообщений.
+     * Этот метод вызывается после создания бина для настройки слушателя.
      */
     @PostConstruct
     public void init() {

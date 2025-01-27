@@ -1,5 +1,9 @@
 /*
-Powered by ©AYE.team
+ * Модель, представляющая продукт в системе.
+ * Этот класс содержит информацию о продукте, включая его уникальный идентификатор,
+ * название и тип.
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.model;
@@ -12,7 +16,10 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class Product {
+
     private UUID id;
+
     private String name;
+
     private String type;
 }
