@@ -1,3 +1,8 @@
+package pro.sky.recommendations.recommendation.enums;
+
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 /**
  * Перечисление типов транзакций.
  * Содержит два типа транзакций: депозит и снятие средств.
@@ -5,11 +10,6 @@
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-package pro.sky.recommendations.recommendation.enums;
-
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
 
 @ToString
 @RequiredArgsConstructor

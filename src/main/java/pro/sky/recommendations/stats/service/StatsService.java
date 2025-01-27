@@ -1,9 +1,3 @@
-/**
- * Сервис для управления статистикой рекомендаций.
- * Хранит и обрабатывает информацию о том, сколько раз были выданы рекомендации для каждого банковского продукта.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.stats.service;
 
 import jakarta.annotation.PostConstruct;
@@ -20,6 +14,14 @@ import pro.sky.recommendations.stats.repository.StatsRepository;
 import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.*;
+
+/**
+ * Сервис для управления статистикой рекомендаций.
+ * Хранит и обрабатывает информацию о том, сколько раз были выданы рекомендации для каждого банковского продукта.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Service
 @RequiredArgsConstructor

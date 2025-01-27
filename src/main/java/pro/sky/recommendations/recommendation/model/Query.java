@@ -1,10 +1,3 @@
-/*
- * Модель, представляющая запрос для рекомендации.
- * Этот класс содержит информацию о запросе, связанном с рекомендацией, включая аргументы запроса и его строковое представление.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.model;
 
 import lombok.Data;
@@ -13,6 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 
+/*
+ * Модель, представляющая запрос для рекомендации.
+ * Этот класс содержит информацию о запросе, связанном с рекомендацией, включая аргументы запроса и его строковое представление.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Data
 @Accessors(chain = true)
 public class Query {

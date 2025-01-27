@@ -1,11 +1,3 @@
-/*
- * Маппер для преобразования объектов {@link Recommendation} в объекты {@link RecommendationData}.
- * Используется для преобразования сущностей рекомендуемых банковских продуктов в объекты,
- * которые могут быть использованы в представлениях (например, для передачи клиенту).
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.mapper.castom_mapper;
 
 import org.slf4j.Logger;
@@ -16,6 +8,14 @@ import pro.sky.recommendations.recommendation.dto.RecommendationData;
 
 import java.util.List;
 
+/*
+ * Маппер для преобразования объектов {@link Recommendation} в объекты {@link RecommendationData}.
+ * Используется для преобразования сущностей рекомендуемых банковских продуктов в объекты,
+ * которые могут быть использованы в представлениях (например, для передачи клиенту).
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Component
 public class RecommendationMapper {
 

@@ -1,11 +1,3 @@
-/*
- * Маппер для преобразования объектов {@link QueryData} в {@link Query} и обратно.
- * Используется для конвертации данных правила рекомендации в сущности, которые могут быть сохранены в базу данных,
- * а также для извлечения данных из базы в представление.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.mapper.castom_mapper;
 
 import org.slf4j.Logger;
@@ -18,7 +10,14 @@ import pro.sky.recommendations.recommendation.model.Recommendation;
 
 import java.util.List;
 
-
+/*
+ * Маппер для преобразования объектов {@link QueryData} в {@link Query} и обратно.
+ * Используется для конвертации данных правила рекомендации в сущности, которые могут быть сохранены в базу данных,
+ * а также для извлечения данных из базы в представление.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Component
 public final class QueryMapper {
 

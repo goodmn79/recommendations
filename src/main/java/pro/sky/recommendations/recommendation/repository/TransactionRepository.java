@@ -1,10 +1,3 @@
-/*
- * Репозиторий для работы с таблицей TRANSACTIONS в базе данных.
- * Этот класс предоставляет методы для выполнения операций, связанных с транзакциями, например, проверки соответствия правилам рекомендации.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.slf4j.Logger;
@@ -15,6 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/*
+ * Репозиторий для работы с таблицей TRANSACTIONS в базе данных.
+ * Этот класс предоставляет методы для выполнения операций, связанных с транзакциями, например, проверки соответствия правилам рекомендации.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Repository
 public class TransactionRepository {
 

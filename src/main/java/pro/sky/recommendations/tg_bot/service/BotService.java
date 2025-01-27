@@ -29,6 +29,7 @@ public class BotService {
     private final Map<String, Command> commands;
 
     private static final Logger log = LoggerFactory.getLogger(BotService.class);
+
     /**
      * Генерация ответного сообщения для пользователя на основе входящего сообщения.
      * <p>

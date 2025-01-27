@@ -1,9 +1,3 @@
-/**
- * Класс для преобразования объектов типа {@link Stats} в объекты типа {@link StatsData}.
- * Этот класс используется для маппинга данных статистики между слоями приложения.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.stats.mapper;
 
 import org.slf4j.Logger;
@@ -14,6 +8,13 @@ import pro.sky.recommendations.stats.model.Stats;
 
 import java.util.List;
 
+/**
+ * Класс для преобразования объектов типа {@link Stats} в объекты типа {@link StatsData}.
+ * Этот класс используется для маппинга данных статистики между слоями приложения.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Component
 public class StatsMapper {

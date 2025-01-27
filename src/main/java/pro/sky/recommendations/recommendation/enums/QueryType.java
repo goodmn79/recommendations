@@ -1,14 +1,14 @@
+package pro.sky.recommendations.recommendation.enums;
+
+import lombok.RequiredArgsConstructor;
+import pro.sky.recommendations.recommendation.exception.InvalidQueryDataException;
+
 /*
  * Перечисление типов запросов, содержащих соответствующие шаблоны SQL-запросов.
  * Каждый тип запроса представляет собой SQL-шаблон, который выполняет различные операции с базой данных.
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
-package pro.sky.recommendations.recommendation.enums;
-
-import lombok.RequiredArgsConstructor;
-import pro.sky.recommendations.recommendation.exception.InvalidQueryDataException;
 
 @RequiredArgsConstructor
 public enum QueryType {

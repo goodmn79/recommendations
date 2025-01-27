@@ -1,10 +1,3 @@
-/*
- * Репозиторий для работы с таблицей PRODUCTS в базе данных.
- * Этот класс предоставляет методы для получения данных о банковских продуктах.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.slf4j.Logger;
@@ -18,6 +11,13 @@ import pro.sky.recommendations.recommendation.model.Product;
 import java.util.Optional;
 import java.util.UUID;
 
+/*
+ * Репозиторий для работы с таблицей PRODUCTS в базе данных.
+ * Этот класс предоставляет методы для получения данных о банковских продуктах.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Repository
 public class ProductRepository {
 

@@ -1,11 +1,3 @@
-/**
- * Контроллер для управления динамическими правилами рекомендаций банковских продуктов.
- * Обрабатывает HTTP-запросы для создания, получения и удаления правил рекомендаций.
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +11,13 @@ import pro.sky.recommendations.recommendation.service.DynamicRecommendationRuleM
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Контроллер для управления динамическими правилами рекомендаций банковских продуктов.
+ * Обрабатывает HTTP-запросы для создания, получения и удаления правил рекомендаций.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @RestController
 @RequestMapping("rule")

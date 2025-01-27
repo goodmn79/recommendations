@@ -1,10 +1,3 @@
-/*
- * Сервис для работы с транзакциями.
- * Этот класс предоставляет метод для проверки соответствия правилам рекомендаций банковских продуктов.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +8,13 @@ import pro.sky.recommendations.recommendation.repository.TransactionRepository;
 
 import java.util.UUID;
 
+/*
+ * Сервис для работы с транзакциями.
+ * Этот класс предоставляет метод для проверки соответствия правилам рекомендаций банковских продуктов.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class TransactionService {

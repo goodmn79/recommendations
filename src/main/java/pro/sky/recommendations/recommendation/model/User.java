@@ -1,11 +1,3 @@
-/*
- * Модель, представляющая пользователя в системе.
- * Этот класс содержит информацию о пользователе, включая его уникальный идентификатор,
- * имя, фамилию и полное имя.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.model;
 
 import lombok.Data;
@@ -13,6 +5,14 @@ import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
+/*
+ * Модель, представляющая пользователя в системе.
+ * Этот класс содержит информацию о пользователе, включая его уникальный идентификатор,
+ * имя, фамилию и полное имя.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Data
 @Accessors(chain = true)
 public class User {

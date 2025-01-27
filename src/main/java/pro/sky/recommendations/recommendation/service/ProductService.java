@@ -1,10 +1,3 @@
-/*
- * Сервис для работы с банковскими продуктами.
- * Этот класс предоставляет методы для получения данных о банковских продуктах.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +10,13 @@ import pro.sky.recommendations.recommendation.repository.ProductRepository;
 
 import java.util.UUID;
 
+/*
+ * Сервис для работы с банковскими продуктами.
+ * Этот класс предоставляет методы для получения данных о банковских продуктах.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductService {

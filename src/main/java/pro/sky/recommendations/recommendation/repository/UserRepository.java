@@ -1,11 +1,3 @@
-/*
- * Репозиторий для работы с таблицей USERS в базе данных.
- * Этот класс предоставляет методы для выполнения операций с пользователями,
- * таких как валидация существования пользователя и поиск пользователей по имени.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +13,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-
+/*
+ * Репозиторий для работы с таблицей USERS в базе данных.
+ * Этот класс предоставляет методы для выполнения операций с пользователями,
+ * таких как валидация существования пользователя и поиск пользователей по имени.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Repository
 public class UserRepository {
 

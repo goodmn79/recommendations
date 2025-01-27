@@ -1,14 +1,15 @@
-/**
- * Перечисление операторов сравнения.
- * Содержит операторы для различных типов сравнений: равенство, больше, больше или равно, меньше, меньше или равно.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.recommendation.enums;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Перечисление операторов сравнения.
+ * Содержит операторы для различных типов сравнений: равенство, больше, больше или равно, меньше, меньше или равно.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @ToString
 @RequiredArgsConstructor

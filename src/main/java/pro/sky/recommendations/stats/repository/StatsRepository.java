@@ -1,9 +1,3 @@
-/**
- * Репозиторий для работы с таблицей статистики в базе данных.
- * Предназначен для получения, сохранения и очистки статистики использования рекомендаций.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.stats.repository;
 
 import org.slf4j.Logger;
@@ -20,6 +14,14 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+/**
+ * Репозиторий для работы с таблицей статистики в базе данных.
+ * Предназначен для получения, сохранения и очистки статистики использования рекомендаций.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Repository
 public class StatsRepository {

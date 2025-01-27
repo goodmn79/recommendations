@@ -1,9 +1,3 @@
-/**
- * Сервис для проверки и инициализации таблиц в базе данных recommendation.mv.db
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.database.service;
 
 import jakarta.annotation.PostConstruct;
@@ -17,6 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * Сервис для проверки и инициализации таблиц в базе данных recommendation.mv.db
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Service
 public class DatabaseInitializer {
