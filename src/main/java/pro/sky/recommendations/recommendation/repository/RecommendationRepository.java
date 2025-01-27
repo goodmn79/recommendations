@@ -1,10 +1,3 @@
-/*
- * Репозиторий для работы с таблицей RECOMMENDATIONS в базе данных.
- * Этот класс предоставляет методы для сохранения, получения и удаления рекомендаций для банковских продуктов.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.slf4j.Logger;
@@ -20,6 +13,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/*
+ * Репозиторий для работы с таблицей RECOMMENDATIONS в базе данных.
+ * Этот класс предоставляет методы для сохранения, получения и удаления рекомендаций для банковских продуктов.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Repository
 public class RecommendationRepository {
 

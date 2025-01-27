@@ -1,3 +1,8 @@
+package pro.sky.recommendations.recommendation.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /*
  * Исключение, которое выбрасывается при неверных данных запроса.
  * Этот класс расширяет {@link RuntimeException} и автоматически вызывает ошибку
@@ -5,11 +10,6 @@
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
-package pro.sky.recommendations.recommendation.exception;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidQueryDataException extends RuntimeException {

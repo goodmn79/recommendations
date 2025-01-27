@@ -1,10 +1,3 @@
-/*
- * Маппер строки результата SQL-запроса в объект {@link Recommendation}.
- * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Recommendation}.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.mapper.row_mapper;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +14,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * Маппер строки результата SQL-запроса в объект {@link Recommendation}.
+ * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Recommendation}.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Component
 @RequiredArgsConstructor
 public class RecommendationRowMapper implements RowMapper<Recommendation> {

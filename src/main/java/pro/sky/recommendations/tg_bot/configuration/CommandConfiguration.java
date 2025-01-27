@@ -1,13 +1,3 @@
-/**
- * Конфигурация для регистрации команд бота.
- * <p>
- * Этот класс настраивает и регистрирует все доступные команды бота, используя {@link Command}.
- * Все команды собираются в {@link Map}, где ключом является имя команды, а значением — объект команды.
- * </p>
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.tg_bot.configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -18,10 +8,22 @@ import pro.sky.recommendations.tg_bot.command.Command;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Конфигурация для регистрации команд бота.
+ * <p>
+ * Этот класс настраивает и регистрирует все доступные команды бота, используя {@link Command}.
+ * Все команды собираются в {@link Map}, где ключом является имя команды, а значением — объект команды.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
+
 @Configuration
 @RequiredArgsConstructor
 public class CommandConfiguration {
     private final Map<String, Command> commands;
+
     /**
      * Создаёт и возвращает карту команд, где ключом является имя команды, а значением — объект команды.
      *
@@ -34,6 +36,7 @@ public class CommandConfiguration {
                 .stream()
                 .collect(Collectors.toMap(this::commandName, command -> command));
     }
+
     /**
      * Получает имя команды на основе её простого имени (без пакета).
      *

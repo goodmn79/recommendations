@@ -1,14 +1,15 @@
-/**
- * Перечисление типов продуктов.
- * Содержит различные типы продуктов: дебетовый, кредитный, сберегательный и инвестиционный.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.recommendation.enums;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Перечисление типов продуктов.
+ * Содержит различные типы продуктов: дебетовый, кредитный, сберегательный и инвестиционный.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @ToString
 @RequiredArgsConstructor

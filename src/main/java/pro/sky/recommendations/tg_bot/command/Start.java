@@ -1,3 +1,9 @@
+package pro.sky.recommendations.tg_bot.command;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 /**
  * Команда для получения инструкции по использованию бота.
  * <p>
@@ -10,11 +16,6 @@
  * @version 1.0
  */
 
-package pro.sky.recommendations.tg_bot.command;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 @Component
 public class Start implements Command {

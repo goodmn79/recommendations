@@ -1,3 +1,12 @@
+package pro.sky.recommendations.user_recommendation.configuration;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * Конфигурация для кэширования запросов с использованием библиотеки Caffeine.
  * <p>
@@ -9,14 +18,6 @@
  * @version 1.0
  */
 
-package pro.sky.recommendations.user_recommendation.configuration;
-
-import com.github.benmanes.caffeine.cache.Caffeine;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching

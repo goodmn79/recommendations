@@ -1,10 +1,3 @@
-/*
- * Сервис для работы с рекомендациями банковских продуктов.
- * Этот класс предоставляет методы для создания, сохранения, получения и удаления рекомендаций.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +11,13 @@ import pro.sky.recommendations.recommendation.repository.RecommendationRepositor
 import java.util.List;
 import java.util.UUID;
 
+/*
+ * Сервис для работы с рекомендациями банковских продуктов.
+ * Этот класс предоставляет методы для создания, сохранения, получения и удаления рекомендаций.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class RecommendationService {

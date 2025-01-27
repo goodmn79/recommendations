@@ -1,3 +1,5 @@
+package pro.sky.recommendations.tg_bot.command;
+
 /**
  * Интерфейс для команд бота.
  * <p>
@@ -8,8 +10,6 @@
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-package pro.sky.recommendations.tg_bot.command;
-
 
 @FunctionalInterface
 public interface Command {

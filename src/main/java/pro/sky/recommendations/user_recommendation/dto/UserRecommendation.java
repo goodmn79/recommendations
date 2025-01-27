@@ -1,3 +1,12 @@
+package pro.sky.recommendations.user_recommendation.dto;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+import pro.sky.recommendations.recommendation.dto.RecommendationData;
+
+import java.util.List;
+import java.util.UUID;
+
 /**
  * Объект передачи данных для списка рекомендаций клиента по его идентификатору.
  * <p>
@@ -9,14 +18,6 @@
  * @version 1.0
  */
 
-package pro.sky.recommendations.user_recommendation.dto;
-
-import lombok.Data;
-import lombok.experimental.Accessors;
-import pro.sky.recommendations.recommendation.dto.RecommendationData;
-
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @Accessors(chain = true)

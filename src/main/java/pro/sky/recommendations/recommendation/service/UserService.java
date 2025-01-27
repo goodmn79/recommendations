@@ -1,9 +1,3 @@
-/**
- * Сервис для работы с пользователями.
- * Этот класс предоставляет методы для валидации пользователя по его идентификатору и для поиска пользователей по ключевому слову в имени.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +11,13 @@ import pro.sky.recommendations.recommendation.repository.UserRepository;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * Сервис для работы с пользователями.
+ * Этот класс предоставляет методы для валидации пользователя по его идентификатору и для поиска пользователей по ключевому слову в имени.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {

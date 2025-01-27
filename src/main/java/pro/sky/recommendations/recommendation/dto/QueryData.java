@@ -1,11 +1,3 @@
-/**
- * DTO класс для передачи и валидации данных при создании SQL-запросов 
- * для динамических правил рекомендаций.
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.dto;
 
 import lombok.Data;
@@ -16,6 +8,14 @@ import pro.sky.recommendations.recommendation.enums.ProductType;
 import pro.sky.recommendations.recommendation.enums.QueryType;
 import pro.sky.recommendations.recommendation.enums.TransactionType;
 import pro.sky.recommendations.recommendation.exception.InvalidQueryDataException;
+
+/**
+ * DTO класс для передачи и валидации данных при создании SQL-запросов
+ * для динамических правил рекомендаций.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Data
 @Accessors(chain = true)

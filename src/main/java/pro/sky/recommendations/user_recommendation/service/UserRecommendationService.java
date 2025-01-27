@@ -1,14 +1,3 @@
-/**
- * Сервис для получения рекомендаций банковских продуктов, доступных пользователю.
- * <p>
- * Этот сервис предоставляет методы для извлечения рекомендаций банковских продуктов на основе идентификатора пользователя.
- * Он также включает валидацию идентификатора пользователя и проверку соответствия различных правил рекомендаций.
- * </p>
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.user_recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +18,17 @@ import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.List;
 import java.util.UUID;
+
+/**
+ * Сервис для получения рекомендаций банковских продуктов, доступных пользователю.
+ * <p>
+ * Этот сервис предоставляет методы для извлечения рекомендаций банковских продуктов на основе идентификатора пользователя.
+ * Он также включает валидацию идентификатора пользователя и проверку соответствия различных правил рекомендаций.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Service
 @RequiredArgsConstructor
@@ -73,13 +73,15 @@ public class UserRecommendationService {
         log.info("Рекомендации для пользователя успешно получены.");
         return userRecommendation;
     }
+
     /**
      * Проверка соответствия всех требований для правила рекомендации банковского продукта.
      *
      * @param userId Идентификатор пользователя.
-     * @param rule Список правил для рекомендации.
+     * @param rule   Список правил для рекомендации.
      * @return {@code true}, если все правила соблюдены, {@code false} в противном случае.
-     */    private boolean isComplianceRule(UUID userId, List<Query> rule) {
+     */
+    private boolean isComplianceRule(UUID userId, List<Query> rule) {
         log.warn("Проверка на соответствие правилу...");
 
         for (Query query : rule) {
@@ -91,11 +93,12 @@ public class UserRecommendationService {
         log.info("Проверка прошла успешно");
         return true;
     }
+
     /**
      * Проверка соответствия конкретному требованию для правила рекомендации банковского продукта.
      *
      * @param userId Идентификатор пользователя.
-     * @param query Объект {@link Query}, представляющий конкретное требование.
+     * @param query  Объект {@link Query}, представляющий конкретное требование.
      * @return {@code true}, если правило соблюдается, {@code false} в противном случае.
      */
     private boolean isCompliance(UUID userId, Query query) {
@@ -107,6 +110,7 @@ public class UserRecommendationService {
         log.debug("Проверка завершена с результатом - '{}'", isCompliance);
         return checkNegate(isCompliance, query.getNegate());
     }
+
     /**
      * Генерация SQL-запроса на основе данных из объекта {@link Query}.
      *
@@ -124,11 +128,12 @@ public class UserRecommendationService {
         }
         return queryPattern;
     }
+
     /**
      * Проверка идентификатора отрицания для SQL-запроса.
      *
      * @param isCompliance Результат проверки на соответствие.
-     * @param negate Флаг отрицания для правила.
+     * @param negate       Флаг отрицания для правила.
      * @return {@code true}, если условие соблюдено с учётом флага отрицания, {@code false} в противном случае.
      */
     private boolean checkNegate(boolean isCompliance, boolean negate) {
@@ -136,6 +141,7 @@ public class UserRecommendationService {
         if (!isCompliance && negate) return true;
         return isCompliance;
     }
+
     /**
      * Валидация пользователя по его идентификатору.
      *

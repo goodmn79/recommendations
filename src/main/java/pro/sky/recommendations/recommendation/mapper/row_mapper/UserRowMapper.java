@@ -1,10 +1,3 @@
-/*
- * Маппер строки результата SQL-запроса в объект {@link User}.
- * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link User}.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.recommendation.mapper.row_mapper;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+/*
+ * Маппер строки результата SQL-запроса в объект {@link User}.
+ * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link User}.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 @Component
 public class UserRowMapper implements RowMapper<User> {
 

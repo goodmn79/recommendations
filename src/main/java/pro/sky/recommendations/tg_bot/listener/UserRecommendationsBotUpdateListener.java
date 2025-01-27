@@ -1,13 +1,3 @@
-/**
- * Слушатель обновлений для обработки сообщений Telegram-бота.
- * <p>
- * Этот сервис обрабатывает входящие обновления от пользователей, используя {@link TelegramBot}, и отвечает пользователям рекомендациями банковских продуктов.
- * </p>
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.tg_bot.listener;
 
 import com.pengrad.telegrambot.TelegramBot;
@@ -23,6 +13,17 @@ import org.springframework.stereotype.Service;
 import pro.sky.recommendations.tg_bot.service.BotService;
 
 import java.util.List;
+
+/**
+ * Слушатель обновлений для обработки сообщений Telegram-бота.
+ * <p>
+ * Этот сервис обрабатывает входящие обновления от пользователей, используя {@link TelegramBot}, и отвечает пользователям рекомендациями банковских продуктов.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
+
 
 @Service
 @RequiredArgsConstructor

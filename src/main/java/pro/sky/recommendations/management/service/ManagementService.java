@@ -1,11 +1,3 @@
-/**
- * Сервис для управления данными приложения.
- * Предоставляет методы для работы с информацией о приложении и управления кэшем.
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.management.service;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.management.dto.InfoManager;
+
+/**
+ * Сервис для управления данными приложения.
+ * Предоставляет методы для работы с информацией о приложении и управления кэшем.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Service
 @RequiredArgsConstructor

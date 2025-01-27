@@ -1,14 +1,3 @@
-/**
- * Сервис для обработки и генерации ответных сообщений для Telegram-бота.
- * <p>
- * Этот сервис анализирует входящие сообщения, извлекает команду и передает её соответствующему обработчику команд для генерации ответного сообщения.
- * Если команда неизвестна или данные некорректны, будет возвращено сообщение об ошибке.
- * </p>
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.tg_bot.service;
 
 
@@ -23,6 +12,18 @@ import pro.sky.recommendations.tg_bot.command.Command;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Сервис для обработки и генерации ответных сообщений для Telegram-бота.
+ * <p>
+ * Этот сервис анализирует входящие сообщения, извлекает команду и передает её соответствующему обработчику команд для генерации ответного сообщения.
+ * Если команда неизвестна или данные некорректны, будет возвращено сообщение об ошибке.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
+
+
 @Service
 @RequiredArgsConstructor
 public class BotService {
@@ -31,6 +32,7 @@ public class BotService {
     private final Map<String, Command> commands;
 
     private static final Logger log = LoggerFactory.getLogger(BotService.class);
+
     /**
      * Генерация ответного сообщения для пользователя на основе входящего сообщения.
      * <p>
@@ -57,6 +59,7 @@ public class BotService {
                     return INCORRECT_DATA;
                 });
     }
+
     /**
      * Извлекает команду из текста сообщения и возвращает соответствующий обработчик команды.
      *

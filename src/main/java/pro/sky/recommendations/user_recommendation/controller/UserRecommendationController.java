@@ -1,14 +1,3 @@
-/**
- * Контроллер для обработки входящих HTTP-запросов, связанных с рекомендациями банковских продуктов.
- * <p>
- * Этот контроллер предоставляет API для получения рекомендаций для клиента по его идентификатору (UUID),
- * а также обеспечивает обновление статистики по каждому запросу.
- * </p>
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
-
 package pro.sky.recommendations.user_recommendation.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +12,18 @@ import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 import pro.sky.recommendations.user_recommendation.service.UserRecommendationService;
 
 import java.util.UUID;
+
+/**
+ * Контроллер для обработки входящих HTTP-запросов, связанных с рекомендациями банковских продуктов.
+ * <p>
+ * Этот контроллер предоставляет API для получения рекомендаций для клиента по его идентификатору (UUID),
+ * а также обеспечивает обновление статистики по каждому запросу.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
+
 
 @RestController
 @RequestMapping("recommendation")

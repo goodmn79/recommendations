@@ -1,9 +1,3 @@
-/**
- * Контроллер для работы с метриками статистики рекомендаций.
- * Этот контроллер предоставляет REST-методы для получения статистики по рекомендациям.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.stats.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +10,14 @@ import pro.sky.recommendations.stats.dto.StatsData;
 import pro.sky.recommendations.stats.service.StatsService;
 
 import java.util.List;
+
+/**
+ * Контроллер для работы с метриками статистики рекомендаций.
+ * Этот контроллер предоставляет REST-методы для получения статистики по рекомендациям.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @RestController
 @RequestMapping("rule")

@@ -1,9 +1,3 @@
-/**
- * Конфигурационный класс для настройки источника данных рекомендаций.
- *
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.database.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -15,6 +9,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+/**
+ * Конфигурационный класс для настройки источника данных рекомендаций.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Configuration
 public class RecommendationDataSourceConfiguration {

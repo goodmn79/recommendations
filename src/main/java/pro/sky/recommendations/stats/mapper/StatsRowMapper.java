@@ -1,9 +1,3 @@
-/**
- * Маппер для преобразования строки результата запроса из базы данных в объект типа {@link Stats}.
- * Используется для маппинга данных статистики в объекты {@link Stats}.
- * @author Powered by ©AYE.team
- * @version 1.0
- */
 package pro.sky.recommendations.stats.mapper;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +10,14 @@ import pro.sky.recommendations.stats.model.Stats;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+
+/**
+ * Маппер для преобразования строки результата запроса из базы данных в объект типа {@link Stats}.
+ * Используется для маппинга данных статистики в объекты {@link Stats}.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 @Component
 @RequiredArgsConstructor
