@@ -1,6 +1,8 @@
 /*
-Файл репозитория для получения данных из таблицы TRANSACTIONS, базы данных transaction.mv.db
-Powered by ©AYE.team
+ * Репозиторий для работы с таблицей TRANSACTIONS в базе данных.
+ * Этот класс предоставляет методы для выполнения операций, связанных с транзакциями, например, проверки соответствия правилам рекомендации.
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.repository;
@@ -15,18 +17,32 @@ import java.util.UUID;
 
 @Repository
 public class TransactionRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
-    private final Logger log = LoggerFactory.getLogger(QueryRepository.class);
+    private final Logger log = LoggerFactory.getLogger(TransactionRepository.class);
 
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param jdbcTemplate объект {@link JdbcTemplate}, используемый для работы с базой данных.
+     */
     public TransactionRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Проверка соответствия требованию правила рекомендации банковского продукта
+    /**
+     * Проверка соответствия требованию правила рекомендации банковского продукта для пользователя.
+     * Этот метод выполняет SQL-запрос для проверки, соответствует ли пользователь определенному правилу рекомендации.
+     *
+     * @param query  SQL-запрос в виде строки, который проверяет соответствие.
+     * @param userId идентификатор пользователя, который проверяется.
+     * @return {@code true}, если пользователь соответствует правилу, иначе {@code false}.
+     */
     public boolean isCompliance(String query, UUID userId) {
         log.debug("Проверка соответствия правилу получения рекомендации для пользователя с идентификатором '{}'", userId);
 
+        // Выполнение запроса и получение результата (true/false)
         boolean isCompliance = Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
 
         log.debug("Проверка завершена с результатом: '{}'", isCompliance);

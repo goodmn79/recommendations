@@ -1,3 +1,9 @@
+/**
+ * Модель статистики для хранения информации о рекомендациях.
+ * Содержит идентификатор статистики, связанное правило рекомендации и количество раз, когда правило было использовано.
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 package pro.sky.recommendations.stats.model;
 
 import lombok.Data;
@@ -9,8 +15,11 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class Stats {
+
     private UUID id;
+
     private Recommendation recommendation;
+
     private int count;
 
     public void increment() {

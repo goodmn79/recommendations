@@ -1,6 +1,8 @@
 /*
-Файл репозитория для получения данных из таблицы PRODUCTS, базы данных transaction.mv.db
-Powered by ©AYE.team
+ * Репозиторий для работы с таблицей PRODUCTS в базе данных.
+ * Этот класс предоставляет методы для получения данных о банковских продуктах.
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.repository;
@@ -20,26 +22,40 @@ import java.util.UUID;
 public class ProductRepository {
 
     private final JdbcTemplate jdbcTemplate;
+
     private final ProductRowMapper mapper;
 
     private final Logger log = LoggerFactory.getLogger(ProductRepository.class);
 
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param jdbcTemplate объект {@link JdbcTemplate}, используемый для работы с базой данных.
+     * @param mapper       объект {@link ProductRowMapper}, который используется для преобразования результата SQL-запроса в объект {@link Product}.
+     */
     public ProductRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate jdbcTemplate,
                              ProductRowMapper mapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.mapper = mapper;
     }
 
-    // Получение данных о банковском продукте по его идентификатору
+    /**
+     * Получение данных о банковском продукте по его идентификатору.
+     *
+     * @param id уникальный идентификатор продукта.
+     * @return объект {@link Optional}, содержащий найденный продукт, если таковой существует, или пустой, если продукт не найден.
+     */
     public Optional<Product> findById(UUID id) {
         log.debug("Вызван метод #findById.");
 
         String findProductByIdSql = "SELECT * FROM PRODUCTS WHERE ID = ?";
 
         try {
+            // Выполнение SQL-запроса и преобразование результата в объект Product
             Product product = jdbcTemplate.queryForObject(findProductByIdSql, mapper, id);
             return Optional.ofNullable(product);
         } catch (Exception e) {
+            // Логирование ошибки, если продукт не найден или возникла другая ошибка
             log.error(e.getMessage());
             return Optional.empty();
         }

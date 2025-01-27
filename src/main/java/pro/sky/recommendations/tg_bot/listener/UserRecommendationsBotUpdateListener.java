@@ -1,5 +1,11 @@
 /**
+ * Слушатель обновлений для обработки сообщений Telegram-бота.
+ * <p>
+ * Этот сервис обрабатывает входящие обновления от пользователей, используя {@link TelegramBot}, и отвечает пользователям рекомендациями банковских продуктов.
+ * </p>
+ *
  * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.tg_bot.listener;
@@ -28,7 +34,8 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
     private final Logger log = LoggerFactory.getLogger(UserRecommendationsBotUpdateListener.class);
 
     /**
-     * инициализация телеграм-бота
+     * Инициализация слушателя обновлений и настройка бота для получения сообщений.
+     * Этот метод вызывается после создания бина для настройки слушателя.
      */
     @PostConstruct
     public void init() {
@@ -36,7 +43,13 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
     }
 
     /**
-     * обработка сообщений телеграм-бота
+     * Обработка входящих обновлений (сообщений) от пользователей.
+     * <p>
+     * Для каждого обновления извлекается сообщение, а затем отправляется текст с рекомендациями пользователю.
+     * </p>
+     *
+     * @param updates список обновлений, полученных от Telegram
+     * @return код подтверждения обновлений, в данном случае {@link UpdatesListener#CONFIRMED_UPDATES_ALL}
      */
     @Override
     public int process(List<Update> updates) {

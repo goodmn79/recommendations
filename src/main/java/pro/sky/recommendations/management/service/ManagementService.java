@@ -1,7 +1,10 @@
-/*
-Файл сервиса для управления данными приложения
-Powered by ©AYE.team
-*/
+/**
+ * Сервис для управления данными приложения.
+ * Предоставляет методы для работы с информацией о приложении и управления кэшем.
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
+ */
 
 package pro.sky.recommendations.management.service;
 
@@ -19,13 +22,20 @@ public class ManagementService {
 
     private final Logger log = LoggerFactory.getLogger(ManagementService.class);
 
-    // Получениесервмсной информации
+    /**
+     * Получает информацию о названии и версии приложения.
+     *
+     * @return Объект InfoManager, содержащий информацию о приложении
+     */
     public InfoManager infoManager() {
         log.info("Получение данных о названии и версии приложения.");
         return infoManager;
     }
 
-    // Очистка кэша
+    /**
+     * Очищает кэш рекомендаций пользователей.
+     * Удаляет все записи из кэша 'userRecommendationCache'.
+     */
     @CacheEvict(value = "userRecommendationCache", allEntries = true)
     public void clearCache() {
         log.info("Очистка кэша");

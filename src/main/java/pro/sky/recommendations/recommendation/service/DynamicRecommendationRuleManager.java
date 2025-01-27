@@ -1,6 +1,8 @@
 /*
-Файл сервиса для создания, сохранения, получения и удаления рекомендации банковских продуктов
-Powered by ©AYE.team
+ * Сервис для работы с динамическими правилами рекомендаций банковских продуктов.
+ * Этот класс предоставляет методы для создания, сохранения, получения и удаления рекомендаций.
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
 
 package pro.sky.recommendations.recommendation.service;
@@ -26,86 +28,121 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DynamicRecommendationRuleManager {
     private final RecommendationService recommendationService;
+
     private final QueryService queryService;
+
     private final ProductService productService;
+
     private final StatsService statsService;
 
     private final QueryMapper queryMapper;
 
     private final Logger log = LoggerFactory.getLogger(DynamicRecommendationRuleManager.class);
 
-    // Создание рекомендации банковского продукта
+    /**
+     * Сохранение динамического правила рекомендации.
+     * Этот метод создает рекомендацию, сохраняет её в базе данных, а также сохраняет правила и статистику.
+     *
+     * @param drr объект, содержащий данные для создания и сохранения динамического правила.
+     * @return сохраненное динамическое правило рекомендации.
+     */
     @Transactional
     public DynamicRecommendationRule saveRecommendation(DynamicRecommendationRule drr) {
         log.info("Сохранение динамического правила рекомендации...");
 
+        // Создание рекомендации
         Recommendation recommendation = this.createRecommendation(drr);
 
         try {
+            // Сохранение рекомендации, правил и статистики
             recommendationService.saveRecommendation(recommendation);
-
             queryService.saveRule(recommendation);
-
             statsService.createCounter(recommendation);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new TransactionExecuteException();
         }
 
+        // Построение и возврат сохраненного динамического правила рекомендации
         DynamicRecommendationRule savedDrr = this.build(recommendation);
         log.info("Динамическое правило рекомендации успешно сохранено.");
         return savedDrr;
     }
 
-    // Получение рекомендации банковского продукта по её идентификатору
+    /**
+     * Получение динамического правила рекомендации по его идентификатору.
+     *
+     * @param recommendationId идентификатор рекомендации.
+     * @return динамическое правило рекомендации.
+     */
     public DynamicRecommendationRule getById(UUID recommendationId) {
         log.info("Получение динамических правил рекомендаций по идентификатору...");
 
+        // Получение рекомендации из базы данных
         Recommendation recommendation = recommendationService.findById(recommendationId);
 
+        // Построение и возврат динамического правила рекомендации
         DynamicRecommendationRule drr = build(recommendation);
         log.info("Динамическое правило рекомендации успешно получено.");
         return drr;
     }
 
-    // Получение всех рекомендаций банковских продуктов
+    /**
+     * Получение всех динамических правил рекомендаций.
+     *
+     * @return список всех динамических правил рекомендаций.
+     */
     public List<DynamicRecommendationRule> getAll() {
         log.info("Получение динамических правил рекомендаций...");
 
+        // Получение всех рекомендаций из базы данных
         List<Recommendation> recommendations = recommendationService.findAll();
         if (recommendations.isEmpty()) {
             log.error("Динамических правил рекомендации не найдено!");
             throw new RecommendationNotFoundException();
         }
 
+        // Построение и возврат списка динамических правил рекомендаций
         List<DynamicRecommendationRule> drrList = recommendations.stream().map(this::build).toList();
         log.info("Динамические правила рекомендаций успешно получены.");
         return drrList;
     }
 
-    // Удаление рекомендации банковского продукта по её идентификатору
+    /**
+     * Удаление динамического правила рекомендации по его идентификатору.
+     * Этот метод удаляет рекомендацию, её правила и статистику.
+     *
+     * @param recommendationId идентификатор рекомендации, которую необходимо удалить.
+     */
     @Transactional
     public void deleteById(UUID recommendationId) {
         log.info("Удаление динамического правила рекомендации...");
 
         try {
+            // Удаление рекомендации, правил и статистики
             recommendationService.deleteById(recommendationId);
-
             queryService.deleteBYRecommendationId(recommendationId);
-
             statsService.deleteCounter(recommendationId);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new TransactionExecuteException();
         }
+
         log.info("Динамическое правило рекомендации успешно удалено.");
     }
 
+    /**
+     * Создание рекомендации банковского продукта из данных динамического правила.
+     *
+     * @param drr объект, содержащий данные для создания рекомендации.
+     * @return созданная рекомендация.
+     */
     private Recommendation createRecommendation(DynamicRecommendationRule drr) {
-
+        // Получение продукта по идентификатору
         Product product = productService.findById(drr.getProductId());
 
         log.info("Создание рекомендации...");
+        // Создание объекта Recommendation
         Recommendation recommendation =
                 new Recommendation()
                         .setId(UUID.randomUUID())
@@ -113,6 +150,7 @@ public class DynamicRecommendationRuleManager {
                         .setProductText(drr.getProductText());
 
         log.info("Создание правила...");
+        // Создание правил для рекомендации
         List<Query> rule = queryMapper.toQuery(drr.getRule(), recommendation);
 
         log.info("Правило успешно создано.");
@@ -122,10 +160,16 @@ public class DynamicRecommendationRuleManager {
         return recommendation;
     }
 
-    // Создание динамического правила рекомендации банковского продукта
+    /**
+     * Построение объекта динамического правила рекомендации на основе объекта Recommendation.
+     *
+     * @param recommendation объект Recommendation.
+     * @return объект DynamicRecommendationRule, представляющий динамическое правило рекомендации.
+     */
     private DynamicRecommendationRule build(Recommendation recommendation) {
         log.info("Создание динамического правила рекомендации...");
 
+        // Построение объекта DynamicRecommendationRule из Recommendation
         DynamicRecommendationRule drr =
                 new DynamicRecommendationRule()
                         .setId(recommendation.getId())

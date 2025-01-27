@@ -1,8 +1,9 @@
-/*
-Файл репозитория для проверки и инициализации таблиц в базе данных recommendation.mv.db
-Powered by ©AYE.team
+/**
+ * Сервис для проверки и инициализации таблиц в базе данных recommendation.mv.db
+ *
+ * @author Powered by ©AYE.team
+ * @version 1.0
  */
-
 package pro.sky.recommendations.database.service;
 
 import jakarta.annotation.PostConstruct;
@@ -16,16 +17,26 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+
 @Service
 public class DatabaseInitializer {
     private final JdbcTemplate jdbcTemplate;
+    private final Logger log = LoggerFactory.getLogger(DatabaseInitializer.class);
 
+    /**
+     * Конструктор для инициализации сервиса.
+     *
+     * @param jdbcTemplate JdbcTemplate для работы с базой данных рекомендаций
+     */
     public DatabaseInitializer(@Qualifier("recommendationJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final Logger log = LoggerFactory.getLogger(DatabaseInitializer.class);
-
+    /**
+     * Метод инициализации, выполняющийся после создания бина.
+     * Создает необходимые таблицы в базе данных: 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS'.
+     * Выполняет SQL-скрипт из файла schema.sql.
+     */
     @PostConstruct
     public void init() {
         log.info("Инициализация таблиц 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS'...");
