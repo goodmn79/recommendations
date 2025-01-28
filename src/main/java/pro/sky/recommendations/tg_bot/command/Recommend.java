@@ -1,7 +1,3 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.command;
 
 import lombok.RequiredArgsConstructor;
@@ -20,8 +16,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 /**
  * Класс реализует интерфейс {@link Command} и предоставляет логику для обработки команды "/recommend".
+ *
+ * @author Powered by ©AYE.team
+ * @see UserService
+ * @see UserRecommendationService
  */
 @Component
 @RequiredArgsConstructor

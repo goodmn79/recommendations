@@ -1,7 +1,3 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.configuration;
 
 import com.pengrad.telegrambot.TelegramBot;
@@ -11,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Конфигурация для настройки бота Telegram.
+ *
+ * @author Powered by ©AYE.team
  */
 @Configuration
 public class TelegramBotConfiguration {
@@ -24,6 +22,7 @@ public class TelegramBotConfiguration {
 
     /**
      * Создание экземпляра, настроенного с токеном для работы с Telegram API.
+     *
      * @return {@link TelegramBot}.
      */
     @Bean

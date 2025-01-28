@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * Конфигурация для создания карты команд.
+ *
+ * @author Powered by ©AYE.team
  */
 @Configuration
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class CommandConfiguration {
 
     /**
      * Создание карты команд.
+     *
      * @return {@link Map} с ключами в виде имен команд и значениями в виде объектов {@link Command}.
      */
     @Bean

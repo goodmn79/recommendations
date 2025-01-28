@@ -1,7 +1,3 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.service;
 
 
@@ -18,6 +14,10 @@ import java.util.Optional;
 
 /**
  * Сервис для обработки команд телеграм-бота и генерации рекомендаций пользователю.
+ *
+ * @author Powered by ©AYE.team
+ * @see Map
+ * @see Command
  */
 @Service
 @RequiredArgsConstructor

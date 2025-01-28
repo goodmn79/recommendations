@@ -1,14 +1,13 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.command;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 /**
  * Класс реализует интерфейс {@link Command} и предоставляет логику для обработки команды "/start".
+ *
+ * @author Powered by ©AYE.team
  */
 @Component
 public class Start implements Command {

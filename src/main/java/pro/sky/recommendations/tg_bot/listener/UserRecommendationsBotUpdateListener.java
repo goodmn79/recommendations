@@ -1,7 +1,3 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.listener;
 
 import com.pengrad.telegrambot.TelegramBot;
@@ -20,6 +16,10 @@ import java.util.List;
 
 /**
  * Обработчик обновлений для бота, который отвечает на запросы пользователей с рекомендациями.
+ *
+ * @author Powered by ©AYE.team
+ * @see TelegramBot
+ * @see BotService
  */
 @Service
 @RequiredArgsConstructor
