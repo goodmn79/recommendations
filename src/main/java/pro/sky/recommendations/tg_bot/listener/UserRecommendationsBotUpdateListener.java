@@ -18,7 +18,6 @@ import java.util.List;
  * Обработчик обновлений для бота, который отвечает на запросы пользователей с рекомендациями.
  *
  * @author Powered by ©AYE.team
- * @see TelegramBot
  * @see BotService
  */
 @Service

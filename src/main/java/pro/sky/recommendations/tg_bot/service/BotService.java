@@ -16,7 +16,6 @@ import java.util.Optional;
  * Сервис для обработки команд телеграм-бота и генерации рекомендаций пользователю.
  *
  * @author Powered by ©AYE.team
- * @see Map
  * @see Command
  */
 @Service
