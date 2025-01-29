@@ -1,7 +1,3 @@
-/**
- * @author Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.tg_bot.service;
 
 
@@ -16,15 +12,28 @@ import pro.sky.recommendations.tg_bot.command.Command;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Сервис для обработки команд телеграм-бота и генерации рекомендаций пользователю.
+ *
+ * @author Powered by ©AYE.team
+ * @see Command
+ */
 @Service
 @RequiredArgsConstructor
 public class BotService {
+
     public static final String INCORRECT_DATA = "Проверьте корректность введенных данных и повторите попытку";
 
     private final Map<String, Command> commands;
 
     private static final Logger log = LoggerFactory.getLogger(BotService.class);
 
+    /**
+     * Генерация рекомендаций для пользователя на основе команды из сообщения.
+     *
+     * @param message сообщение от пользователя, содержащее текст команды.
+     * @return строка с рекомендацией или сообщение об ошибке, если команда не найдена.
+     */
     public String getUserRecommendations(Message message) {
         log.info("Генерация ответного сообщения...");
 
@@ -42,7 +51,13 @@ public class BotService {
                 });
     }
 
-    private Optional<Command> getCommand(String text) {
+    /**
+     * Извлечение команды из текста сообщения.
+     *
+     * @param text текст сообщения от пользователя.
+     * @return объект Optional, содержащий команду, если она найдена, или пустой Optional, если команда не найдена.
+     */
+    public Optional<Command> getCommand(String text) {
         if (StringUtils.isBlank(text)) return Optional.empty();
         String command;
         if (text.contains(" ")) {
