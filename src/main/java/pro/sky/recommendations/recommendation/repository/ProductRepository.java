@@ -32,7 +32,7 @@ public class ProductRepository {
 
     // Получение данных о банковском продукте по его идентификатору
     public Optional<Product> findById(UUID id) {
-        log.debug("Invoke method:'findById'");
+        log.debug("Вызван метод #findById.");
 
         String findProductByIdSql = "SELECT * FROM PRODUCTS WHERE ID = ?";
 
@@ -41,7 +41,7 @@ public class ProductRepository {
             return Optional.ofNullable(product);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 }

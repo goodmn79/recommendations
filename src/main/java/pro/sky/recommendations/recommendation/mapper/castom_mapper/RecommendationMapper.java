@@ -25,7 +25,7 @@ public class RecommendationMapper {
     }
 
     public List<RecommendationData> fromRecommendationList(List<Recommendation> recommendations) {
-        log.info("Mapping Recommendation.class to RecommendationData.class");
+        log.info("Преобразование Recommendation.class в RecommendationData.class");
 
         return recommendations
                 .stream()

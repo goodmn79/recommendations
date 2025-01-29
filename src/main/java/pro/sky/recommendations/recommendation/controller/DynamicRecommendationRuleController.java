@@ -27,28 +27,28 @@ public class DynamicRecommendationRuleController {
 
     @PostMapping
     public DynamicRecommendationRule saveDynamicRecommendationRule(@RequestBody DynamicRecommendationRule dynamicRecommendationRule) {
-        log.info("Invoke method: 'saveDynamicRecommendationRule'");
+        log.info("Вызван метод #saveDynamicRecommendationRule.");
 
         return dynamicRecommendationRuleManager.saveRecommendation(dynamicRecommendationRule);
     }
 
     @GetMapping("{rule_id}")
     public DynamicRecommendationRule getDynamicRecommendationRule(@PathVariable(name = "rule_id") UUID ruleId) {
-        log.info("Invoke method: 'getDynamicRecommendationRule'");
+        log.info("Вызван метод #getDynamicRecommendationRule.");
 
         return dynamicRecommendationRuleManager.getById(ruleId);
     }
 
     @GetMapping
     public List<DynamicRecommendationRule> getAllDynamicRecommendationRule() {
-        log.info("Invoke method: 'getAllDynamicRecommendationRule'");
+        log.info("Вызван метод #getAllDynamicRecommendationRule.");
 
         return dynamicRecommendationRuleManager.getAll();
     }
 
     @DeleteMapping("{rule_id}")
     public ResponseEntity<String> deleteDynamicRecommendationRuleById(@PathVariable(name = "rule_id") UUID ruleId) {
-        log.info("Invoke method: 'deleteDynamicRecommendationRuleById'");
+        log.info("Вызван метод #deleteDynamicRecommendationRuleById.");
 
         dynamicRecommendationRuleManager.deleteById(ruleId);
         return ResponseEntity.ok(String.format("Правило рекомендации: id='%s' удалено!", ruleId));

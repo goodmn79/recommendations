@@ -30,10 +30,10 @@ public class UserRecommendationController {
 
     @GetMapping("{user_id}")
     public UserRecommendation userRecommendations(@PathVariable("user_id") UUID userId) {
-        log.info("Invoke method: 'getUserRecommendations'");
+        log.info("Вызван метод #getUserRecommendations.");
 
         UserRecommendation userRecommendation = userRecommendationService.getUserRecommendations(userId);
-        statsService.incrementor(userRecommendation);
+        statsService.statsAccumulator(userRecommendation);
 
         return userRecommendation;
     }

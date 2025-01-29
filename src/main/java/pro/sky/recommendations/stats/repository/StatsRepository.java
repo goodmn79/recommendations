@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pro.sky.recommendations.stats.mapper.rowMapper.StatsRowMapper;
+import pro.sky.recommendations.stats.mapper.StatsRowMapper;
 import pro.sky.recommendations.stats.model.Stats;
 
 import java.sql.PreparedStatement;
@@ -28,16 +28,20 @@ public class StatsRepository {
     }
 
     public List<Stats> findAll() {
+        log.debug("Вызван метод #findAll");
+
         String findAllStatsSql = "SELECT * FROM STATISTICS";
         try {
             return jdbcTemplate.query(findAllStatsSql, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
     public void saveAll(List<Stats> statsList) {
+        log.debug("Вызван метод #saveAll");
+
         String saveStatsSql = "INSERT INTO STATISTICS (ID, RECOMMENDATION_ID, COUNT) VALUES (?, ?, ?)";
 
         this.clearStatistics();
@@ -59,6 +63,8 @@ public class StatsRepository {
     }
 
     public void clearStatistics() {
+        log.debug("Вызван метод #clearStatistics");
+
         String clearTableStatisticsSql = "TRUNCATE TABLE STATISTICS";
         jdbcTemplate.update(clearTableStatisticsSql);
     }

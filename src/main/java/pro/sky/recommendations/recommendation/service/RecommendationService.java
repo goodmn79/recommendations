@@ -25,40 +25,42 @@ public class RecommendationService {
 
     // Сохранение рекомендации банковского продукта в базе данных
     public void saveRecommendation(Recommendation recommendation) {
-        log.info("Saving recommendation...");
+        log.info("Сохранение рекомендации...");
 
         recommendationRepository.save(recommendation);
     }
 
     // Получение рекомендации банковского продукта по её идентификатору
     public Recommendation findById(UUID recommendationId) {
-        log.info("Fetching recommendation...");
+        log.info("Получение рекомендации...");
 
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(() -> {
-                    log.error("Recommendation not found");
+                    log.error("Рекомендация не найдена!");
                     return new RecommendationNotFoundException();
                 });
-        log.info("Recommendation successfully fetched");
+        log.info("Рекомендация успешно получена.");
         return recommendation;
     }
 
     // Получение всех рекомендаций банковских продуктов
     public List<Recommendation> findAll() {
-        log.info("Fetching recommendations...");
+        log.info("Получение рекомендаций...");
 
         List<Recommendation> recommendations = recommendationRepository.findAll();
         if (recommendations.isEmpty()) {
-            log.warn("Recommendations not found");
+            log.warn("Рекомендаций не найдено!");
         } else {
-            log.info("Recommendations successfully fetched");
+            log.info("Рекомендации успешно получены.");
         }
         return recommendations;
     }
 
     // Удаление рекомендации банковского продукта по её идентификатору
     public void deleteById(UUID recommendationId) {
-        log.info("Deleting recommendation by id...");
+        log.info("Удаление рекомендации по идентификатору...");
+
+        this.findById(recommendationId);
 
         recommendationRepository.deleteById(recommendationId);
     }

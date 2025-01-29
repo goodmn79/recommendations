@@ -21,7 +21,7 @@ public class StatsController {
 
     @GetMapping("stats")
     public List<StatsData> getStats() {
-        log.info("Invoke method 'getStats'");
+        log.info("Вызван метод #getStats.");
         return statsService.getAll();
     }
 }

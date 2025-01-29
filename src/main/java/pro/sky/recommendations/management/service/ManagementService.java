@@ -21,14 +21,14 @@ public class ManagementService {
 
     // Получениесервмсной информации
     public InfoManager infoManager() {
-        log.info("Fetching info data");
+        log.info("Получение данных о названии и версии приложения.");
         return infoManager;
     }
 
     // Очистка кэша
     @CacheEvict(value = "userRecommendationCache", allEntries = true)
     public void clearCache() {
-        log.info("Clearing cache");
+        log.info("Очистка кэша");
     }
 }
 

@@ -24,38 +24,31 @@ public class QueryService {
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
-    // Создание правила рекомендации банковского продукта
+    // Сохранение правила рекомендации банковского продукта
     public void saveRule(Recommendation recommendation) {
-        log.info("Saving rule...");
+        log.info("Сохранение правила...");
 
         List<Query> rule = recommendation.getRule();
-        this.saveRule(rule);
+        queryRepository.saveAll(rule);
     }
 
     // Получение правила по идентификатору рекомендации банковского продукта
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
-        log.info("Fetching all rules by recommendation id...");
+        log.info("Получение правила по идентификатору рекомендации...");
 
         List<Query> foundQueries = queryRepository.findAllByRecommendationId(recommendationId);
         if (foundQueries.isEmpty()) {
-            log.error("Recommendation rule not found");
+            log.error("Правило для рекомендации не найдено!");
             throw new RecommendationRuleNotExistException();
         }
-        log.info("Recommendation rule successfully found");
+        log.info("Правило для рекомендации упешно получено");
         return foundQueries;
     }
 
     // Удаление правила по идентификатору рекомендации банковского продукта
     public void deleteBYRecommendationId(UUID recommendationId) {
-        log.info("Deleting rule by recommendation id...");
+        log.info("Удаление правила по идентификатору рекомендации...");
 
         queryRepository.deleteAllByRecommendationId(recommendationId);
-    }
-
-    // Сохранение правила рекомендации банковского продукта
-    private void saveRule(List<Query> queries) {
-        log.debug("Invoke method: 'saveRule'");
-
-        queryRepository.saveAll(queries);
     }
 }
