@@ -35,6 +35,6 @@ public class ManagementController {
     public InfoManager info() {
         log.info("Вызван метод #info.");
 
-        return managementService.infoManager();
+        return managementService.getInfo();
     }
 }

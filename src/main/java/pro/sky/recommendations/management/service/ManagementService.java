@@ -20,7 +20,7 @@ public class ManagementService {
     private final Logger log = LoggerFactory.getLogger(ManagementService.class);
 
     // Получениесервмсной информации
-    public InfoManager infoManager() {
+    public InfoManager getInfo() {
         log.info("Получение данных о названии и версии приложения.");
         return infoManager;
     }
