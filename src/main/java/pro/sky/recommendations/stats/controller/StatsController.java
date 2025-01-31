@@ -11,6 +11,15 @@ import pro.sky.recommendations.stats.service.StatsService;
 
 import java.util.List;
 
+/**
+ * Контроллер для работы с метриками статистики рекомендаций.
+ * <p>
+ * Этот контроллер предоставляет REST-методы для получения статистики по рекомендациям.
+ * </P>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @RestController
 @RequestMapping("rule")
 @RequiredArgsConstructor
@@ -19,6 +28,12 @@ public class StatsController {
 
     private final Logger log = LoggerFactory.getLogger(StatsController.class);
 
+    /**
+     * Получение статистики по рекомендациям.
+     * <br>Метод возвращает список статистических данных, связанных с рекомендациями.
+     *
+     * @return список объектов {@link StatsData}, представляющих статистику.
+     */
     @GetMapping("stats")
     public List<StatsData> getStats() {
         log.info("Вызван метод #getStats.");

@@ -1,8 +1,3 @@
-/*
-Файл конфигурации для подключения к базе данных transaction.mv.db
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.database.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -14,10 +9,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+/**
+ * Конфигурационный класс для настройки подключения к базе данных transaction.mv.db
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Configuration
 public class TransactionDataSourceConfiguration {
 
-    // Регистрация бина управляющего соединением с базой данных
+    /**
+     * Создает и настраивает источник данных для базы данных транзакций.
+     *
+     * @param transactionUrl URL базы данных транзакций из конфигурации
+     * @return Настроенный источник данных HikariDataSource
+     */
     @Bean(name = "transactionDataSource")
     public DataSource transactionDataSource(
             @Value("${application.transaction-db.url}") String transactionUrl) {
@@ -28,7 +34,12 @@ public class TransactionDataSourceConfiguration {
         return dataSource;
     }
 
-    // Регистрация бина обеспечивающего взаимодействие с базой данных
+    /**
+     * Создает JdbcTemplate для работы с базой данных транзакций.
+     *
+     * @param dataSource Источник данных для базы транзакций
+     * @return Настроенный экземпляр JdbcTemplate
+     */
     @Bean(name = "transactionJdbcTemplate")
     public JdbcTemplate transactionJdbcTemplate(@Qualifier("transactionDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);

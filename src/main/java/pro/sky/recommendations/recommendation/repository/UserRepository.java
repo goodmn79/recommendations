@@ -1,8 +1,3 @@
-/*
-Файл репозитория для получения данных из таблицы USERS, базы данных transaction.mv.db
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,21 +13,42 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий для работы с таблицей USERS в базе данных.
+ * <p>
+ * Этот класс предоставляет методы для выполнения операций с пользователями, таких как валидация существования пользователя и поиск пользователей по имени.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Repository
 public class UserRepository {
-
     private final JdbcTemplate transactionJdbcTemplate;
 
     private final UserRowMapper userRowMapper;
 
-    Logger log = LoggerFactory.getLogger(UserRepository.class);
+    private final Logger log = LoggerFactory.getLogger(UserRepository.class);
 
-    public UserRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionJdbcTemplate, UserRowMapper userRowMapper) {
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param transactionJdbcTemplate объект {@link JdbcTemplate}, используемый для работы с базой данных.
+     * @param userRowMapper           объект {@link UserRowMapper}, который используется для преобразования строк результата запроса в объекты типа {@link User}.
+     */
+    public UserRepository(@Qualifier("transactionJdbcTemplate") JdbcTemplate transactionJdbcTemplate,
+                          UserRowMapper userRowMapper) {
         this.transactionJdbcTemplate = transactionJdbcTemplate;
         this.userRowMapper = userRowMapper;
     }
 
-    // Валидация пользователя по его идентификатору
+    /**
+     * Проверка существования пользователя по его идентификатору.
+     * <br>Этот метод выполняет SQL-запрос для проверки, существует ли пользователь с данным идентификатором.
+     *
+     * @param id идентификатор пользователя, который проверяется.
+     * @return {@code true}, если пользователь существует, иначе {@code false}.
+     */
     public boolean userIsExists(UUID id) {
         log.debug("Валидация пользователя по идентификатору '{}'", id);
 
@@ -44,6 +60,13 @@ public class UserRepository {
         return userIsExists;
     }
 
+    /**
+     * Получение списка пользователей по ключевому слову в имени.
+     * <br>Этот метод выполняет SQL-запрос для поиска пользователей, чье имя (первая часть имени) соответствует ключу.
+     *
+     * @param key строка, содержащая ключевое слово для поиска пользователей.
+     * @return список пользователей, чьи имена соответствуют ключу.
+     */
     public List<User> findUsersByNameKey(String key) {
         log.debug("Получение списка пользователей по ключу = '{}'", StringUtils.substringBefore(key, "%"));
 

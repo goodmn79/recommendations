@@ -15,18 +15,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий для работы с таблицей статистики в базе данных.
+ * <p>
+ * Предназначен для получения, сохранения и очистки статистики использования рекомендаций.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Repository
 public class StatsRepository {
     private final JdbcTemplate jdbcTemplate;
+
     private final StatsRowMapper mapper;
 
-    Logger log = LoggerFactory.getLogger(StatsRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(StatsRepository.class);
 
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param jdbcTemplate объект JdbcTemplate для взаимодействия с базой данных
+     * @param mapper       маппер для преобразования данных из базы в объект Stats
+     */
     public StatsRepository(@Qualifier("recommendationJdbcTemplate") JdbcTemplate jdbcTemplate, StatsRowMapper mapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.mapper = mapper;
     }
 
+    /**
+     * Получение всех статистических данных из таблицы STATISTICS.
+     *
+     * @return список всех статистик
+     */
     public List<Stats> findAll() {
         log.debug("Вызван метод #findAll");
 
@@ -39,6 +60,12 @@ public class StatsRepository {
         }
     }
 
+    /**
+     * Сохранение списка статистик в базу данных.
+     * <br>Все текущие записи статистики сначала очищаются.
+     *
+     * @param statsList список статистик для сохранения
+     */
     public void saveAll(List<Stats> statsList) {
         log.debug("Вызван метод #saveAll");
 
@@ -62,6 +89,10 @@ public class StatsRepository {
         });
     }
 
+    /**
+     * Очистка таблицы STATISTICS.
+     * <br>Этот метод удаляет все записи статистики из базы данных.
+     */
     public void clearStatistics() {
         log.debug("Вызван метод #clearStatistics");
 
@@ -69,4 +100,3 @@ public class StatsRepository {
         jdbcTemplate.update(clearTableStatisticsSql);
     }
 }
-

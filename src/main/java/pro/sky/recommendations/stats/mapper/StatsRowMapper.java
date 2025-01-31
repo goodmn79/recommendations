@@ -11,14 +11,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-
+/**
+ * Маппер для преобразования строки результата запроса из базы данных в объект типа {@link Stats}.
+ * <p>
+ * Используется для маппинга данных статистики в объекты {@link Stats}.
+ * </P>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Component
 @RequiredArgsConstructor
 public class StatsRowMapper implements RowMapper<Stats> {
-
     private final RecommendationService recommendationService;
 
-
+    /**
+     * Преобразует строку результата запроса в объект типа {@link Stats}.
+     *
+     * @param rs     результат запроса из базы данных
+     * @param rowNum номер строки (не используется)
+     * @return объект типа {@link Stats}, полученный из строки результата запроса
+     * @throws SQLException если происходит ошибка при извлечении данных из результата запроса
+     */
     @Override
     public Stats mapRow(ResultSet rs, int rowNum) throws SQLException {
         UUID recommendationId = rs.getObject("RECOMMENDATION_ID", UUID.class);

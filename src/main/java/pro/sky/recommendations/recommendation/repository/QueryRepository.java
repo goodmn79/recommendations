@@ -1,8 +1,3 @@
-/*
-Файл репозитория для сохранения, получения и удаления данных из таблицы QUERIES, базы данных recommendation.mv.db
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.recommendation.repository;
 
 import org.slf4j.Logger;
@@ -20,6 +15,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Репозиторий для работы с таблицей QUERIES в базе данных.
+ * <p>
+ * Этот класс предоставляет методы для сохранения, получения и удаления запросов, связанных с динамическими правилами рекомендаций.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Repository
 public class QueryRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -28,13 +32,23 @@ public class QueryRepository {
 
     private final Logger log = LoggerFactory.getLogger(QueryRepository.class);
 
+    /**
+     * Конструктор для инициализации репозитория.
+     *
+     * @param jdbcTemplate объект {@link JdbcTemplate}, используемый для работы с базой данных.
+     * @param mapper       объект {@link QueryRowMapper}, который используется для преобразования результата SQL-запроса в объект {@link Query}.
+     */
     public QueryRepository(@Qualifier("recommendationJdbcTemplate") JdbcTemplate jdbcTemplate,
                            QueryRowMapper mapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.mapper = mapper;
     }
 
-    // Сохранение коллекции запросов для динамического правила рекомендации
+    /**
+     * Сохранение коллекции запросов для динамического правила рекомендации.
+     *
+     * @param queries список объектов {@link Query}, которые необходимо сохранить.
+     */
     public void saveAll(List<Query> queries) {
         log.debug("Вызван метод #saveAll.");
 
@@ -65,7 +79,12 @@ public class QueryRepository {
         });
     }
 
-    // Получение коллекции запросов для динамического правила по идентификатору рекомендации
+    /**
+     * Получение коллекции запросов для динамического правила по идентификатору рекомендации.
+     *
+     * @param recommendationId уникальный идентификатор рекомендации.
+     * @return список объектов {@link Query}, связанных с указанной рекомендацией.
+     */
     public List<Query> findAllByRecommendationId(UUID recommendationId) {
         log.debug("Вызван метод #findAllByRecommendationId.");
 
@@ -80,13 +99,17 @@ public class QueryRepository {
         }
     }
 
-    // Удаление коллекции запросов для динамического правила по идентификатору рекомендации
+    /**
+     * Удаление всех запросов, связанных с динамическим правилом по идентификатору рекомендации.
+     *
+     * @param recommendationId уникальный идентификатор рекомендации.
+     */
     public void deleteAllByRecommendationId(UUID recommendationId) {
         log.debug("Вызван метод #deleteAllByRecommendationId.");
 
         String deleteQueriesByRecommendationIdSql = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
-        log.debug("Правило для рекомендации с идентификатором '{}' успешно удалено", recommendationId);
         jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
+        log.debug("Правило для рекомендации с идентификатором '{}' успешно удалено", recommendationId);
     }
 }

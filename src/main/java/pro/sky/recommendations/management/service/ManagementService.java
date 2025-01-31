@@ -1,8 +1,3 @@
-/*
-Файл сервиса для управления данными приложения
-Powered by ©AYE.team
-*/
-
 package pro.sky.recommendations.management.service;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +7,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import pro.sky.recommendations.management.dto.InfoManager;
 
+/**
+ * Сервис для управления данными приложения.
+ * <p>
+ * Предоставляет методы для работы с информацией о приложении и управления кэшем.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Service
 @RequiredArgsConstructor
 public class ManagementService {
@@ -19,13 +23,20 @@ public class ManagementService {
 
     private final Logger log = LoggerFactory.getLogger(ManagementService.class);
 
-    // Получениесервмсной информации
+    /**
+     * Получает информацию о названии и версии приложения.
+     *
+     * @return Объект InfoManager, содержащий информацию о приложении
+     */
     public InfoManager getInfo() {
         log.info("Получение данных о названии и версии приложения.");
         return infoManager;
     }
 
-    // Очистка кэша
+    /**
+     * Очищает кэш рекомендаций пользователей.
+     * <br>Удаляет все записи из кэша 'userRecommendationCache'.
+     */
     @CacheEvict(value = "userRecommendationCache", allEntries = true)
     public void clearCache() {
         log.info("Очистка кэша");

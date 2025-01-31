@@ -1,8 +1,3 @@
-/*
-Файл сервиса для получения данных о транзакциях
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +8,15 @@ import pro.sky.recommendations.recommendation.repository.TransactionRepository;
 
 import java.util.UUID;
 
+/**
+ * Сервис для работы с транзакциями.
+ * <p>
+ * Этот класс предоставляет метод для проверки соответствия правилам рекомендаций банковских продуктов.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
@@ -20,7 +24,14 @@ public class TransactionService {
 
     private final Logger log = LoggerFactory.getLogger(TransactionRepository.class);
 
-    // Проверка соответствия требованию правила рекомендации банковского продукта
+    /**
+     * Проверка соответствия требованию правила рекомендации банковского продукта для пользователя.
+     * <br>Метод выполняет запрос к базе данных, чтобы проверить соответствие транзакций заданному запросу.
+     *
+     * @param query  SQL запрос, который представляет собой правило для проверки.
+     * @param userId идентификатор пользователя, для которого выполняется проверка.
+     * @return {@code true}, если транзакции соответствуют правилу; {@code false} в противном случае.
+     */
     public boolean isCompliance(String query, UUID userId) {
         log.debug("Invoke method: 'isCompliance'");
 

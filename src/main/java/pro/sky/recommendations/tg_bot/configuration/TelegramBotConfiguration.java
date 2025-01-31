@@ -6,22 +6,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Конфигурация для настройки бота Telegram.
+ * Конфигурация для инициализации бота Telegram.
+ * <p>
+ * Этот класс конфигурирует и создаёт экземпляр {@link TelegramBot}, который используется для взаимодействия с API Telegram.
+ * </p>
  *
  * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
  */
 @Configuration
 public class TelegramBotConfiguration {
-
-    /**
-     * Токен для доступа к Telegram API.
-     * Значение токена загружается из конфигурационного файла {@code application.properties} с помощью аннотации {@link Value}.
-     */
     @Value("${telegram.bot.token}")
     private String token;
 
     /**
-     * Создание экземпляра, настроенного с токеном для работы с Telegram API.
+     * Создание экземпляра {@link TelegramBot}, настроенного с токеном для работы с Telegram API.
      *
      * @return {@link TelegramBot}.
      */

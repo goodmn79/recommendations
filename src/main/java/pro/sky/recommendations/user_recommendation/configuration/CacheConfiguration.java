@@ -1,8 +1,3 @@
-/*
-Файл конфигурации для кэширования запросов
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.user_recommendation.configuration;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -12,11 +7,25 @@ import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Конфигурация для кэширования запросов с использованием библиотеки Caffeine.
+ * <p>
+ * Этот класс настраивает кэширование данных с помощью Caffeine, что позволяет ускорить обработку повторных запросов, храня данные в памяти и улучшая производительность системы.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
 
-    // Регистрация бина управляющего кэшированием данных
+    /**
+     * Регистрирует бин для управления кэшированием данных с использованием Caffeine.
+     * <br>Конфигурируется максимальный размер кэша в 100 элементов, а также включение статистики кэширования.
+     *
+     * @return {@link CacheManager} объект для управления кэшированием
+     */
     @Bean
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();

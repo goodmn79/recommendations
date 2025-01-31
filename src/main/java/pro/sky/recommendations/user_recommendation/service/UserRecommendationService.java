@@ -1,8 +1,3 @@
-/*
-Файл сервиса для получения рекомендаций банковских продуктов доступных пользователю
-Powered by ©AYE.team
- */
-
 package pro.sky.recommendations.user_recommendation.service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +19,16 @@ import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для получения рекомендаций банковских продуктов, доступных пользователю.
+ * <p>
+ * Этот сервис предоставляет методы для извлечения рекомендаций банковских продуктов на основе идентификатора пользователя.
+ * <br>Он также включает валидацию идентификатора пользователя и проверку соответствия различных правил рекомендаций.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationService {
@@ -35,9 +40,14 @@ public class UserRecommendationService {
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
 
-    // Кэширование результатов работы метода getUserRecommendations по идентификатору пользователя
+    /**
+     * Получение всех рекомендаций банковских продуктов, доступных пользователю по его идентификатору.
+     * <br>Метод кэширует результаты на основе идентификатора пользователя.
+     *
+     * @param userId Идентификатор пользователя.
+     * @return Объект {@link UserRecommendation}, содержащий рекомендации для данного пользователя.
+     */
     @Cacheable(value = "userRecommendationCache", key = "#userId")
-    // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
         validateUserId(userId);
 
@@ -62,7 +72,13 @@ public class UserRecommendationService {
         return userRecommendation;
     }
 
-    // Проверка соответствованя всех требований для правила рекомендации банковского продукта
+    /**
+     * Проверка соответствия всех требований для правила рекомендации банковского продукта.
+     *
+     * @param userId Идентификатор пользователя.
+     * @param rule   Список правил для рекомендации.
+     * @return {@code true}, если все правила соблюдены, {@code false} в противном случае.
+     */
     private boolean isComplianceRule(UUID userId, List<Query> rule) {
         log.warn("Проверка на соответствие правилу...");
 
@@ -76,7 +92,13 @@ public class UserRecommendationService {
         return true;
     }
 
-    // Проверка соответствованя требования для правила рекомендации банковского продукта
+    /**
+     * Проверка соответствия конкретному требованию для правила рекомендации банковского продукта.
+     *
+     * @param userId Идентификатор пользователя.
+     * @param query  Объект {@link Query}, представляющий конкретное требование.
+     * @return {@code true}, если правило соблюдается, {@code false} в противном случае.
+     */
     private boolean isCompliance(UUID userId, Query query) {
         log.debug("Проверка соответствия правилу для пользователя с id = {}", userId);
         String querySQL = queryGenerator(query);
@@ -87,7 +109,12 @@ public class UserRecommendationService {
         return checkNegate(isCompliance, query.getNegate());
     }
 
-    // Генерация SQL-запроса
+    /**
+     * Генерация SQL-запроса на основе данных из объекта {@link Query}.
+     *
+     * @param query Объект {@link Query}, который содержит данные для формирования SQL-запроса.
+     * @return Сформированный SQL-запрос.
+     */
     private String queryGenerator(Query query) {
         String queryType = query.getQuery();
         String queryPattern = QueryType.getQueryPattern(queryType);
@@ -100,14 +127,25 @@ public class UserRecommendationService {
         return queryPattern;
     }
 
-    // Проверка идентификатора отрицания для SQL-запроса
+    /**
+     * Проверка идентификатора отрицания для SQL-запроса.
+     *
+     * @param isCompliance Результат проверки на соответствие.
+     * @param negate       Флаг отрицания для правила.
+     * @return {@code true}, если условие соблюдено с учётом флага отрицания, {@code false} в противном случае.
+     */
     private boolean checkNegate(boolean isCompliance, boolean negate) {
         if (isCompliance && negate) return false;
         if (!isCompliance && negate) return true;
         return isCompliance;
     }
 
-    // Валидация пользователя по его идентификатору
+    /**
+     * Валидация пользователя по его идентификатору.
+     *
+     * @param userId Идентификатор пользователя.
+     * @throws UserNotFoundException Если пользователь не найден.
+     */
     private void validateUserId(UUID userId) {
         if (!userService.userExists(userId)) {
             log.error("Пользователь не существует");

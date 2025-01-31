@@ -15,14 +15,30 @@ import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.*;
 
+/**
+ * Сервис для управления статистикой рекомендаций.
+ * <p>
+ * Хранит и обрабатывает информацию о том, сколько раз были выданы рекомендации для каждого банковского продукта.
+ * </p>
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Service
 @RequiredArgsConstructor
 public class StatsService {
-    private final StatsMapper statsMapper;
     private final StatsRepository statsRepository;
-    private Map<UUID, Stats> statsCounters;
-    private final Logger log = LoggerFactory.getLogger(StatsService.class);
 
+    private final StatsMapper statsMapper;
+
+    private Map<UUID, Stats> statsCounters;
+
+    private static final Logger log = LoggerFactory.getLogger(StatsService.class);
+
+    /**
+     * Инициализация хранилища данных статистики при запуске приложения.
+     * <br>Загружает существующую статистику из базы данных в память.
+     */
     @PostConstruct
     public void initStatsDataStore() {
         log.info("Инициализация хранилища данных статистики.");
@@ -34,9 +50,13 @@ public class StatsService {
                     .stream()
                     .collect(HashMap::new, (map, stat) -> map.put(stat.getId(), stat), HashMap::putAll);
         }
-        log.info("Хранилища данных статистики успешно инициализировано.");
+        log.info("Хранилище данных статистики успешно инициализировано.");
     }
 
+    /**
+     * Сохранение данных статистики при завершении работы приложения.
+     * <br>Сохраняет все текущие данные статистики в базу данных.
+     */
     @PreDestroy
     public void save() {
         log.info("Сохранение данных статистики выдачи рекомендаций в базе данных.");
@@ -45,6 +65,12 @@ public class StatsService {
         statsRepository.saveAll(statsList);
     }
 
+    /**
+     * Обновление счётчиков статистики для рекомендаций.
+     * <br>Увеличивает количество показов каждой рекомендации на 1.
+     *
+     * @param userRecommendation объект, содержащий рекомендации для конкретного пользователя
+     */
     public void statsAccumulator(UserRecommendation userRecommendation) {
         log.info("Инкремент счётчика выдачи рекомендаций продукта.");
 
@@ -56,6 +82,11 @@ public class StatsService {
         });
     }
 
+    /**
+     * Получение всех данных статистики выдачи рекомендаций.
+     *
+     * @return список объектов StatsData, содержащих информацию о рекомендациях и их частоте
+     */
     public List<StatsData> getAll() {
         log.info("Получение данных статистики выдачи рекомендаций.");
 
@@ -63,18 +94,35 @@ public class StatsService {
         return statsMapper.toStatsDataList(statsDataList);
     }
 
+    /**
+     * Создание нового счётчика для рекомендации.
+     * <br>Добавляет новую запись в хранилище статистики для указанной рекомендации.
+     *
+     * @param recommendation объект рекомендации, для которого создаётся счётчик
+     */
     public void createCounter(Recommendation recommendation) {
         log.info("Создание счётчика выдачи рекомендаций.");
 
         this.statsCounters.put(recommendation.getId(), new Stats().setRecommendation(recommendation));
     }
 
+    /**
+     * Удаление счётчика для рекомендации.
+     * <br>Удаляет запись из хранилища статистики для указанной рекомендации.
+     *
+     * @param recommendationId идентификатор рекомендации, для которой удаляется счётчик
+     */
     public void deleteCounter(UUID recommendationId) {
         log.info("Удаление данных статистики выдачи рекомендаций из хранилища.");
 
         this.statsCounters.remove(recommendationId);
     }
 
+    /**
+     * Преобразование хранилища статистики в список объектов Stats.
+     *
+     * @return список всех статистик в хранилище
+     */
     private List<Stats> getStatsList() {
         log.info("Извлечение данных статистики выдачи рекомендаций из хранилища.");
 
