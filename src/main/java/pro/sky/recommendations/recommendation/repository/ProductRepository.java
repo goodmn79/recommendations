@@ -13,10 +13,12 @@ import java.util.UUID;
 
 /**
  * Репозиторий для работы с таблицей PRODUCTS в базе данных.
+ * <p>
  * Этот класс предоставляет методы для получения данных о банковских продуктах.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Repository
 public class ProductRepository {

@@ -7,10 +7,12 @@ import java.util.UUID;
 
 /**
  * Модель, представляющая пользователя в системе.
+ * <p>
  * Этот класс содержит информацию о пользователе, включая его уникальный идентификатор, имя, фамилию и полное имя.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

@@ -9,10 +9,12 @@ import pro.sky.recommendations.management.dto.InfoManager;
 
 /**
  * Сервис для управления данными приложения.
+ * <p>
  * Предоставляет методы для работы с информацией о приложении и управления кэшем.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class ManagementService {
 
     /**
      * Очищает кэш рекомендаций пользователей.
-     * Удаляет все записи из кэша 'userRecommendationCache'.
+     * <br>Удаляет все записи из кэша 'userRecommendationCache'.
      */
     @CacheEvict(value = "userRecommendationCache", allEntries = true)
     public void clearCache() {

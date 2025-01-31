@@ -10,11 +10,10 @@ import pro.sky.recommendations.recommendation.enums.TransactionType;
 import pro.sky.recommendations.recommendation.exception.InvalidQueryDataException;
 
 /**
- * DTO класс для передачи и валидации данных при создании SQL-запросов
- * для динамических правил рекомендаций.
+ * DTO класс для передачи и валидации данных при создании SQL-запросов для динамических правил рекомендаций.
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

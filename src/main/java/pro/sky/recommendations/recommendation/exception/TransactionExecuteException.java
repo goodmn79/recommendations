@@ -5,17 +5,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Исключение, которое выбрасывается при ошибке выполнения транзакции.
+ * <p>
  * Этот класс расширяет {@link RuntimeException} и автоматически вызывает ошибку с кодом статуса 400 (BAD_REQUEST) при возникновении исключения.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class TransactionExecuteException extends RuntimeException {
 
     /**
      * Конструктор исключения {@link TransactionExecuteException}.
-     * Создаёт новое исключение без сообщения.
+     * <br>Создаёт новое исключение без сообщения.
      */
     public TransactionExecuteException() {
     }

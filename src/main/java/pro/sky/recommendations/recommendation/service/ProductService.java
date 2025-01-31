@@ -12,10 +12,12 @@ import java.util.UUID;
 
 /**
  * Сервис для работы с банковскими продуктами.
+ * <p>
  * Этот класс предоставляет методы для получения данных о банковских продуктах.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class ProductService {
 
     /**
      * Получение данных о банковском продукте по его идентификатору.
-     * Если продукт не найден, выбрасывается исключение {@link ProductNotFoundException}.
+     * <br>Если продукт не найден, выбрасывается исключение {@link ProductNotFoundException}.
      *
      * @param id идентификатор банковского продукта.
      * @return объект {@link Product}, содержащий данные о продукте.

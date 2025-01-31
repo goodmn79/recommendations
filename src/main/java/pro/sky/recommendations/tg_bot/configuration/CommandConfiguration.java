@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
  * Конфигурация для регистрации команд бота.
  * <p>
  * Этот класс настраивает и регистрирует все доступные команды бота, используя {@link Command}.
- * Все команды собираются в {@link Map}, где ключом является имя команды, а значением — объект команды.
+ * <br>Все команды собираются в {@link Map}, где ключом является имя команды, а значением — объект команды.
  * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Configuration
 @RequiredArgsConstructor

@@ -5,17 +5,22 @@ import lombok.ToString;
 
 /**
  * Перечисление типов транзакций.
- * Содержит два типа транзакций: депозит и снятие средств.
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @ToString
 @RequiredArgsConstructor
 public enum TransactionType {
 
+    /**
+     * Тип транзакции "DEPOSIT".
+     */
     DEPOSIT("DEPOSIT"),
 
+    /**
+     * Тип транзакции "WITHDRAW".
+     */
     WITHDRAW("WITHDRAW");
 
     private final String value;

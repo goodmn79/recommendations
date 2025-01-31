@@ -4,11 +4,11 @@ package pro.sky.recommendations.tg_bot.command;
  * Интерфейс для команд бота.
  * <p>
  * Каждая команда должна реализовывать метод {@link #respond(String)} для обработки входных данных и возвращения ответа.
+ * <br>Используется в контексте обработки команд в телеграм-боте.
  * </p>
- * Используется в контексте обработки команд в телеграм-боте.
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @FunctionalInterface
 public interface Command {

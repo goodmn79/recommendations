@@ -10,10 +10,12 @@ import java.util.List;
 
 /**
  * Класс для преобразования объектов типа {@link Stats} в объекты типа {@link StatsData}.
+ * <p>
  * Этот класс используется для маппинга данных статистики между слоями приложения.
+ * </P>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Component
 public class StatsMapper {

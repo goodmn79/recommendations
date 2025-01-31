@@ -4,26 +4,33 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * Перечисление типов продуктов.
- * Содержит различные типы продуктов: дебетовый, кредитный, сберегательный и инвестиционный.
+ * Перечисление типов банковских продуктов.
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @ToString
 @RequiredArgsConstructor
 public enum ProductType {
 
-
+    /**
+     * Тип продукта "DEBIT".
+     */
     DEBIT("DEBIT"),
 
-
+    /**
+     * Тип продукта "CREDIT".
+     */
     CREDIT("CREDIT"),
 
-
+    /**
+     * Тип продукта "SAVING".
+     */
     SAVING("SAVING"),
 
-
+    /**
+     * Тип продукта "INVEST".
+     */
     INVEST("INVEST");
 
     private final String value;

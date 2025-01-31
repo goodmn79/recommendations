@@ -8,10 +8,12 @@ import java.util.UUID;
 
 /**
  * Модель, представляющая рекомендацию банковского продукта.
+ * <p>
  * Этот класс содержит информацию о рекомендации, включая продукт, текст описания и связанные правила.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

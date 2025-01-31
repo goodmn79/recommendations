@@ -13,10 +13,12 @@ import java.util.UUID;
 
 /**
  * Маппер для преобразования строки результата запроса из базы данных в объект типа {@link Stats}.
+ * <p>
  * Используется для маппинга данных статистики в объекты {@link Stats}.
+ * </P>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Component
 @RequiredArgsConstructor

@@ -15,10 +15,12 @@ import java.util.UUID;
 
 /**
  * Репозиторий для работы с таблицей RECOMMENDATIONS в базе данных.
+ * <p>
  * Этот класс предоставляет методы для сохранения, получения и удаления рекомендаций для банковских продуктов.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Repository
 public class RecommendationRepository {
@@ -41,7 +43,7 @@ public class RecommendationRepository {
     }
 
     /**
-     * Сохраняет рекомендацию банковского продукта.
+     * Сохранение рекомендации банковского продукта.
      *
      * @param recommendation объект {@link Recommendation}, который необходимо сохранить в базе данных.
      */

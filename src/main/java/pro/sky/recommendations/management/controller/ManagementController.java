@@ -12,10 +12,12 @@ import pro.sky.recommendations.management.service.ManagementService;
 
 /**
  * Контроллер для управления данными приложения.
+ * <p>
  * Предоставляет API endpoints для управления кэшем и получения информации о приложении.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @RestController
 @RequestMapping("management")
@@ -27,7 +29,7 @@ public class ManagementController {
 
     /**
      * Очищает кэш приложения.
-     * Endpoint: POST /management/clear-cache
+     * <br>Endpoint: POST /management/clear-cache
      */
     @PostMapping("clear-cache")
     public void clearCache() {
@@ -38,7 +40,7 @@ public class ManagementController {
 
     /**
      * Получает информацию о текущем состоянии приложения.
-     * Endpoint: GET /management/info
+     * <br>Endpoint: GET /management/info
      *
      * @return Объект InfoManager, содержащий информацию о приложении
      */

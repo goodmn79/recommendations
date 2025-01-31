@@ -5,24 +5,40 @@ import lombok.ToString;
 
 /**
  * Перечисление операторов сравнения.
+ * <p>
  * Содержит операторы для различных типов сравнений: равенство, больше, больше или равно, меньше, меньше или равно.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @ToString
 @RequiredArgsConstructor
 public enum ComparisonOperator {
 
-
+    /**
+     * Оператор сравнения '='
+     */
     EQ("="),
 
+    /**
+     * Оператор сравнения '&gt;'
+     */
     GT(">"),
 
+    /**
+     * Оператор сравнения '&gt;='
+     */
     GE(">="),
 
+    /**
+     * Оператор сравнения '&lt;'
+     */
     LT("<"),
 
+    /**
+     * Оператор сравнения '&lt;='
+     */
     LE("<=");
 
     private final String value;

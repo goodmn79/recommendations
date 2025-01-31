@@ -5,17 +5,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Исключение, которое выбрасывается при отсутствии продукта в базе данных.
+ * <p>
  * Этот класс расширяет {@link RuntimeException} и автоматически вызывает ошибку с кодом статуса 404 (NOT_FOUND) при возникновении исключения.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ProductNotFoundException extends RuntimeException {
 
     /**
      * Конструктор исключения {@link ProductNotFoundException}.
-     * Создаёт новое исключение без сообщения.
+     * <br>Создаёт новое исключение без сообщения.
      */
     public ProductNotFoundException() {
     }

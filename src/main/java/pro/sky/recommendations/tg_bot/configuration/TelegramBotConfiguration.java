@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Configuration
 public class TelegramBotConfiguration {

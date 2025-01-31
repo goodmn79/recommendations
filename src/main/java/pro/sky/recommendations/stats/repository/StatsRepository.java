@@ -17,10 +17,12 @@ import java.util.UUID;
 
 /**
  * Репозиторий для работы с таблицей статистики в базе данных.
+ * <p>
  * Предназначен для получения, сохранения и очистки статистики использования рекомендаций.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Repository
 public class StatsRepository {
@@ -60,7 +62,7 @@ public class StatsRepository {
 
     /**
      * Сохранение списка статистик в базу данных.
-     * Все текущие записи статистики сначала очищаются.
+     * <br>Все текущие записи статистики сначала очищаются.
      *
      * @param statsList список статистик для сохранения
      */
@@ -89,7 +91,7 @@ public class StatsRepository {
 
     /**
      * Очистка таблицы STATISTICS.
-     * Этот метод удаляет все записи статистики из базы данных.
+     * <br>Этот метод удаляет все записи статистики из базы данных.
      */
     public void clearStatistics() {
         log.debug("Вызван метод #clearStatistics");

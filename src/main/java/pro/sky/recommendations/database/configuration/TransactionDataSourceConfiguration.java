@@ -13,7 +13,7 @@ import javax.sql.DataSource;
  * Конфигурационный класс для настройки подключения к базе данных transaction.mv.db
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Configuration
 public class TransactionDataSourceConfiguration {

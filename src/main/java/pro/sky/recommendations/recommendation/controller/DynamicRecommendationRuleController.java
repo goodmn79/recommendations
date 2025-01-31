@@ -13,10 +13,12 @@ import java.util.UUID;
 
 /**
  * Контроллер для управления динамическими правилами рекомендаций банковских продуктов.
+ * <p>
  * Обрабатывает HTTP-запросы для создания, получения и удаления правил рекомендаций.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 
 @RestController
@@ -28,7 +30,7 @@ public class DynamicRecommendationRuleController {
 
     /**
      * Сохраняет новое правило рекомендации.
-     * Endpoint: POST /rule
+     * <br>Endpoint: POST /rule
      *
      * @param dynamicRecommendationRule Объект правила рекомендации для сохранения
      * @return Сохраненное правило рекомендации
@@ -41,7 +43,7 @@ public class DynamicRecommendationRuleController {
 
     /**
      * Получает правило рекомендации по его идентификатору.
-     * Endpoint: GET /rule/{rule_id}
+     * <br>Endpoint: GET /rule/{rule_id}
      *
      * @param ruleId Уникальный идентификатор правила
      * @return Найденное правило рекомендации
@@ -54,7 +56,7 @@ public class DynamicRecommendationRuleController {
 
     /**
      * Получает список всех правил рекомендаций.
-     * Endpoint: GET /rule
+     * <br>Endpoint: GET /rule
      *
      * @return Список всех правил рекомендаций
      */
@@ -66,7 +68,7 @@ public class DynamicRecommendationRuleController {
 
     /**
      * Удаляет правило рекомендации по его идентификатору.
-     * Endpoint: DELETE /rule/{rule_id}
+     * <br>Endpoint: DELETE /rule/{rule_id}
      *
      * @param ruleId Уникальный идентификатор правила для удаления
      * @return ResponseEntity с сообщением об успешном удалении

@@ -3,17 +3,19 @@ package pro.sky.recommendations.recommendation.mapper.castom_mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pro.sky.recommendations.recommendation.model.Recommendation;
 import pro.sky.recommendations.recommendation.dto.RecommendationData;
+import pro.sky.recommendations.recommendation.model.Recommendation;
 
 import java.util.List;
 
 /**
  * Маппер для преобразования объектов {@link Recommendation} в объекты {@link RecommendationData}.
+ * <p>
  * Используется для преобразования сущностей рекомендуемых банковских продуктов в объекты, которые могут быть использованы в представлениях (например, для передачи клиенту).
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Component
 public class RecommendationMapper {
@@ -22,7 +24,7 @@ public class RecommendationMapper {
 
     /**
      * Преобразует объект {@link Recommendation} в объект {@link RecommendationData}.
-     * Этот метод используется для передачи данных о рекомендации в формате, который удобен для отображения.
+     * <br>Этот метод используется для передачи данных о рекомендации в формате, который удобен для отображения.
      *
      * @param recommendation объект {@link Recommendation}, который нужно преобразовать.
      * @return объект {@link RecommendationData}, содержащий информацию о рекомендации.
@@ -36,7 +38,7 @@ public class RecommendationMapper {
 
     /**
      * Преобразует список объектов {@link Recommendation} в список объектов {@link RecommendationData}.
-     * Этот метод используется для преобразования списка рекомендаций в соответствующие данные, которые могут быть отображены.
+     * <br>Этот метод используется для преобразования списка рекомендаций в соответствующие данные, которые могут быть отображены.
      *
      * @param recommendations список объектов {@link Recommendation}, которые нужно преобразовать.
      * @return список объектов {@link RecommendationData}.

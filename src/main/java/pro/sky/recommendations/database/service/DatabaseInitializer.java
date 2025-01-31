@@ -15,7 +15,7 @@ import java.util.Objects;
  * Сервис для проверки и инициализации таблиц в базе данных recommendation.mv.db
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Service
 public class DatabaseInitializer {
@@ -33,8 +33,8 @@ public class DatabaseInitializer {
 
     /**
      * Метод инициализации, выполняющийся после создания бина.
-     * Создает необходимые таблицы в базе данных: 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS'.
-     * Выполняет SQL-скрипт из файла schema.sql.
+     * <br>Создает необходимые таблицы в базе данных: 'RECOMMENDATIONS', 'QUERIES', 'STATISTICS'.
+     * <br>Выполняет SQL-скрипт из файла schema.sql.
      */
     @PostConstruct
     public void init() {

@@ -12,18 +12,19 @@ import java.util.UUID;
 
 /**
  * Маппер строки результата SQL-запроса в объект {@link Transaction}.
+ * <p>
  * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Transaction}.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Component
 public class TransactionRowMapper implements RowMapper<Transaction> {
 
     /**
      * Преобразует строку из результата SQL-запроса в объект {@link Transaction}.
-     * Этот метод извлекает данные из строки результата запроса и создает связанные сущности:
-     * {@link User} и {@link Product}, а затем возвращает объект {@link Transaction}.
+     * <br>Этот метод извлекает данные из строки результата запроса и создает связанные сущности: {@link User} и {@link Product}, а затем возвращает объект {@link Transaction}.
      *
      * @param rs     строка результата запроса, содержащая данные.
      * @param rowNum номер текущей строки в результате запроса (независимо от использования, может быть полезен для обработки).

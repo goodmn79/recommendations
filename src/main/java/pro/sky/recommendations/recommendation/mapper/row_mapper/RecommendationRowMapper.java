@@ -16,10 +16,12 @@ import java.util.UUID;
 
 /**
  * Маппер строки результата SQL-запроса в объект {@link Recommendation}.
+ * <p>
  * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Recommendation}.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Component
 @RequiredArgsConstructor
@@ -30,8 +32,7 @@ public class RecommendationRowMapper implements RowMapper<Recommendation> {
 
     /**
      * Преобразует строку из результата SQL-запроса в объект {@link Recommendation}.
-     * Этот метод извлекает данные из строки результата запроса и использует сервисы {@link ProductService} и {@link QueryService}
-     * для получения связанных сущностей: {@link Product} и {@link Query}.
+     * <br>Этот метод извлекает данные из строки результата запроса и использует сервисы {@link ProductService} и {@link QueryService} для получения связанных сущностей: {@link Product} и {@link Query}.
      *
      * @param rs     строка результата запроса, содержащая данные.
      * @param rowNum номер текущей строки в результате запроса (независимо от использования, может быть полезен для обработки).

@@ -21,7 +21,7 @@ import java.util.List;
  * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class UserRecommendationsBotUpdateListener implements UpdatesListener {
 
     /**
      * Инициализация слушателя обновлений и настройка бота для получения сообщений.
-     * Этот метод вызывается после создания бина для настройки слушателя.
+     * <br>Этот метод вызывается после создания бина для настройки слушателя.
      */
     @PostConstruct
     public void init() {

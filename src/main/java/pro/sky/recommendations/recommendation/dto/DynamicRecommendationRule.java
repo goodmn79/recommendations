@@ -8,10 +8,12 @@ import java.util.UUID;
 
 /**
  * DTO класс для передачи данных о динамическом правиле рекомендации банковских продуктов.
+ * <p>
  * Содержит информацию о продукте и правилах его рекомендации.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

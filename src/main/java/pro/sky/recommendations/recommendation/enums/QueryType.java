@@ -5,10 +5,12 @@ import pro.sky.recommendations.recommendation.exception.InvalidQueryDataExceptio
 
 /**
  * Перечисление типов запросов, содержащих соответствующие шаблоны SQL-запросов.
+ * <p>
  * Каждый тип запроса представляет собой SQL-шаблон, который выполняет различные операции с базой данных.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @RequiredArgsConstructor
 public enum QueryType {
@@ -37,7 +39,7 @@ public enum QueryType {
 
     /**
      * Возвращает строковое представление SQL-шаблона для данного типа запроса.
-     * Переопределённый метод {@code toString}.
+     * <br>Переопределённый метод {@code toString}.
      *
      * @return строка, представляющая SQL-шаблон.
      */

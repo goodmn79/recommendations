@@ -7,10 +7,12 @@ import java.util.UUID;
 
 /**
  * DTO класс для передачи данных о рекомендации банковского продукта.
+ * <p>
  * Содержит основную информацию о рекомендуемом продукте.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

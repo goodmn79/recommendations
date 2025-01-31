@@ -7,10 +7,12 @@ import java.util.UUID;
 
 /**
  * Модель, представляющая транзакцию с банковским продуктом.
+ * <p>
  * Этот класс содержит информацию о транзакции, включая продукт, пользователя, тип транзакции и сумму.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)

@@ -7,16 +7,16 @@ import java.util.UUID;
 
 /**
  * Модель, представляющая продукт в системе.
- * Этот класс содержит информацию о продукте, включая его уникальный идентификатор,
- * название и тип.
+ * <p>
+ * Этот класс содержит информацию о продукте, включая его уникальный идентификатор, название и тип.
+ * </p>
  *
  * @author Powered by ©AYE.team
- * @version 1.0
+ * @version 0.0.1-SNAPSHOT
  */
 @Data
 @Accessors(chain = true)
 public class Product {
-
     private UUID id;
 
     private String name;
