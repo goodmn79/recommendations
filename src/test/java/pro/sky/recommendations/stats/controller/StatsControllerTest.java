@@ -7,6 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pro.sky.recommendations.stats.dto.StatsData;
 
@@ -30,6 +31,7 @@ class StatsControllerTest {
 
         List<StatsData> actual = response.getBody();
 
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(actual).isNotNull();
         assertThat(actual).isEmpty();
     }
