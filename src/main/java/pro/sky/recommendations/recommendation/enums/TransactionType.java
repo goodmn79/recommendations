@@ -10,7 +10,6 @@ import lombok.ToString;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @ToString
 @RequiredArgsConstructor
 public enum TransactionType {

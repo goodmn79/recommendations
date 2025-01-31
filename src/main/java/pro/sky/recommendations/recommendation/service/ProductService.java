@@ -10,7 +10,7 @@ import pro.sky.recommendations.recommendation.repository.ProductRepository;
 
 import java.util.UUID;
 
-/*
+/**
  * Сервис для работы с банковскими продуктами.
  * Этот класс предоставляет методы для получения данных о банковских продуктах.
  *
@@ -35,7 +35,6 @@ public class ProductService {
     public Product findById(UUID id) {
         log.info("Получение продукта по его идентификатору...");
 
-        // Попытка найти продукт по идентификатору, если не найдено, выбрасывается исключение
         Product foundProduct = productRepository.findById(id).orElseThrow(() -> {
             log.error("Продукт не найден!");
             return new ProductNotFoundException();

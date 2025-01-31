@@ -35,6 +35,7 @@ public class CommandConfiguration {
                 .stream()
                 .collect(Collectors.toMap(this::commandName, command -> command));
     }
+
     /**
      * Получает имя команды на основе её простого имени (без пакета).
      *

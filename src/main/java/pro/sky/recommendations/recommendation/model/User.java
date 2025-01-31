@@ -5,10 +5,9 @@ import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
-/*
+/**
  * Модель, представляющая пользователя в системе.
- * Этот класс содержит информацию о пользователе, включая его уникальный идентификатор,
- * имя, фамилию и полное имя.
+ * Этот класс содержит информацию о пользователе, включая его уникальный идентификатор, имя, фамилию и полное имя.
  *
  * @author Powered by ©AYE.team
  * @version 1.0
@@ -16,7 +15,6 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class User {
-
     private UUID id;
 
     private String userName;

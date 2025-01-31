@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 
-/*
+/**
  * Модель, представляющая запрос для рекомендации.
  * Этот класс содержит информацию о запросе, связанном с рекомендацией, включая аргументы запроса и его строковое представление.
  *
@@ -16,8 +16,6 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class Query {
-
-
     private UUID id;
 
     private Recommendation recommendation;

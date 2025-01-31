@@ -12,7 +12,7 @@ import pro.sky.recommendations.recommendation.repository.QueryRepository;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Сервис для работы с правилами рекомендаций банковских продуктов.
  * Этот класс предоставляет методы для сохранения, получения и удаления правил рекомендаций.
  *
@@ -22,7 +22,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class QueryService {
-
     private final QueryRepository queryRepository;
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);

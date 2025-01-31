@@ -11,7 +11,7 @@ import pro.sky.recommendations.recommendation.model.Product;
 import java.util.Optional;
 import java.util.UUID;
 
-/*
+/**
  * Репозиторий для работы с таблицей PRODUCTS в базе данных.
  * Этот класс предоставляет методы для получения данных о банковских продуктах.
  *
@@ -20,7 +20,6 @@ import java.util.UUID;
  */
 @Repository
 public class ProductRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final ProductRowMapper mapper;
@@ -51,11 +50,9 @@ public class ProductRepository {
         String findProductByIdSql = "SELECT * FROM PRODUCTS WHERE ID = ?";
 
         try {
-            // Выполнение SQL-запроса и преобразование результата в объект Product
             Product product = jdbcTemplate.queryForObject(findProductByIdSql, mapper, id);
             return Optional.ofNullable(product);
         } catch (Exception e) {
-            // Логирование ошибки, если продукт не найден или возникла другая ошибка
             log.error(e.getMessage());
             return Optional.empty();
         }

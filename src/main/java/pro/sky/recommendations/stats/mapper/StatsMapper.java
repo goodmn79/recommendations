@@ -15,10 +15,8 @@ import java.util.List;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Component
 public class StatsMapper {
-
     private final Logger log = LoggerFactory.getLogger(StatsMapper.class);
 
     /**

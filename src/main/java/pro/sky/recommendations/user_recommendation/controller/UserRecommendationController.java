@@ -23,18 +23,14 @@ import java.util.UUID;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
-
 @RestController
 @RequestMapping("recommendation")
 @RequiredArgsConstructor
 public class UserRecommendationController {
-
     private final UserRecommendationService userRecommendationService;
+    private final StatsService statsService;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationController.class);
-
-    private final StatsService statsService;
 
     /**
      * Обрабатывает GET-запрос для получения рекомендаций для клиента по его идентификатору.

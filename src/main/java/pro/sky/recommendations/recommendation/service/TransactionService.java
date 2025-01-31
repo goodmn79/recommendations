@@ -8,7 +8,7 @@ import pro.sky.recommendations.recommendation.repository.TransactionRepository;
 
 import java.util.UUID;
 
-/*
+/**
  * Сервис для работы с транзакциями.
  * Этот класс предоставляет метод для проверки соответствия правилам рекомендаций банковских продуктов.
  *
@@ -18,7 +18,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
-
     private final TransactionRepository transactionRepository;
 
     private final Logger log = LoggerFactory.getLogger(TransactionRepository.class);

@@ -13,17 +13,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Репозиторий для работы с таблицей USERS в базе данных.
- * Этот класс предоставляет методы для выполнения операций с пользователями,
- * таких как валидация существования пользователя и поиск пользователей по имени.
+ * Этот класс предоставляет методы для выполнения операций с пользователями, таких как валидация существования пользователя и поиск пользователей по имени.
  *
  * @author Powered by ©AYE.team
  * @version 1.0
  */
 @Repository
 public class UserRepository {
-
     private final JdbcTemplate transactionJdbcTemplate;
 
     private final UserRowMapper userRowMapper;
@@ -52,7 +50,6 @@ public class UserRepository {
     public boolean userIsExists(UUID id) {
         log.debug("Валидация пользователя по идентификатору '{}'", id);
 
-        // Выполнение запроса на проверку существования пользователя
         String userByIdIsExistsSql = "SELECT EXISTS (SELECT 1 FROM USERS u WHERE u.ID = ?) AS user_is_exist";
 
         boolean userIsExists = Boolean.TRUE.equals(transactionJdbcTemplate.queryForObject(userByIdIsExistsSql, Boolean.class, id));
@@ -71,7 +68,6 @@ public class UserRepository {
     public List<User> findUsersByNameKey(String key) {
         log.debug("Получение списка пользователей по ключу = '{}'", StringUtils.substringBefore(key, "%"));
 
-        // Выполнение запроса на получение пользователей по ключевому слову в имени
         String findUserByKeySql = "SELECT * FROM USERS u WHERE LOWER(u.FIRST_NAME) LIKE lower(?)";
 
         try {

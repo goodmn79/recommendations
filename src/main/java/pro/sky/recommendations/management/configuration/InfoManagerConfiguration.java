@@ -12,7 +12,6 @@ import pro.sky.recommendations.management.dto.InfoManager;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Configuration
 @PropertySource("classpath:build-info.properties")
 public class InfoManagerConfiguration {

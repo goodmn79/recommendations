@@ -22,10 +22,8 @@ import java.util.UUID;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Repository
 public class StatsRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final StatsRowMapper mapper;
@@ -71,14 +69,13 @@ public class StatsRepository {
 
         String saveStatsSql = "INSERT INTO STATISTICS (ID, RECOMMENDATION_ID, COUNT) VALUES (?, ?, ?)";
 
-        // Очищаем старые данные перед вставкой новых
         this.clearStatistics();
 
         jdbcTemplate.batchUpdate(saveStatsSql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Stats stats = statsList.get(i);
-                ps.setObject(1, UUID.randomUUID());  // Генерация нового уникального ID для статистики
+                ps.setObject(1, UUID.randomUUID());
                 ps.setObject(2, stats.getRecommendation().getId());
                 ps.setInt(3, stats.getCount());
             }

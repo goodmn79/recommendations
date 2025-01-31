@@ -16,7 +16,6 @@ import pro.sky.recommendations.recommendation.exception.InvalidQueryDataExceptio
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Data
 @Accessors(chain = true)
 public class QueryData {

@@ -17,11 +17,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
-
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
+
     /**
      * Регистрирует бин для управления кэшированием данных с использованием Caffeine.
      * <p>

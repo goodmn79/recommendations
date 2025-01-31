@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-/*
+/**
  * Маппер строки результата SQL-запроса в объект {@link Product}.
  * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Product}.
  *

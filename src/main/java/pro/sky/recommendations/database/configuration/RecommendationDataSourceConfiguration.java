@@ -15,7 +15,6 @@ import javax.sql.DataSource;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Configuration
 public class RecommendationDataSourceConfiguration {
 

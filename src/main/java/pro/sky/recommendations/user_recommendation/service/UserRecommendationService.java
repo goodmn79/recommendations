@@ -29,7 +29,6 @@ import java.util.UUID;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Service
 @RequiredArgsConstructor
 public class UserRecommendationService {
@@ -49,7 +48,6 @@ public class UserRecommendationService {
      * @return Объект {@link UserRecommendation}, содержащий рекомендации для данного пользователя.
      */
     @Cacheable(value = "userRecommendationCache", key = "#userId")
-    // Получение всех рекомендаций банковских продуктов доступных пользователю по его идентификатору
     public UserRecommendation getUserRecommendations(UUID userId) {
         validateUserId(userId);
 

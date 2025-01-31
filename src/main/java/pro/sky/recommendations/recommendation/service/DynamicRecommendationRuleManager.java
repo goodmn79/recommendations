@@ -17,7 +17,7 @@ import pro.sky.recommendations.stats.service.StatsService;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Сервис для работы с динамическими правилами рекомендаций банковских продуктов.
  * Этот класс предоставляет методы для создания, сохранения, получения и удаления рекомендаций.
  *
@@ -78,10 +78,8 @@ public class DynamicRecommendationRuleManager {
     public DynamicRecommendationRule getById(UUID recommendationId) {
         log.info("Получение динамических правил рекомендаций по идентификатору...");
 
-        // Получение рекомендации из базы данных
         Recommendation recommendation = recommendationService.findById(recommendationId);
 
-        // Построение и возврат динамического правила рекомендации
         DynamicRecommendationRule drr = build(recommendation);
         log.info("Динамическое правило рекомендации успешно получено.");
         return drr;
@@ -95,14 +93,12 @@ public class DynamicRecommendationRuleManager {
     public List<DynamicRecommendationRule> getAll() {
         log.info("Получение динамических правил рекомендаций...");
 
-        // Получение всех рекомендаций из базы данных
         List<Recommendation> recommendations = recommendationService.findAll();
         if (recommendations.isEmpty()) {
             log.error("Динамических правил рекомендации не найдено!");
             throw new RecommendationNotFoundException();
         }
 
-        // Построение и возврат списка динамических правил рекомендаций
         List<DynamicRecommendationRule> drrList = recommendations.stream().map(this::build).toList();
         log.info("Динамические правила рекомендаций успешно получены.");
         return drrList;
@@ -119,7 +115,6 @@ public class DynamicRecommendationRuleManager {
         log.info("Удаление динамического правила рекомендации...");
 
         try {
-            // Удаление рекомендации, правил и статистики
             recommendationService.deleteById(recommendationId);
             queryService.deleteBYRecommendationId(recommendationId);
             statsService.deleteCounter(recommendationId);
@@ -127,7 +122,6 @@ public class DynamicRecommendationRuleManager {
             log.error(e.getMessage());
             throw new TransactionExecuteException();
         }
-
         log.info("Динамическое правило рекомендации успешно удалено.");
     }
 
@@ -138,11 +132,9 @@ public class DynamicRecommendationRuleManager {
      * @return созданная рекомендация.
      */
     private Recommendation createRecommendation(DynamicRecommendationRule drr) {
-        // Получение продукта по идентификатору
         Product product = productService.findById(drr.getProductId());
 
         log.info("Создание рекомендации...");
-        // Создание объекта Recommendation
         Recommendation recommendation =
                 new Recommendation()
                         .setId(UUID.randomUUID())
@@ -150,7 +142,6 @@ public class DynamicRecommendationRuleManager {
                         .setProductText(drr.getProductText());
 
         log.info("Создание правила...");
-        // Создание правил для рекомендации
         List<Query> rule = queryMapper.toQuery(drr.getRule(), recommendation);
 
         log.info("Правило успешно создано.");
@@ -169,7 +160,6 @@ public class DynamicRecommendationRuleManager {
     private DynamicRecommendationRule build(Recommendation recommendation) {
         log.info("Создание динамического правила рекомендации...");
 
-        // Построение объекта DynamicRecommendationRule из Recommendation
         DynamicRecommendationRule drr =
                 new DynamicRecommendationRule()
                         .setId(recommendation.getId())

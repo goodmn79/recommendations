@@ -17,7 +17,6 @@ import java.util.Objects;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Service
 public class DatabaseInitializer {
     private final JdbcTemplate jdbcTemplate;

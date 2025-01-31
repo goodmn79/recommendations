@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/*
+/**
  * Репозиторий для работы с таблицей RECOMMENDATIONS в базе данных.
  * Этот класс предоставляет методы для сохранения, получения и удаления рекомендаций для банковских продуктов.
  *
@@ -22,7 +22,6 @@ import java.util.UUID;
  */
 @Repository
 public class RecommendationRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final RecommendationRowMapper mapper;
@@ -51,7 +50,6 @@ public class RecommendationRepository {
 
         String saveRecommendationSql = "INSERT INTO RECOMMENDATIONS (ID, PRODUCT_ID, PRODUCT_TEXT) VALUES (?, ?, ?)";
 
-        // Сохранение рекомендации в базе данных
         jdbcTemplate.update(saveRecommendationSql, recommendation.getId(), recommendation.getProduct().getId(), recommendation.getProductText());
     }
 
@@ -67,7 +65,6 @@ public class RecommendationRepository {
         String findRecommendationByIdSql = "SELECT * FROM RECOMMENDATIONS WHERE ID = ?";
 
         try {
-            // Получение рекомендации по идентификатору
             return Optional.ofNullable(jdbcTemplate.queryForObject(findRecommendationByIdSql, mapper, id));
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -86,7 +83,6 @@ public class RecommendationRepository {
         String findAllRecommendationSql = "SELECT * FROM RECOMMENDATIONS";
 
         try {
-            // Получение всех рекомендаций
             return jdbcTemplate.query(findAllRecommendationSql, mapper);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -104,7 +100,6 @@ public class RecommendationRepository {
 
         String deleteRecommendationByIdSql = "DELETE FROM RECOMMENDATIONS WHERE ID = ?";
 
-        // Удаление рекомендации по идентификатору
         jdbcTemplate.update(deleteRecommendationByIdSql, id);
     }
 }

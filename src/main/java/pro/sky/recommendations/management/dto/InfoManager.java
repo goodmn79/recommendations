@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Data
 @Accessors(chain = true)
 public class InfoManager {

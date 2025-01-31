@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Маппер строки результата SQL-запроса в объект {@link Recommendation}.
  * Этот класс используется для преобразования строки из результата SQL-запроса в объект модели {@link Recommendation}.
  *
@@ -41,16 +41,12 @@ public class RecommendationRowMapper implements RowMapper<Recommendation> {
     @Override
     public Recommendation mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        // Извлечение информации о продукте с помощью ProductService
         Product product = productService.findById(rs.getObject("PRODUCT_ID", UUID.class));
 
-        // Получение идентификатора рекомендации
         UUID id = rs.getObject("ID", UUID.class);
 
-        // Извлечение правил для данной рекомендации через QueryService
         List<Query> rule = queryService.findAllByRecommendationId(id);
 
-        // Создание и возврат объекта Recommendation
         return new Recommendation()
                 .setId(id)
                 .setProduct(product)

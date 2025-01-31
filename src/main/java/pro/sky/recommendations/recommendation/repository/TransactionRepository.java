@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-/*
+/**
  * Репозиторий для работы с таблицей TRANSACTIONS в базе данных.
  * Этот класс предоставляет методы для выполнения операций, связанных с транзакциями, например, проверки соответствия правилам рекомендации.
  *
@@ -17,7 +17,6 @@ import java.util.UUID;
  */
 @Repository
 public class TransactionRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final Logger log = LoggerFactory.getLogger(TransactionRepository.class);
@@ -42,7 +41,6 @@ public class TransactionRepository {
     public boolean isCompliance(String query, UUID userId) {
         log.debug("Проверка соответствия правилу получения рекомендации для пользователя с идентификатором '{}'", userId);
 
-        // Выполнение запроса и получение результата (true/false)
         boolean isCompliance = Boolean.TRUE.equals(jdbcTemplate.queryForObject(query, Boolean.class, userId));
 
         log.debug("Проверка завершена с результатом: '{}'", isCompliance);

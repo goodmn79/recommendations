@@ -18,7 +18,6 @@ import java.util.List;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @RestController
 @RequestMapping("rule")
 @RequiredArgsConstructor

@@ -18,11 +18,9 @@ import java.util.UUID;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Component
 @RequiredArgsConstructor
 public class StatsRowMapper implements RowMapper<Stats> {
-
     private final RecommendationService recommendationService;
 
     /**
@@ -37,7 +35,6 @@ public class StatsRowMapper implements RowMapper<Stats> {
     public Stats mapRow(ResultSet rs, int rowNum) throws SQLException {
         UUID recommendationId = rs.getObject("RECOMMENDATION_ID", UUID.class);
 
-        // Извлекаем объект Recommendation по идентификатору
         Recommendation recommendation = recommendationService.findById(recommendationId);
 
         return new Stats()

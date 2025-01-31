@@ -22,16 +22,14 @@ import java.util.*;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
 @Service
 @RequiredArgsConstructor
 public class StatsService {
+    private final StatsRepository statsRepository;
 
     private final StatsMapper statsMapper;
 
-    private final StatsRepository statsRepository;
-
-    private Map<UUID, Stats> statsCounters;  // Хранилище статистики рекомендаций
+    private Map<UUID, Stats> statsCounters;
 
     private static final Logger log = LoggerFactory.getLogger(StatsService.class);
 

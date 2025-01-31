@@ -15,17 +15,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Репозиторий для работы с таблицей QUERIES в базе данных.
- * Этот класс предоставляет методы для сохранения, получения и удаления запросов,
- * связанных с динамическими правилами рекомендаций.
+ * Этот класс предоставляет методы для сохранения, получения и удаления запросов, связанных с динамическими правилами рекомендаций.
  *
  * @author Powered by ©AYE.team
  * @version 1.0
  */
 @Repository
 public class QueryRepository {
-
     private final JdbcTemplate jdbcTemplate;
 
     private final QueryRowMapper mapper;
@@ -54,21 +52,18 @@ public class QueryRepository {
 
         String saveQuerySql = "INSERT INTO QUERIES(ID, RECOMMENDATION_ID, QUERY, ARGUMENTS, NEGATE)VALUES (?, ?, ?, ?, ?)";
 
-        // Извлечение идентификатора рекомендации из первого запроса
         UUID recommendationId = queries
                 .stream()
                 .map(query -> query.getRecommendation().getId())
                 .findAny()
                 .orElse(null);
 
-        // Выполнение пакетного обновления базы данных
         jdbcTemplate.batchUpdate(saveQuerySql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Query query = queries.get(i);
 
-                // Заполнение параметров для SQL-запроса
-                ps.setObject(1, UUID.randomUUID()); // Уникальный идентификатор для каждого запроса
+                ps.setObject(1, UUID.randomUUID());
                 ps.setObject(2, recommendationId);
                 ps.setString(3, query.getQuery());
                 ps.setString(4, query.argsToString());
@@ -94,7 +89,6 @@ public class QueryRepository {
         String findAllQueriesByRecommendationIdSql = "SELECT * FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
         try {
-            // Выполнение SQL-запроса для получения всех запросов, связанных с рекомендацией
             return jdbcTemplate
                     .query(findAllQueriesByRecommendationIdSql, mapper, recommendationId);
         } catch (Exception e) {
@@ -113,7 +107,6 @@ public class QueryRepository {
 
         String deleteQueriesByRecommendationIdSql = "DELETE FROM QUERIES WHERE RECOMMENDATION_ID = ?";
 
-        // Удаление запросов для указанной рекомендации
         jdbcTemplate.update(deleteQueriesByRecommendationIdSql, recommendationId);
         log.debug("Правило для рекомендации с идентификатором '{}' успешно удалено", recommendationId);
     }

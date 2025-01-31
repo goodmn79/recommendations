@@ -17,8 +17,6 @@ import java.util.UUID;
  * @author Powered by ©AYE.team
  * @version 1.0
  */
-
-
 @Data
 @Accessors(chain = true)
 public class UserRecommendation {

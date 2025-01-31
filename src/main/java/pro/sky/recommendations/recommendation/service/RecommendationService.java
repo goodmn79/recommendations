@@ -11,7 +11,7 @@ import pro.sky.recommendations.recommendation.repository.RecommendationRepositor
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * Сервис для работы с рекомендациями банковских продуктов.
  * Этот класс предоставляет методы для создания, сохранения, получения и удаления рекомендаций.
  *
@@ -21,7 +21,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class RecommendationService {
-
     private final RecommendationRepository recommendationRepository;
 
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
@@ -85,7 +84,6 @@ public class RecommendationService {
     public void deleteById(UUID recommendationId) {
         log.info("Удаление рекомендации по идентификатору...");
 
-        // Проверка существования рекомендации
         this.findById(recommendationId);
 
         recommendationRepository.deleteById(recommendationId);
