@@ -6,14 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import pro.sky.recommendations.recommendation.dto.RecommendationData;
 import pro.sky.recommendations.recommendation.enums.QueryType;
 import pro.sky.recommendations.recommendation.exception.UserNotFoundException;
 import pro.sky.recommendations.recommendation.mapper.castom_mapper.RecommendationMapper;
 import pro.sky.recommendations.recommendation.model.Query;
-import pro.sky.recommendations.recommendation.model.Recommendation;
 import pro.sky.recommendations.recommendation.service.RecommendationService;
 import pro.sky.recommendations.recommendation.service.TransactionService;
 import pro.sky.recommendations.recommendation.service.UserService;
+import pro.sky.recommendations.top_recommendations.service.TopRecommendationService;
 import pro.sky.recommendations.user_recommendation.dto.UserRecommendation;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class UserRecommendationService {
     private final RecommendationMapper recommendationMapper;
 
     private final Logger log = LoggerFactory.getLogger(UserRecommendationService.class);
+    private final TopRecommendationService topRecommendationService;
 
     /**
      * Получение всех рекомендаций банковских продуктов, доступных пользователю по его идентификатору.
@@ -53,20 +55,25 @@ public class UserRecommendationService {
 
         log.info("Получение рекомендаций для пользователя...");
 
-        List<Recommendation> userRecommendations =
-                recommendationService.findAll()
+        List<RecommendationData> userTopRecommendations = topRecommendationService.getTopRecommendationsForUser(userId);
+
+        List<RecommendationData> userRecommendations =
+                new java.util.ArrayList<>(recommendationService.findAll()
                         .stream()
                         .filter(r -> {
                             List<Query> rule = r.getRule();
                             return isComplianceRule(userId, rule);
                         })
-                        .toList();
+                        .map(recommendationMapper::fromRecommendation)
+                        .toList());
+
+        userRecommendations.addAll(userTopRecommendations);
 
         if (userRecommendations.isEmpty()) log.warn("Рекомендаций для пользователя не найдено.");
 
         UserRecommendation userRecommendation = new UserRecommendation()
                 .setUserId(userId)
-                .setRecommendations(recommendationMapper.fromRecommendationList(userRecommendations));
+                .setRecommendations(userRecommendations);
 
         log.info("Рекомендации для пользователя успешно получены.");
         return userRecommendation;
