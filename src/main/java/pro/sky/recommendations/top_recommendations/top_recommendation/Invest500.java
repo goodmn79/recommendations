@@ -6,6 +6,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Представление одной из топовых рекомендаций для пользователя, связанной с инвестициями.
+ * Этот класс представляет конкретную рекомендацию по открытию индивидуального инвестиционного счета (ИИС).
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
+
 @Component
 @Getter
 @Accessors(chain = true)

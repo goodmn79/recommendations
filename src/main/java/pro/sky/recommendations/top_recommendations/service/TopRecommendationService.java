@@ -12,15 +12,31 @@ import pro.sky.recommendations.top_recommendations.top_recommendation.TopRecomme
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для формирования топовых рекомендаций для конкретного пользователя.
+ * Проверяет, соответствует ли пользователь требованиям для каждой рекомендации и возвращает отфильтрованный список.
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
+
 @Service
 @RequiredArgsConstructor
 public class TopRecommendationService {
+
     private final TransactionRepository transactionRepository;
 
     private final List<TopRecommendation> topRecommendations;
 
+    // Логгер для записи информации и отладки
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
+    /**
+     * Получает список топовых рекомендаций для заданного пользователя, проверяя, соответствует ли пользователь каждой из рекомендаций.
+     *
+     * @param userId Уникальный идентификатор пользователя, для которого генерируются рекомендации.
+     * @return Список объектов {@link RecommendationData}, представляющих топовые рекомендации для пользователя.
+     */
     public List<RecommendationData> getTopRecommendationsForUser(UUID userId) {
         log.info("Формирование списка топовых рекомендаций...");
 
