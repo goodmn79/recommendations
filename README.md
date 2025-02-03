@@ -36,21 +36,17 @@
 - java-telegram-bot-api (pengrad): для создания Telegram-ботов.
   
 ## Структура проекта
+```plaintext
 src/main/java/pro/sky/recommendations/
 
-├── database/ # Конфигурация базы данных. 
-
-├── management/ # Управление приложением. 
-
-├── recommendation/ # Динамические правила рекомендаций.
-
-├── stats/ # Статистика использования. 
-
-├── tg_bot/ # Telegram бот. 
-
-├── top_recommendations/ # Статические правила рекомендаций.
-
-└── user_recommendation/ # Рекомендации для пользователей.
+├── database/               # Конфигурация базы данных
+├── management/             # Управление приложением
+├── recommendation/         # Динамические правила рекомендаций
+├── stats/                  # Статистика использования
+├── tg_bot/                 # Telegram бот
+├── top_recommendations/    # Статические правила рекомендаций
+└── user_recommendation/    # Рекомендации для пользователей
+```
 
 ## API Endpoints
 ### Управление динамическими правилами рекомендаций
@@ -78,8 +74,9 @@ src/main/java/pro/sky/recommendations/
 1. Создайте файл application.properties в директории `src/main/resources/`, если он ещё не существует.
 2. Добавьте необходимые настройки в файл application.properties:
 ```properties
-// Настройки для базы данных (замените на путь к вашей базе данных)
-application.recommendation-db.url=jdbc:h2:file:./db/recommendation
+// Настройки для баз данных
+application.transaction-db.url=jdbc:h2:file:./db/transaction_db/transaction
+application.recommendation-db.url=jdbc:h2:file:./db/recommendation_db/recommendation
 
 // Токен Telegram-бота (замените на реальный токен, который вы получите после создания бота в BotFather)
 telegram.bot.token=your_telegram_bot_token 
