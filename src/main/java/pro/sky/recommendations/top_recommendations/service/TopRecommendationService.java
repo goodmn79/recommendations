@@ -14,7 +14,9 @@ import java.util.UUID;
 
 /**
  * Сервис для формирования топовых рекомендаций для конкретного пользователя.
- * Проверяет, соответствует ли пользователь требованиям для каждой рекомендации и возвращает отфильтрованный список.
+ *</p>
+ * Сервис предоставляет метод для проверки на соответствие пользователя требованиям для каждой рекомендации.
+ *<p>
  *
  * @author Powered by ©AYE.team
  * @version 0.0.1-SNAPSHOT
@@ -28,14 +30,14 @@ public class TopRecommendationService {
 
     private final List<TopRecommendation> topRecommendations;
 
-    // Логгер для записи информации и отладки
     private final Logger log = LoggerFactory.getLogger(RecommendationService.class);
 
     /**
-     * Получает список топовых рекомендаций для заданного пользователя, проверяя, соответствует ли пользователь каждой из рекомендаций.
+     * Получение списка топовых рекомендаций для заданного пользователя. 
+     *<dr> Этот метод использует {@link TransactionRepository#isCompliance(Query, Long)} проверяя, соответствует ли пользователь каждой из рекомендаций.
      *
-     * @param userId Уникальный идентификатор пользователя, для которого генерируются рекомендации.
-     * @return Список объектов {@link RecommendationData}, представляющих топовые рекомендации для пользователя.
+     * @param userId уникальный идентификатор пользователя, для которого генерируются рекомендации.
+     * @return список объектов {@link RecommendationData}, представляющих топовые рекомендации для пользователя.
      */
     public List<RecommendationData> getTopRecommendationsForUser(UUID userId) {
         log.info("Формирование списка топовых рекомендаций...");
@@ -45,7 +47,7 @@ public class TopRecommendationService {
                 .filter(tr -> {
                     String query = tr.getQuery();
                     boolean compliance = transactionRepository.isCompliance(query, userId);
-                    log.debug("Проверка запроса пройдена с резулбтатом: '{}'", compliance);
+                    log.debug("Проверка запроса пройдена с результатом: '{}'", compliance);
                     return compliance;
                 })
                 .map(tr -> new RecommendationData()
