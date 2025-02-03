@@ -6,6 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Представление одной из топовых рекомендаций для пользователя, связанной с получением простого кредита.
+ * <br> Этот класс представляет рекомендацию по предложению простого кредита с выгодными условиями.
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Component
 @Getter
 @Accessors(chain = true)

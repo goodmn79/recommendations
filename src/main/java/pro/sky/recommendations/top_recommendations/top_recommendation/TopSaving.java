@@ -6,6 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Представление одной из топовых рекомендаций для пользователя, связанной с продуктом "Копилка" для накопления средств.
+ * <br> Этот класс представляет рекомендацию по использованию банковского инструмента для накопления средств на важные цели.
+ *
+ * @author Powered by ©AYE.team
+ * @version 0.0.1-SNAPSHOT
+ */
 @Component
 @Getter
 @Accessors(chain = true)
